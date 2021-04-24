@@ -1,0 +1,128 @@
+/*
+ * Created by Osman Balci on 2021.3.1
+ * Copyright © 2021 Osman Balci. All rights reserved.
+ */
+package edu.vt.globals;
+
+public final class Constants {
+    /*
+    ==================================================
+    |   Use of Class Variables as Global Constants   |
+    ==================================================
+    All of the variables in this class are Class Variables (typed with the "static" keyword")
+    with Constant values, which can be accessed in any class in the project by specifying
+    Constants.CONSTANTNAME, i.e., ClassName.ClassVariableName
+
+    =====================================================
+    |   Our Design Decision for Use of External Files   |
+    =====================================================
+    We decided to use directories external to our application for the storage and retrieval of user's files.
+    We do not want to store/retrieve external files into/from our database for the following reasons:
+
+        (a) Database storage and retrieval of large files as BLOB (Binary Large OBject) degrades performance.
+        (b) BLOBs increase the database complexity.
+        (c) The operating system handles the external files instead of the database management system.
+
+    WildFly provides an internal web server, named Undertow, to display external files.
+    See https://docs.wildfly.org/21/Admin_Guide.html#Undertow
+
+    ========================================================================================
+    |   For storing and internally accessing external files, we use absolute file paths.   |
+    ========================================================================================
+    Windows:
+        public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Balci/DocRoot/SurveyUserPhotoStorage/";
+    Unix (macOS) or Linux:
+     */
+    // To run locally
+//    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/SurveyUserPhotoStorage/";
+
+    // To run on your AWS EC2 instance
+    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/SurveyUserPhotoStorage/";
+
+    /*
+     ---------------------------------
+     To Deploy to Your AWS EC2 server:
+     ---------------------------------
+     STEP 1: Comment out the constant under "To run locally" above.
+     STEP 2: Uncomment the constant under "To run on your AWS EC2 instance" above.
+
+     STEP 3: Comment out the constant under "To run locally" below.
+     STEP 4: Uncomment the constant under "To run on your AWS EC2 instance with your IP address" below.
+     STEP 5: Replace 54.92.194.218 with the public IP address of your AWS EC2 instance.
+
+     STEP 6: Select Build --> Rebuild Project.
+     STEP 7: Run your app to generate the WAR file. Do not use the app locally!
+     STEP 8: Use the generated WAR file to deploy your app to your AWS EC2 server.
+
+     STEP 9: Undo the above changes to run the app locally.
+     */
+
+    /*
+    =================================================================================================
+    |   For displaying external files to the user in an XHTML page, we use the Undertow subsystem.  |
+    =================================================================================================
+     We configured WildFly Undertow subsystem so that
+     http://localhost:8080/userphotos/p displays photo file p from /Users/Balci/DocRoot/SurveyUserPhotoStorage/
+     */
+    // To run locally
+//    public static final String PHOTOS_URI = "http://localhost:8080/userphotos/";
+
+    // To run on your AWS EC2 instance with your IP address
+    public static final String PHOTOS_URI = "http://3.236.179.184:8080/userphotos/";
+
+    /* 
+    ==================================================
+    |             Our Design Decision                |
+    ==================================================
+    
+    We decided to scale down the user's uploaded photo to 200x200 px,
+    which we call the Thumbnail photo, and use it.
+    
+    We do not want to use the uploaded photo as is, which may be
+    very large in size degrading performance.
+     */
+    public static final Integer THUMBNAIL_SIZE = 200;
+
+    /* 
+    United States postal state abbreviations (codes) 
+     */
+    public static final String[] STATES = {"AK", "AL", "AR", "AZ", "CA", "CO", "CT",
+        "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA",
+        "MD", "ME", "MH", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM",
+        "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC", "SD", "TN", "TX", "UT",
+        "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
+
+    /* 
+    A security question is selected and answered by the user at the time of account creation.
+    The selected question is used as a second level of authentication in addition to password.
+     */
+    public static final String[] QUESTIONS = {
+        "In what city or town did your mother and father meet?",
+        "In what city or town were you born?",
+        "What did you want to be when you grew up?",
+        "What do you remember most from your childhood?",
+        "What is the name of the boy or girl that you first kissed?",
+        "What is the name of the first school you attended?",
+        "What is the name of your favorite childhood friend?",
+        "What is the name of your first pet?",
+        "What is your mother's maiden name?",
+        "What was your favorite place to visit as a child?"
+    };
+
+    /*
+    Survey questions
+     */
+    public static final String[] SURVEY_QUESTIONS = {
+        "How physically healthy are you?",
+        "How important is exercise to you?",
+        "What do you most often do to exercise?",
+        "How many times do you exercise per week?",
+        "How often do you drink regular soda or other sugared beverages?",
+        "How often do you consume alcohol?",
+        "What types of food do you usually snack on?",
+        "How many hours of sleep do you get each night on average?",
+        "What is your stress level?",
+        "Which of the following is most effective in coping with your stress?"
+    };
+
+}
