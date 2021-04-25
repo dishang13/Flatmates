@@ -12,7 +12,7 @@ repositories {
 
     // flat filesystem directory containing the JAR files
     flatDir {
-        dirs 'C:/Users/sivakrishna/IdeaProjects/Flatmates/src/main/webapp/WEB-INF/lib'
+        dirs 'C:/Users/disha/IdeaProjects/Flatmates/src/main/webapp/WEB-INF/lib'
     }
 }
 
