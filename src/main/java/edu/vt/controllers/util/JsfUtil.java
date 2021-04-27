@@ -4,12 +4,12 @@
  */
 package edu.vt.controllers.util;
 
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
-import java.util.List;
 
 public class JsfUtil {
 

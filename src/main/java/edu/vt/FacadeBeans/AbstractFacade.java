@@ -4,8 +4,14 @@
  */
 package edu.vt.FacadeBeans;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+/* 
+ An instance of javax.persistence.EntityManager represents an Entity Manager.
+ An Entity Manager manages JPA Entities. 
+ Each Entity Manager instance is associated with a persistence context.
+ A persistence context is a set of managed entity instances. 
+ */
+import javax.persistence.EntityManager;
 
 /**
  * The AbstractFacade.java is an abstract Facade class providing a generic interface to the Entity Manager.
@@ -20,47 +26,47 @@ public abstract class AbstractFacade<T> {
 
     /*  
     This is the constructor method called by the subclass UserFacade.java,
-    UserPhotoFacade.java, and UserSurveyFacade.java class's constructor method
-    by passing the User, UserPhoto, and UserSurvey class respectively as a parameter.
+    UserPhotoFacade.java, and UserQuestionnaireFacade.java class's constructor method
+    by passing the User, UserPhoto, and UserQuestionnaire class respectively as a parameter.
     */
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
     /* 
-    This method is overridden in UserFacade.java, UserPhotoFacade.java, or UserSurveyFacade.java
+    This method is overridden in UserFacade.java, UserPhotoFacade.java, or UserQuestionnaireFacade.java
     which is the concrete Facade subclass providing the actual implementation. 
      */
     protected abstract EntityManager getEntityManager();
 
-    // Stores the newly Created User, UserPhoto or UserSurvey (entity) object into the database.
+    // Stores the newly Created User, UserPhoto or UserQuestionnaire (entity) object into the database.
     public void create(T entity) {
         getEntityManager().persist(entity);
     }
 
-    // Stores the Edited User, UserPhoto or UserSurvey (entity) object into the database.
+    // Stores the Edited User, UserPhoto or UserQuestionnaire (entity) object into the database.
     public void edit(T entity) {
         getEntityManager().merge(entity);
     }
 
-    // Deletes (Removes) the given User, UserPhoto or UserSurvey (entity) object from the database.
+    // Deletes (Removes) the given User, UserPhoto or UserQuestionnaire (entity) object from the database.
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 
-    // Finds a User, UserPhoto or UserSurvey in the database by using its Primary Key (id) and returns it.
+    // Finds a User, UserPhoto or UserQuestionnaire in the database by using its Primary Key (id) and returns it.
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }
 
-    // Returns a list of object references of all of the User, UserPhoto or UserSurvey entities in the database.
+    // Returns a list of object references of all of the User, UserPhoto or UserQuestionnaire entities in the database.
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    // Returns a List of User, UserPhoto or UserSurvey objects in a range from the database.
+    // Returns a List of User, UserPhoto or UserQuestionnaire objects in a range from the database. 
     public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -70,7 +76,7 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    // Obtains and returns the total number of User, UserPhoto or UserSurvey entities in the database.
+    // Obtains and returns the total number of User, UserPhoto or UserQuestionnaire entities in the database.
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<T> rt = cq.from(entityClass);

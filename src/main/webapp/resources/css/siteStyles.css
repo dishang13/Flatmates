@@ -210,19 +210,19 @@ Used in headerTemplate
     font-size: 12pt;
     color:white;                /* Text color */
     padding: 5px 10px;          /* Top Right Bottom Left */
-    border: 1px solid dodgerblue;
+    border: 1px solid maroon;
     border-radius:6px;
-    background: dodgerblue;
+    background: maroon;
 }
 .menu:focus { pointer-events:none; }
 .menu:focus .menu-dropdown { opacity:1; visibility:visible; }
 
 .menu-dropdown {
-    background: dodgerblue;
+    background: maroon;
     width: auto;
     margin:6px 20px 0 0;        /* Top Right Bottom Left = 20px on right same as in headerTemplate */
     padding: 10px;              /* Top Right Bottom Left */
-    border:1px dodgerblue solid;
+    border:1px maroon solid;
     border-radius:6px;
     pointer-events: auto;
     position: absolute;
@@ -244,8 +244,8 @@ Used in headerTemplate
 }
 
 .menu-dropdown a:hover {
-    background-color: lightskyblue;
-    color:black;
+    background-color: red;
+    color:white;
 }
 
 /*
@@ -568,11 +568,6 @@ Position the confirmation dialog box on the center of the screen per
 .ui-fileupload-content {
     /* The drag-and-drop area height will increase as more files are dropped */
     min-height: 200px;
-}
-
-/* Style p:selectOneRadio circle icons to be left justified */
-.ui-radiobutton {
-    float: left;
 }
 
 /*

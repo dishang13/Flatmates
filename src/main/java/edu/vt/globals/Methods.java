@@ -4,9 +4,9 @@
  */
 package edu.vt.globals;
 
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import java.util.Map;
 
 /*
 This class is created to provide Convenience Class Methods (typed with the "static" keyword")

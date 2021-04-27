@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Osman Balci on 2021.2.27
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Questionnaire Details" />
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:97%">
+
+                <h1>Details of the BEVQ Questionnaire Taken on </h1>
+                <h1>
+                    <h:outputText value="#{userQuestionnaireController.selected.getDateEntered()}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </h1>
+                <br />
+                <h:form id="resultsForm">
+
+                    <p:dataTable id="datalist" value="#{userQuestionnaireController.bevqItems}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.categoryNumber}"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20"
+                                 class="dataTable" >
+
+                        <!-- 
+                        ***********************
+                        *   Category Number   *
+                        ***********************
+                        Category Number 16 is the last row showing the total values. Therefore,
+                        we do not show the values of some columns if it is the last totals row.
+                        -->
+                        <p:column headerText="Category Number" style="width:40px;text-align:center;" 
+                                  exportFunction="#{userQuestionnaireController.convertIntToString(item.categoryNumber)}">
+                            <!-- Render the row value of this column if it is not the last totals row  -->
+                            <p:row rendered="#{item.categoryNumber ne 16}">
+                                <h:outputText class="standardText" value="#{item.categoryNumber}"/>
+                            </p:row>
+                        </p:column>
+
+                        <!-- 
+                        **********************
+                        *   Category Image   *
+                        **********************
+                        -->
+                        <p:column exportable="false" headerText="Category Image" style="width:100px;" >
+                            <div align="center">
+                                <p:row rendered="#{item.categoryNumber ne 16}">
+                                    <h:graphicImage value="/resources/images/category/category#{item.categoryNumber}.png" />
+                                </p:row>
+                            </div>
+                        </p:column>                    
+
+                        <!-- 
+                        *********************
+                        *   Category Name   *
+                        *********************
+                        -->
+                        <p:column headerText="Category Name" style="width:120px;text-align:center;" 
+                                  exportFunction="#{item.getCategoryName()}">
+                            <h:outputText class="standardText" value="#{item.categoryName}"/>
+                        </p:column>
+
+                        <!-- 
+                        ***********************
+                        *   How Often Title   *
+                        ***********************
+                        -->
+                        <p:column headerText="How Often Title" style="width:80px;text-align:center;" 
+                                  exportFunction="#{item.getHowOftenTitle()}">
+                            <h:outputText class="standardText" value="#{item.howOftenTitle}"/>
+                        </p:column>
+
+                        <!-- 
+                        *************************
+                        *   Frequency Per Day   *
+                        *************************
+                        -->
+                        <p:column headerText="Frequency Per Day" style="width:50px;text-align:center;" 
+                                  exportFunction="#{userQuestionnaireController.convertDoubleToString(item.frequencyPerDay)}">
+                            <!-- Render the row value of this column if it is not the last totals row  -->
+                            <p:row rendered="#{item.categoryNumber ne 16}">
+                                <h:outputText class="standardText" value="#{item.frequencyPerDay}"/>
+                            </p:row>
+                        </p:column>
+
+                        <!-- 
+                        **********************
+                        *   How Much Title   *
+                        **********************
+                        -->
+                        <p:column headerText="How Much Title" style="width:80px;text-align:center;" 
+                                  exportFunction="#{item.getHowMuchTitle()}">
+                            <!-- escape="false" enables to show HTML tags like &frac34; and 1&frac12; -->
+                            <h:outputText escape="false" class="standardText" value="#{item.howMuchTitle}"/>
+                        </p:column>
+
+                        <!-- 
+                        ***************************
+                        *   Fluid Ounce Per Day   *
+                        ***************************
+                        -->
+                        <p:column headerText="Fluid Ounce Per Day" style="width:30px;text-align:center;" 
+                                  exportFunction="#{userQuestionnaireController.convertDoubleToString(item.fluidOuncePerDay)}">
+                            <!-- Render the row value of this column if it is not the last totals row  -->
+                            <p:row rendered="#{item.categoryNumber ne 16}">
+                                <h:outputText class="standardText" value="#{item.fluidOuncePerDay}"/>
+                            </p:row>
+                        </p:column>
+
+                        <!-- 
+                        ***********************
+                        *   Options / Other   *
+                        ***********************
+                        -->
+                        <p:column headerText="Options / Other" style="width:100px;text-align:center;" 
+                                  exportFunction="#{item.getOptionsOther()}">
+                            <!-- escape="false" enables to show HTML tags like &frac34; and 1&frac12; -->
+                            <h:outputText escape="false" class="standardText" value="#{item.optionsOther}"/>
+                        </p:column>                    
+
+                        <!-- 
+                        ************************************************
+                        *   Average Daily Consumption in Fluid Ounce   *
+                        ************************************************
+                        -->
+                        <p:column headerText="Average Daily Consumption in Fluid Ounce" style="width:80px;text-align:center;" 
+                                  exportFunction="#{userQuestionnaireController.convertDoubleToString(item.averageDailyConsumptionInFluidOunce)}">
+                            <h:outputText class="standardText" value="#{item.averageDailyConsumptionInFluidOunce}"/>
+                        </p:column>
+
+                        <!-- 
+                        ***********************************************
+                        *   Caloric Density in Kcal Per Fluid Ounce   *
+                        ***********************************************
+                        -->
+                        <p:column headerText="Caloric Density in Kcal Per Fluid Ounce" style="width:50px;text-align:center;" 
+                                  exportFunction="#{userQuestionnaireController.convertDoubleToString(item.caloricDensityInKcalPerFluidOunce)}">
+                            <!-- Render the row value of this column if it is not the last totals row  -->
+                            <p:row rendered="#{item.categoryNumber ne 16}">
+                                <h:outputText class="standardText" value="#{item.caloricDensityInKcalPerFluidOunce}"/>
+                            </p:row>
+                        </p:column>
+
+                        <!-- 
+                        ********************************************
+                        *   Average Daily Caloric Intake in Kcal   *
+                        ********************************************
+                        -->
+                        <p:column headerText="Average Daily Caloric Intake in Kcal" style="width:80px;text-align:center;" 
+                                  exportFunction="#{userQuestionnaireController.convertDoubleToString(item.averageDailyCaloricIntakeInKcal)}">
+                            <h:outputText class="standardText" value="#{item.averageDailyCaloricIntakeInKcal}"/>
+                        </p:column>
+
+                        <!-- 
+                        ****************************************
+                        *** FOOTER Section of the Data Table ***
+                        ****************************************
+                        -->
+                        <f:facet name="footer">
+
+                            <p:commandButton value="Export as PDF" icon="fas fa-file-pdf" ajax="false">
+                                <!-- 
+                                PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                                itext-2.1.7.jar must be added to the Libraries folder. 
+                                Pre-process the PDF file to be in Landscape orientation on Letter size paper.
+                                -->
+                                <p:dataExporter type="pdf" target="datalist" fileName="Bevq" preProcessor="#{questionnaireManager.preProcessPDF}"/>
+                            </p:commandButton>
+                            &nbsp;
+                            <p:commandButton value="Export as Excel" icon="fas fa-file-excel" ajax="false">
+                                <!-- 
+                                PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                poi-3.15.jar must be added to the Libraries folder. 
+                                -->
+                                <p:dataExporter type="xls" target="datalist" fileName="Bevq" />
+                            </p:commandButton>
+                            &nbsp;
+                            <p:commandButton value="Export as CSV" icon="fas fa-file" ajax="false">
+                                <!-- 
+                                PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                poi-3.15.jar must be added to the Libraries folder. 
+                                -->
+                                <p:dataExporter type="csv" target="datalist" fileName="Bevq" />
+                            </p:commandButton>
+                            &nbsp;
+                            <!-- Clicking the Cancel button shows the Profile page -->
+                            <p:button outcome="/userQuestionnaire/QuestionnairesTaken" value="Questionnaires Taken" icon="fas fa-arrow-left"  />
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:form>
+
+            </div>
+            <br/>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
