@@ -13,8 +13,8 @@ import javax.persistence.PersistenceContext;
 public class UserFacade extends AbstractFacade<User> {
     /*
     ---------------------------------------------------------------------------------------------
-    Annotating 'private EntityManager em;' with '@PersistenceContext(unitName = "BevQPU")' 
-    implies that the EntityManager instance pointed to by 'em' is associated with the 'BevQPU'
+    Annotating 'private EntityManager em;' with '@PersistenceContext(unitName = "FlatmatesPU")' 
+    implies that the EntityManager instance pointed to by 'em' is associated with the 'FlatmatesPU'
     persistence context. The persistence context is a set of entity (User) instances in which for
     any persistent entity (User) identity, there is a unique entity (User) instance.
     Within the persistence context, the entity (User) instances and their life cycle are managed.
@@ -22,7 +22,7 @@ public class UserFacade extends AbstractFacade<User> {
     to find entities by their primary key, and to query over entities (Users).
     ---------------------------------------------------------------------------------------------
      */
-    @PersistenceContext(unitName = "BevQ-ValotiaPU")
+    @PersistenceContext(unitName = "FlatmatesPU")
     private EntityManager em;
 
     // @Override annotation indicates that the super class AbstractFacade's getEntityManager() method is overridden.

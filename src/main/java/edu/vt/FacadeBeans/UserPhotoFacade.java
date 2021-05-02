@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserPhotoFacade extends AbstractFacade<UserPhoto> {
 
-    @PersistenceContext(unitName = "BevQ-ValotiaPU")
+    @PersistenceContext(unitName = "FlatmatesPU")
     private EntityManager em;
 
     // @Override annotation indicates that the super class AbstractFacade's getEntityManager() method is overridden.

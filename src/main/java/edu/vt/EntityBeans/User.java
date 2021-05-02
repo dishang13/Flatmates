@@ -138,8 +138,8 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "userId")
     private Collection<UserPhoto> userPhotoCollection;
 
-    @OneToMany(mappedBy = "userId")
-    private Collection<UserQuestionnaire> userQuestionnaireCollection;
+//    @OneToMany(mappedBy = "userId")
+//    private Collection<UserQuestionnaire> userQuestionnaireCollection;
 
     /*
     ============================================================
@@ -301,13 +301,13 @@ public class User implements Serializable {
         this.userPhotoCollection = userPhotoCollection;
     }
 
-    public Collection<UserQuestionnaire> getUserQuestionnaireCollection() {
-        return userQuestionnaireCollection;
-    }
-
-    public void setUserQuestionnaireCollection(Collection<UserQuestionnaire> userQuestionnaireCollection) {
-        this.userQuestionnaireCollection = userQuestionnaireCollection;
-    }
+//    public Collection<UserQuestionnaire> getUserQuestionnaireCollection() {
+//        return userQuestionnaireCollection;
+//    }
+//
+//    public void setUserQuestionnaireCollection(Collection<UserQuestionnaire> userQuestionnaireCollection) {
+//        this.userQuestionnaireCollection = userQuestionnaireCollection;
+//    }
 
     /*
     ================
