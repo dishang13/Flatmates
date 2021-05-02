@@ -27,13 +27,13 @@ CREATE TABLE User (
 	security_question_number INT NOT NULL,  /* Refers to the number of the selected security question */
 	security_answer varchar(128) NOT NULL,
 	email varchar(128) NOT NULL,
-	phone INT UNSIGNED,
-	pet_owned varchar(20) NOT NULL,
-	eating_pref varchar(20) NOT NULL,
-	smoking_pref varchar(20) NOT NULL,
-	alcohol_pref varchar(20) NOT NULL,
-	sleep_pref varchar(20) NOT NULL,
-	social_pref varchar(20) NOT NULL,
+	phone varchar(20),
+    pet_owned_number INT NOT NULL ,
+    eating_pref_number INT NOT NULL,
+    smoking_pref_number INT NOT NULL,
+    alcohol_pref_number INT NOT NULL,
+    sleep_pref_number INT NOT NULL,
+    social_pref_number INT NOT NULL,
 	PRIMARY KEY (id)
 );
 

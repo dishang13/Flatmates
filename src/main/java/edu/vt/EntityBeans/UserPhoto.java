@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-// The @Entity annotation designates this class as a JPA Entity class representing the UserPhoto table in the BevqDB database.
+// The @Entity annotation designates this class as a JPA Entity class representing the UserPhoto table in the FlatmatesDB database.
 @Entity
 
 // Name of the database table represented
@@ -43,7 +43,7 @@ public class UserPhoto implements Serializable {
     /*
     ========================================================
     Instance variables representing the attributes (columns)
-    of the UserPhoto table in the BevqDB database.
+    of the UserPhoto table in the FlatmatesDB database.
     ========================================================
      */
     private static final long serialVersionUID = 1L;
@@ -71,7 +71,7 @@ public class UserPhoto implements Serializable {
     /*
     =================================================================
     Class constructors for instantiating a UserPhoto entity object to
-    represent a row in the UserPhoto table in the BevqDB database.
+    represent a row in the UserPhoto table in the FlatmatesDB database.
     =================================================================
      */
     public UserPhoto() {
@@ -95,7 +95,7 @@ public class UserPhoto implements Serializable {
     /*
     ======================================================
     Getter and Setter methods for the attributes (columns)
-    of the UserPhoto table in the BevqDB database.
+    of the UserPhoto table in the FlatmatesDB database.
     ======================================================
      */
     public Integer getId() {
@@ -193,11 +193,11 @@ public class UserPhoto implements Serializable {
     }
 
     public String getPhotoFilePath() {
-        return Constants.PHOTOS_ABSOLUTE_PATH + getPhotoFilename();
+        return Constants.USER_PHOTOS_ABSOLUTE_PATH + getPhotoFilename();
     }
 
     public String getThumbnailFilePath() {
-        return Constants.PHOTOS_ABSOLUTE_PATH + getThumbnailFileName();
+        return Constants.USER_PHOTOS_ABSOLUTE_PATH + getThumbnailFileName();
     }
 
 }

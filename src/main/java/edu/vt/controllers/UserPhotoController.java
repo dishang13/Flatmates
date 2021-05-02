@@ -243,7 +243,7 @@ public class UserPhotoController implements Serializable {
             inputStream.read(buffer);
 
             // Create a new empty file with the given name targetFilename in the UserPhotoStorage directory
-            targetFile = new File(Constants.PHOTOS_ABSOLUTE_PATH, targetFilename);
+            targetFile = new File(Constants.USER_PHOTOS_ABSOLUTE_PATH, targetFilename);
 
             // A file OutputStream is an output stream for writing data to a file
             OutputStream outStream;
@@ -300,7 +300,7 @@ public class UserPhotoController implements Serializable {
             BufferedImage thumbnailPhoto = Scalr.resize(uploadedPhoto, Constants.THUMBNAIL_SIZE);
 
             // Create the thumbnail photo file in the UserPhotoStorage directory
-            File thumbnailPhotoFile = new File(Constants.PHOTOS_ABSOLUTE_PATH, inputPhoto.getThumbnailFileName());
+            File thumbnailPhotoFile = new File(Constants.USER_PHOTOS_ABSOLUTE_PATH, inputPhoto.getThumbnailFileName());
 
             /*
             NOTE: ImageIO is imported as: import javax.imageio.ImageIO;

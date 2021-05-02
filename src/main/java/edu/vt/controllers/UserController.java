@@ -82,6 +82,14 @@ public class UserController implements Serializable {
     private String answerToSecurityQuestion;
 
     private String email;
+    private String phone;
+
+    private int petOwnedNumber;
+    private int eatingPrefNumber;
+    private int smokingPrefNumber;
+    private int alcoholPrefNumber;
+    private int sleepPrefNumber;
+    private int socialPrefNumber;
 
     private Map<String, Object> security_questions;
 
@@ -228,31 +236,87 @@ public class UserController implements Serializable {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getPetOwnedNumber() {
+        return petOwnedNumber;
+    }
+
+    public void setPetOwnedNumber(int petOwnedNumber) {
+        this.petOwnedNumber = petOwnedNumber;
+    }
+
+    public int getEatingPrefNumber() {
+        return eatingPrefNumber;
+    }
+
+    public void setEatingPrefNumber(int eatingPrefNumber) {
+        this.eatingPrefNumber = eatingPrefNumber;
+    }
+
+    public int getSmokingPrefNumber() {
+        return smokingPrefNumber;
+    }
+
+    public void setSmokingPrefNumber(int smokingPrefNumber) {
+        this.smokingPrefNumber = smokingPrefNumber;
+    }
+
+    public int getAlcoholPrefNumber() {
+        return alcoholPrefNumber;
+    }
+
+    public void setAlcoholPrefNumber(int alcoholPrefNumber) {
+        this.alcoholPrefNumber = alcoholPrefNumber;
+    }
+
+    public int getSleepPrefNumber() {
+        return sleepPrefNumber;
+    }
+
+    public void setSleepPrefNumber(int sleepPrefNumber) {
+        this.sleepPrefNumber = sleepPrefNumber;
+    }
+
+    public int getSocialPrefNumber() {
+        return socialPrefNumber;
+    }
+
+    public void setSocialPrefNumber(int socialPrefNumber) {
+        this.socialPrefNumber = socialPrefNumber;
+    }
+
     /*
-    --------------------------------------------------------------------------------
-    private Map<String, Object> security_questions;
-        String      int
-        ---------   ---
-        question1,  0
-        question2,  1
-        question3,  2
-            :
-    When the user selects a security question, its number (int) is stored; 
-    not its String value. Later, given the number (int), the security question 
-    String is obtained from the constant array QUESTIONS given in Constants.java.
-    
-    DESIGN STRATEGY:
-        Typically, software quality characteristics Performance and Maintainability
-        conflict with each other. Here, we choose to improve Performance at the 
-        expense of degrading Maintainability.
-    
-        Storage and retrieval of an integer number into/from database is much faster
-        than doing it for the security question as a String. However, this degrades
-        maintainability. In the future, changing the order, deleting or adding 
-        security questions will invalidate the number representation. Therefore,
-        we can only add new security questions, but not delete or change order.
-    --------------------------------------------------------------------------------
-     */
+        --------------------------------------------------------------------------------
+        private Map<String, Object> security_questions;
+            String      int
+            ---------   ---
+            question1,  0
+            question2,  1
+            question3,  2
+                :
+        When the user selects a security question, its number (int) is stored;
+        not its String value. Later, given the number (int), the security question
+        String is obtained from the constant array QUESTIONS given in Constants.java.
+
+        DESIGN STRATEGY:
+            Typically, software quality characteristics Performance and Maintainability
+            conflict with each other. Here, we choose to improve Performance at the
+            expense of degrading Maintainability.
+
+            Storage and retrieval of an integer number into/from database is much faster
+            than doing it for the security question as a String. However, this degrades
+            maintainability. In the future, changing the order, deleting or adding
+            security questions will invalidate the number representation. Therefore,
+            we can only add new security questions, but not delete or change order.
+        --------------------------------------------------------------------------------
+         */
     public Map<String, Object> getSecurity_questions() {
 
         if (security_questions == null) {
@@ -423,6 +487,13 @@ public class UserController implements Serializable {
             newUser.setSecurityAnswer(answerToSecurityQuestion);
             newUser.setEmail(email);
             newUser.setUsername(username);
+            newUser.setPhone(phone);
+            newUser.setPetOwnedNumber(petOwnedNumber);
+            newUser.setEatingPrefNumber(eatingPrefNumber);
+            newUser.setSmokingPrefNumber(smokingPrefNumber);
+            newUser.setAlcoholPrefNumber(alcoholPrefNumber);
+            newUser.setSleepPrefNumber(sleepPrefNumber);
+            newUser.setSocialPrefNumber(socialPrefNumber);
 
             //-------------------------------------------------------------------------------------
             // Convert the user-entered String password to a String containing the following parts
@@ -482,6 +553,14 @@ public class UserController implements Serializable {
             editUser.setState(this.selected.getState());
             editUser.setZipcode(this.selected.getZipcode());
             editUser.setEmail(this.selected.getEmail());
+            editUser.setPhone(this.selected.getPhone());
+
+            editUser.setPetOwnedNumber(this.selected.getPetOwnedNumber());
+            editUser.setEatingPrefNumber(this.selected.getEatingPrefNumber());
+            editUser.setSmokingPrefNumber(this.selected.getSmokingPrefNumber());
+            editUser.setAlcoholPrefNumber(this.selected.getAlcoholPrefNumber());
+            editUser.setSleepPrefNumber(this.selected.getSleepPrefNumber());
+            editUser.setSocialPrefNumber(this.selected.getSocialPrefNumber());
 
             // Store the changes in the database
             getUserFacade().edit(editUser);
@@ -626,7 +705,7 @@ public class UserController implements Serializable {
 
         if (photoList.isEmpty()) {
             // No user photo exists. Return defaultUserPhoto.png from the BevqPhotoStorage directory.
-            return Constants.PHOTOS_URI + "defaultUserPhoto.png";
+            return Constants.USER_PHOTOS_URI + "defaultUserPhoto.png";
         }
 
         /*
@@ -636,7 +715,7 @@ public class UserController implements Serializable {
          */
         String thumbnailFileName = photoList.get(0).getThumbnailFileName();
 
-        return Constants.PHOTOS_URI + thumbnailFileName;
+        return Constants.USER_PHOTOS_URI + thumbnailFileName;
     }
 
     /*

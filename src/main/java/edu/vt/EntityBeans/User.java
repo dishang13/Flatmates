@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-// The @Entity annotation designates this class as a JPA Entity class representing the User table in the BevqDB database.
+// The @Entity annotation designates this class as a JPA Entity class representing the User table in the FlatmatesDB database.
 @Entity
 
 // Name of the database table represented
@@ -50,7 +50,7 @@ public class User implements Serializable {
     /*
     ========================================================
     Instance variables representing the attributes (columns)
-    of the User table in the BevqDB database.
+    of the User table in the FlatmatesDB database.
     ========================================================
      */
     private static final long serialVersionUID = 1L;
@@ -104,13 +104,12 @@ public class User implements Serializable {
     @Column(name = "city")
     private String city;
 
+    // state was a reserved keyword in SQL in 1999, but not any more.
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "state")
     private String state;
-    
-    // state was a reserved keyword in SQL in 1999, but not any more.
 
     @Basic(optional = false)
     @NotNull
@@ -135,6 +134,41 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Basic(optional = false)
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "pet_owned_number")
+    private int petOwnedNumber;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "eating_pref_number")
+    private int eatingPrefNumber;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "smoking_pref_number")
+    private int smokingPrefNumber;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "alcohol_pref_number")
+    private int alcoholPrefNumber;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "sleep_pref_number")
+    private int sleepPrefNumber;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "social_pref_number")
+    private int socialPrefNumber;
+
     @OneToMany(mappedBy = "userId")
     private Collection<UserPhoto> userPhotoCollection;
 
@@ -144,7 +178,7 @@ public class User implements Serializable {
     /*
     ============================================================
     Class constructors for instantiating a User entity object to
-    represent a row in the User table in the BevqDB database.
+    represent a row in the User table in the FlatmatesDB database.
     ============================================================
      */
     public User() {
@@ -154,9 +188,11 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String username, String password, String firstName, String middleName, 
-            String lastName, String address1, String address2, String city, String state,
-            String zipcode, int securityQuestionNumber, String securityAnswer, String email) {
+    public User(Integer id, String username, String password, String firstName, String middleName,
+                String lastName, String address1, String address2, String city, String state,
+                String zipcode, int securityQuestionNumber, String securityAnswer, String email,
+                String phone, int petOwnedNumber, int eatingPrefNumber, int smokingPrefNumber,
+                int alcoholPrefNumber, int sleepPrefNumber, int socialPrefNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -171,12 +207,19 @@ public class User implements Serializable {
         this.securityQuestionNumber = securityQuestionNumber;
         this.securityAnswer = securityAnswer;
         this.email = email;
+        this.phone = phone;
+        this.petOwnedNumber = petOwnedNumber;
+        this.eatingPrefNumber = eatingPrefNumber;
+        this.smokingPrefNumber = smokingPrefNumber;
+        this.alcoholPrefNumber = alcoholPrefNumber;
+        this.sleepPrefNumber = sleepPrefNumber;
+        this.socialPrefNumber = socialPrefNumber;
     }
 
     /*
     ======================================================
     Getter and Setter methods for the attributes (columns)
-    of the User table in the BevqDB database.
+    of the User table in the FlatmatesDB database.
     ======================================================
      */
     public Integer getId() {
@@ -289,6 +332,62 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getPetOwnedNumber() {
+        return petOwnedNumber;
+    }
+
+    public void setPetOwnedNumber(int petOwnedNumber) {
+        this.petOwnedNumber = petOwnedNumber;
+    }
+
+    public int getEatingPrefNumber() {
+        return eatingPrefNumber;
+    }
+
+    public void setEatingPrefNumber(int eatingPrefNumber) {
+        this.eatingPrefNumber = eatingPrefNumber;
+    }
+
+    public int getSmokingPrefNumber() {
+        return smokingPrefNumber;
+    }
+
+    public void setSmokingPrefNumber(int smokingPrefNumber) {
+        this.smokingPrefNumber = smokingPrefNumber;
+    }
+
+    public int getAlcoholPrefNumber() {
+        return alcoholPrefNumber;
+    }
+
+    public void setAlcoholPrefNumber(int alcoholPrefNumber) {
+        this.alcoholPrefNumber = alcoholPrefNumber;
+    }
+
+    public int getSleepPrefNumber() {
+        return sleepPrefNumber;
+    }
+
+    public void setSleepPrefNumber(int sleepPrefNumber) {
+        this.sleepPrefNumber = sleepPrefNumber;
+    }
+
+    public int getSocialPrefNumber() {
+        return socialPrefNumber;
+    }
+
+    public void setSocialPrefNumber(int socialPrefNumber) {
+        this.socialPrefNumber = socialPrefNumber;
     }
 
     // The @XmlTransient annotation is used to resolve potential name collisions

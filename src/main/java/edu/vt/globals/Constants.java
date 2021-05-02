@@ -34,10 +34,17 @@ public final class Constants {
     Unix (macOS) or Linux:
      */
     // To run locally
-//    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/Balci/DocRoot/BevqPhotoStorage/";
+    // Dishang's Paths
+    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
+
+    // Siva's Paths
+//    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+//    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
 
     // To run on your AWS EC2 instance
-    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/BevqPhotoStorage/";
+//    public static final String USER_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+//    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
 
     /*
      ---------------------------------
@@ -65,10 +72,12 @@ public final class Constants {
      http://localhost:8080/bevqphotos/p displays photo file p from /Users/Balci/DocRoot/BevqPhotoStorage/
      */
     // To run locally
-//    public static final String PHOTOS_URI = "http://localhost:8080/bevqphotos/";
+    public static final String USER_PHOTOS_URI = "http://localhost:8080/flatmatesuserphotos/";
+    public static final String APARTMENT_PHOTOS_URI = "http://localhost:8080/flatmatesapartmentphotos/";
 
     // To run on your AWS EC2 instance with your IP address
-    public static final String PHOTOS_URI = "http://3.236.179.184:8080/bevqphotos/";
+//    public static final String USER_PHOTOS_URI = "http://3.236.179.184:8080/flatmatesuserphotos/";
+//    public static final String APARTMENT_PHOTOS_URI = "http://3.236.179.184:8080/flatmatesapartmentphotos/";
 
     /* 
     ==================================================
