@@ -72,23 +72,29 @@
                         -->
                         <div tabindex="0" class="menu" style="float:right;padding-right:20px;">
                             <div class="menu-dropdown" style="right:0;">
+                                <!--
+                                ===========================
+                                |   Common Menu Options   |
+                                ===========================
+                                -->
 
                                 <h:link outcome="/index" class="standardText">
                                     <i class="fas fa-home" />&nbsp;Home
                                 </h:link>
 
+                                <!-- Clicking "Search Apartments" displays the ListApartments.xhtml file -->
+                                <h:link outcome="/apartment/ListApartments" class="standardText" >
+                                    <i class="fas fa-pencil-alt" />&nbsp;Search Apartments
+                                </h:link>
                                 <!-- 
                                 ===========================================
                                 |   Menu Options IF a User is Signed In   |
                                 ===========================================
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
-                                    <h:link outcome="/userQuestionnaire/TakeQuestionnaire" class="standardText" >
-                                        <i class="fas fa-pencil-alt" />&nbsp;Take Questionnaire
-                                    </h:link>
-                                    
-                                    <h:link outcome="/userQuestionnaire/QuestionnairesTaken" class="standardText" >
-                                        <i class="fas fa-check" />&nbsp;Questionnaires Taken
+                                    <!-- Clicking "My Apartments" displays the UsersApartments.xhtml file -->
+                                    <h:link outcome="/apartment/UsersApartments" class="standardText" >
+                                        <i class="fas fa-check" />&nbsp;My Apartments
                                     </h:link>
 
                                     <!-- Clicking "My Account" displays the Profile.xhtml file -->
@@ -114,6 +120,11 @@
                                 ============================================
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == false}">
+                                    <!-- Clicking "Add a Listing" displays the SignIn.xhtml file TODO ordering -->
+                                    <h:link outcome="/SignIn" class="standardText" >
+                                        <i class="fas fa-check" />&nbsp;Add a Listing
+                                    </h:link>
+
                                     <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
                                     <h:link outcome="/SignIn" class="standardText">
                                         <i class="fas fa-sign-in-alt" />&nbsp;Sign In
@@ -123,24 +134,8 @@
                                     <h:link outcome="/userAccount/CreateAccount" class="standardText">
                                         <i class="fas fa-user-plus" />&nbsp;Create an Account
                                     </h:link>
-                                    
-                                    <h:link outcome="/SignIn" class="standardText">
-                                        <i class="fas fa-pencil-alt" />&nbsp;Take Questionnaire
-                                    </h:link>
+
                                 </c:if>
-
-                                <!-- 
-                                ===========================
-                                |   Common Menu Options   |
-                                ===========================
-                                -->
-                                <h:link outcome="/UserGuide" class="standardText">
-                                    <i class="fas fa-book" />&nbsp;User Guide
-                                </h:link>
-
-                                <h:link outcome="/About" class="standardText">
-                                    <i class="fas fa-info-circle" />&nbsp;About
-                                </h:link>
                             </div>
                         </div>
                     </td>

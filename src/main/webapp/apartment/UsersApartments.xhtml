@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Dishang Rajendra Valotia on 2021.3.12
+  - Copyright © 2021 Dishang Rajendra Valotia. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="My Apartments" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <!-- In case of JSF validation error, set 'selected' to null in apartmentController -->
+        <c:if test="#{facesContext.validationFailed}">
+            ${apartmentController.unselect()}
+        </c:if>
+
+        <!-- Set 'selected' to null in apartmentController when the user refreshes / reloads this JSF page -->
+        <f:metadata>
+            <f:viewAction action="#{apartmentController.unselect()}" rendered="#{facesContext.postBack}" />
+        </f:metadata>
+
+        <div align="center" style="width:97%">
+
+            <h:form id="UsersApartmentListForm">
+                <p:panel header="My Apartments">
+
+                    <p:dataTable id="datalist" value="#{apartmentController.items}" var="item"
+                                 selectionMode="single" selection="#{apartmentController.selected}"
+                                 reflow="true"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,20,30,50,70,90"
+                                 class="dataTable"
+                    >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+<!--                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton playButton shareButton "/>-->
+<!--                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton playButton shareButton "/>-->
+
+                        <!--
+                        Clicking the header of a column with 'sortBy' redisplays the table with that
+                        column sorted in alphabetical order A to Z or numerically in ascending order.
+                        Clicking it again reverses the order to Z to A or numerically in descending order.
+                        -->
+
+                        <!--
+                        ************************
+                        *    User Video Id   *
+                        ************************
+                        -->
+                        <p:column headerText="Id" style="width:20px;">
+                            <div align="center">
+                                <h:outputText class="inputTextField" value="#{item.id}"/>
+                            </div>
+                        </p:column>
+
+                        <!--
+                        ***************************
+                        *    User Video Title   *
+                        ***************************
+                        -->
+                        <p:column sortBy="#{item.name}" headerText="Title" style="width:100px;">
+                            <h:outputText class="inputTextField" value="#{item.name}"/>
+                        </p:column>
+
+<!--                         &lt;!&ndash;-->
+<!--                        *******************************-->
+<!--                        *    User Video Thumbnail   *-->
+<!--                        *******************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:column headerText="Thumbnail" style="align-content: center; width:80px;">-->
+<!--                            <img src="https://i1.ytimg.com/vi/#{item.youtubeVideoId}/hqdefault.jpg"-->
+<!--                                 alt="Thumbnail" class="scalableImage"/>-->
+<!--                        </p:column>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *    User Video Description  *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:column headerText="Description" style="width:250px;">-->
+<!--                            <h:outputText class="inputTextField" value="#{item.description}"/>-->
+<!--                        </p:column>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *    User Video Duration  *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:column sortBy="#{item.duration}" headerText="Duration" style="width:80px;">-->
+<!--                            <div align="center">-->
+<!--                                <h:outputText class="inputTextField" value="#{item.duration}"/>-->
+<!--                            </div>-->
+<!--                        </p:column>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *    User Video Date Published  *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:column sortBy="#{item.datePublished}" headerText="Date Published" style="width:100px;">-->
+<!--                            <div align="center">-->
+<!--                                <h:outputText class="inputTextField" value="#{item.datePublished}">-->
+<!--                                    &lt;!&ndash; Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0&ndash;&gt;-->
+<!--                                    <f:convertDateTime pattern="MM/dd/yyyy" />-->
+<!--                                </h:outputText>-->
+<!--                            </div>-->
+<!--                        </p:column>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *    User Video Category  *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:column sortBy="#{item.category}" headerText="Category" style="width:80px;">-->
+<!--                            <div align="center">-->
+<!--                                <h:outputText class="inputTextField" value="#{item.category}"/>-->
+<!--                            </div>-->
+<!--                        </p:column>-->
+
+                        <!--
+                        ********************************
+                        *    User ID  *
+                        ********************************
+                        -->
+                        <p:column headerText="UserId" style="width:80px;">
+                            <div align="center">
+                                <h:outputText class="inputTextField" value="#{item.userId}"/>
+                            </div>
+                        </p:column>
+
+                        <br /><br />
+
+                        <!--
+                        The "footer" facet is defined for p:dataTable. See PrimeFaces User Guide.
+                        -->
+
+                        <f:facet name="footer">
+                            <!-- ADD AN APARTMENT button -->
+                            <p:commandButton id="createButton" icon="fas fa-plus" value="Add an Apartment"
+                                             actionListener="#{apartmentController.prepareCreate()}"
+                                             action="/apartment/AddApartment?faces-redirect=true" />
+
+                            <!-- VIEW button -->
+                            <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
+                                             update=":ApartmentViewDlg" oncomplete="PF('ApartmentViewDlg').show()"
+                                             disabled="#{empty apartmentController.selected}"/>
+
+                            <!-- EDIT button -->
+                            <p:commandButton id="editButton" icon="fas fa-edit" value="Edit"
+                                             update=":ApartmentEditDlg" oncomplete="PF('ApartmentEditDialog').show()"
+                                             disabled="#{empty apartmentController.selected}"/>
+
+                            <!-- **********************************************
+                            Display a Confirmation dialog for the DELETE button
+                            *********************************************** -->
+                            <p:commandButton id="deleteButton" icon="fas fa-trash-alt"  value="Delete"
+                                             actionListener="#{apartmentController.delete}"
+                                             update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                             disabled="#{empty apartmentController.selected}">
+
+                                <p:confirm header="Confirmation"
+                                           message="Are you sure you want to permanently delete the selected apartment from the database?"
+                                           icon="fas fa-exclamation-triangle fa-2x" />
+                            </p:commandButton>
+
+                            <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade" >
+                                <div align="center">
+                                    <!-- The value of the first button listed below will be shown as
+                                    highlighted (default action) when displayed -->
+                                    <p:commandButton value="No" type="button"
+                                                     class="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                    &nbsp;
+                                    <p:commandButton value="Yes" type="button"
+                                                     class="ui-confirmdialog-yes" icon="fas fa-check-square" />
+                                </div>
+                            </p:confirmDialog>
+                            <!-- *******************************************
+                            End of Display of the DELETE Confirmation dialog
+                            ******************************************** -->
+
+                        </f:facet>
+
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+        </div>
+
+        <!--
+        Clicking the View button displays the included
+        ViewApartment.xhtml file in a dialog box on top of this page.
+        -->
+        <ui:include src="/apartment/ViewApartment.xhtml"/>
+
+        <!--
+        Clicking the Edit button displays the included
+        Edit.xhtml file in a dialog box on top of this page.
+        -->
+        <ui:include src="/apartment/EditApartment.xhtml"/>
+
+    </ui:define>
+
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

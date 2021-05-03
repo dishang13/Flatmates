@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Osman Balci on 2021.2.17
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Add an Apartment" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <div align="center" style="width:97%">
+
+            <h1>Add a New Apartment</h1>
+            <br />
+            <h:form id="ApartmentCreateForm" class="ui-datatable-data">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >
+
+                        <!--
+                        When the user clicks the CREATE button in List.xhtml, actionListener="#{apartmentController.prepareCreate}"
+                        executes the prepareCreate method in which a new Apartment object is instantiated and its object reference
+                        is stored in the "selected" instance variable. Thus, "selected" points to a newly created Apartment object
+                        with property (instance variable) values set to empty or null. The inputText data fields below are
+                        intended to assign user-provided values to the properties.
+                        -->
+                        <p:outputLabel value="Apartment Name:" for="name" />
+                        <!-- The entered value is set to be the selected new apartment object's property 'name'  -->
+                        <p:inputText id="name" class="dataFields" value="#{apartmentController.selected.name}"
+                                     placeholder="Enter Apartment Name" required="true"
+                                     requiredMessage="The Apartment Name field is required."/>
+
+                        <p:outputLabel value="Address Line 1:" for="address1" />
+                        <p:inputText id="address1" value="#{apartmentController.selected.address1}" required="true" class="inputTextField"
+                                     requiredMessage="The Address Line 1 field is required." >
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Address Line 2:" for="address2" />
+                        <p:inputText id="address2" value="#{apartmentController.selected.address2}" class="inputTextField">
+                        </p:inputText>
+
+                        <p:outputLabel value="City:" for="city" />
+                        <p:inputText id="city" value="#{apartmentController.selected.city}" required="true" class="inputTextField"
+                                     requiredMessage="The City field is required." >
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="State:" for="state" />
+                        <h:selectOneMenu id="state" value="#{apartmentController.selected.state}" required="true">
+                            <!--
+                            List of U.S. state postal codes is iterated over
+                            to display the list for the user to select one.
+                            -->
+                            <f:selectItems value="#{apartmentController.listOfStates()}" var="state"
+                                           itemLabel="#{state}" itemValue="#{state}" />
+                        </h:selectOneMenu>
+
+                        <p:outputLabel value="Rent per Month:" for="rent" />
+                        <!--
+                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.
+                        *****************************************************************
+                        *   mask="9?99999"   min=1 & max=999999 )   *
+                        *****************************************************************
+                        9 ==> indicates a digit 0 to 9.
+                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.
+                        Total number of 9s defines the maximum number of digits allowed.
+                        -->
+                        <p:inputMask id="rent" class="dataFields" value="#{apartmentController.selected.rent}"
+                                     required="true" requiredMessage="The Rent field is required."
+                                     mask="9?999999" >
+                            <p:watermark for="rent" value="Enter the Monthly Rent!" />
+                        </p:inputMask>
+
+                        <p:outputLabel value="Number of Bedrooms:" for="numBed" />
+                        <!--TODO
+                        Use mask to allow only digits 0 to 9 with minimum 3 and maximum 7 digits.
+                        *************************************************
+                        *   mask="999?9999"   min=100 & max=9,999,999)  *
+                        *************************************************
+                        9 ==> indicates a digit 0 to 9.
+                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.
+                        Total number of 9s defines the maximum number of digits allowed.
+                        -->
+                        <p:inputMask id="numBed" class="dataFields" value="#{apartmentController.selected.numBed}"
+                                     required="true" requiredMessage="The Number of Bedrooms field is required."
+                                     mask="9?99" >
+                            <p:watermark for="numBed" value="Enter Number of Bedrooms!" />
+                        </p:inputMask>
+
+                        <p:outputLabel value="Number of Bathrooms:" for="numBath" />
+                        <p:inputMask id="numBath" class="dataFields" value="#{apartmentController.selected.numBath}"
+                                     required="true" requiredMessage="The Number of Bathrooms field is required."
+                                     mask="9?99" >
+                            <p:watermark for="numBath" value="Enter Number of Bathrooms!" />
+                        </p:inputMask>
+
+                        <p:outputLabel value="Apartment Complex Website:" for="website" />
+                        <!-- The entered value is set to be the selected new apartment object's property 'website'  -->
+                        <p:inputText id="website" class="dataFields" value="#{apartmentController.selected.complexWebsite}"
+                                     placeholder="Enter Apartment's Home Website URL" required="true"
+                                     requiredMessage="The Apartment Complex Website field is required."/>
+
+                        <p:outputLabel value="Start Date:" for="startDate" />
+                        <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" title="Start Date"
+                                    pattern="dd/MM/yyyy"  required="true" mask="true"
+                                    requiredMessage="The Start Date field is required."/>
+
+                        <p:outputLabel value="End Date:" for="endDate" />
+                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}" title="End Date"
+                                    pattern="dd/MM/yyyy"  required="true" mask="true"
+                                    requiredMessage="The End Date field is required."/>
+
+
+                        <!-- Asterisk * indicates that the field is required and must have a value -->
+<!--                        <h:outputText value="Logo: *" class="facetHeader"/>-->
+<!--                        &lt;!&ndash;-->
+<!--                        Apartment's logo file is named as TICKER.png and is stored in external directory ApartmentLogosStorage-->
+<!--                        &ndash;&gt;-->
+<!--                        <h:graphicImage value="#{apartmentController.logoFileStoragePath()}#{apartmentController.selected.ticker}.png"-->
+<!--                                        class="apartmentLogo" />-->
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br /><br />
+                <h:panelGroup>
+                    <!--
+                    ===============================
+                    |   UPLOAD LOGO FILE Button   |
+                    ===============================
+
+                    <p:commandButton> renders a Submit action and therefore it must be specified within <h:form>.
+
+                    Asynchronous JavaScript and XML (AJAX):
+                        When <p:commandButton> Submits an asynchronous request from the client to the server,
+                        the server sends back a response that is used to update the JSF page.
+                        The term AJAX refers to this interaction between the client and server.
+
+                    The "ajax" attribute of <p:commandButton> specifies the Submit mode:
+                        ajax="true" (default)
+                            causes the Submit to be made with Ajax. This means that the server
+                            will send back a response that is used to update this JSF page.
+
+                        ajax="false" causes the Submit to be made without Ajax. This means that the server
+                            will NOT send back a response that is used to update this JSF page.
+
+                    The ajax="false" attribute causes the current page to be first rendered before showing the UploadFile page.
+
+                    During the rendering, each <p:inputText> data field with required="true" is tested if a value is entered.
+                    If a value is not entered, the requiredMessage attribute value of <p:inputText> is displayed as an error message.
+                    If all fields pass the required="true" test, then the UploadFile page is displayed.
+
+                    If we want the <p:commandButton> to perform its 'action' or 'actionListener' immediately
+                    without first rendering the current JSF page, we use the attribute immediate="true".
+                    -->
+<!--                    <p:commandButton value="Upload Logo File" action="/UploadFile?faces-redirect=true"-->
+<!--                                     icon="fas fa-upload" ajax="false"  />-->
+                    &nbsp;
+                    <!--
+                    ===================
+                    |   SAVE Button   |
+                    ===================
+
+                    The SAVE button becomes enabled AFTER apartment logo file is uploaded.
+                    The logo file can be uploaded only if the user entered values in all data fields.
+                    -->
+                    <p:commandButton value="Save" action="/apartment/UsersApartments"
+                                     actionListener="#{apartmentController.create()}"
+                                     icon="fas fa-save" ajax="false"
+                                      />
+<!--                                     disabled="#{apartmentController.isLogoFileUploaded() == false}" />-->
+                    &nbsp;
+
+                    <!--
+                    =================================
+                    |   Conditional CANCEL Button   |
+                    =================================
+                    The CANCEL button looks the same but has 2 different functionalities.
+                    -->
+                    <p:commandButton value="Cancel" action="#{apartmentController.cancel()}"
+                                     icon="fas fa-ban" ajax="false" immediate="true" />
+<!--                    <c:if test="#{apartmentController.isLogoFileUploaded() == false}">-->
+<!--                        &lt;!&ndash;-->
+<!--                        Call the cancel() method immediately without first rendering this JSF page.-->
+<!--                        The cancel() method will make the selected apartment object null and show the List page.-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:commandButton value="Cancel" action="#{apartmentController.cancel()}"-->
+<!--                                         icon="fas fa-ban" ajax="false" immediate="true" />-->
+<!--                    </c:if>-->
+<!--                    <c:if test="#{apartmentController.isLogoFileUploaded() == true}">-->
+<!--                        &lt;!&ndash;-->
+<!--                        Show the List page while executing the deleteLogoFile() method of the backing bean-->
+<!--                        apartmentController to delete the uploaded apartment logo file since it is being cancelled.-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:commandButton value="Cancel" action="/apartment/List"-->
+<!--                                         icon="fas fa-ban" ajax="false"-->
+<!--                                         actionListener="#{apartmentController.deleteLogoFile()}" />-->
+<!--                    </c:if>-->
+
+                </h:panelGroup>
+
+            </h:form>
+        </div>
+        <br /><br />
+    </ui:define>
+</ui:composition>
+</html>

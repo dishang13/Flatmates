@@ -8,19 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -48,7 +36,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Apartment.findByLatitude", query = "SELECT a FROM Apartment a WHERE a.latitude = :latitude"),
     @NamedQuery(name = "Apartment.findByLongitude", query = "SELECT a FROM Apartment a WHERE a.longitude = :longitude"),
     @NamedQuery(name = "Apartment.findByComplexWebsite", query = "SELECT a FROM Apartment a WHERE a.complexWebsite = :complexWebsite"),
-    @NamedQuery(name = "Apartment.findByPetsAllowed", query = "SELECT a FROM Apartment a WHERE a.petsAllowed = :petsAllowed")
+    @NamedQuery(name = "Apartment.findByPetsAllowed", query = "SELECT a FROM Apartment a WHERE a.petsAllowed = :petsAllowed"),
+    @NamedQuery(name = "Apartment.findByUserId", query = "SELECT a FROM Apartment a WHERE a.userId.id = :userId")
 })
 
 public class Apartment implements Serializable {
@@ -151,6 +140,11 @@ public class Apartment implements Serializable {
     @NotNull
     @Column(name = "pets_allowed", nullable = false)
     private boolean petsAllowed;
+
+    // User Id
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartmentId")
     private Collection<ApartmentPhoto> apartmentPhotoCollection;
@@ -334,6 +328,22 @@ public class Apartment implements Serializable {
 
     public void setApartmentPhotoCollection(Collection<ApartmentPhoto> apartmentPhotoCollection) {
         this.apartmentPhotoCollection = apartmentPhotoCollection;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public boolean isPetsAllowed() {
+        return petsAllowed;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     /*

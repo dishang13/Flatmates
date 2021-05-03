@@ -9,6 +9,7 @@ import edu.vt.EntityBeans.Apartment;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class ApartmentFacade extends AbstractFacade<Apartment> {
@@ -56,21 +57,16 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
         return em.find(Apartment.class, id);
     }
 
-//    /**
-//     * @param username is the username attribute (column) value of the user
-//     * @return object reference of the User entity whose user name is username
-//     */
-//    public User findByUsername(String username) {
-//        if (em.createQuery("SELECT c FROM User c WHERE c.username = :username")
-//                .setParameter("username", username)
-//                .getResultList().isEmpty()) {
-//            return null;
-//        } else {
-//            return (User) (em.createQuery("SELECT c FROM User c WHERE c.username = :username")
-//                    .setParameter("username", username)
-//                    .getSingleResult());
-//        }
-//    }
+    /**
+     * @param id is the user_id attribute (column) value of the Apartment
+     * @return object reference of the List of Apartment entities whose user id is user_id
+     */
+    public List<Apartment> findApartmentsByUserPrimaryKey(int id) {
+        List<Apartment> result = (List<Apartment>) em.createNamedQuery("Apartment.findByUserId")
+                .setParameter("userId", id)
+                .getResultList();
+        return result;
+    }
 
     /**
      * Deletes the Apartment entity whose primary key is id
@@ -83,5 +79,7 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
 
         // The remove method is inherited from the parent AbstractFacade class
         em.remove(apartment);
+
+        //TODO remove apartment photos
     }
 }

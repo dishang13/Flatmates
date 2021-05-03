@@ -6,14 +6,17 @@ package edu.vt.controllers;
 
 import edu.vt.EntityBeans.Apartment;
 import edu.vt.EntityBeans.ApartmentPhoto;
+import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.ApartmentFacade;
 import edu.vt.FacadeBeans.ApartmentPhotoFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
+import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -86,7 +89,6 @@ public class ApartmentController implements Serializable {
     private BigDecimal longitude;
     private String complexWebsite;
     private boolean petsAllowed;
-
 
     private List<Apartment> items;
     private List<ApartmentPhoto> apartmentPhotoList;
@@ -295,6 +297,28 @@ public class ApartmentController implements Serializable {
         this.apartmentPhotoFacade = apartmentPhotoFacade;
     }
 
+    public void unselect() {
+        selected = null;
+    }
+
+    public List<Apartment> getItems() {
+        if(items == null) {
+            /*
+            'user', the object reference of the signed-in user, was put into the SessionMap
+            in the initializeSessionMap() method in LoginManager upon user's sign in.
+             */
+            User signedInUser = (User) Methods.sessionMap().get("user");
+
+            // Obtain only those apartments from the database that belong to the signed-in user
+            items = getApartmentFacade().findApartmentsByUserPrimaryKey(signedInUser.getId());
+        }
+        return items;
+    }
+
+    public void setItems(List<Apartment> items) {
+        this.items = items;
+    }
+
     /*
     ================
     Instance Methods
@@ -327,6 +351,20 @@ public class ApartmentController implements Serializable {
         different JSF page after successful creation of the Survey.
          */
         Methods.preserveMessages();
+
+        // Set userId attribute value
+        User signedInUser = (User) Methods.sessionMap().get("user");
+        selected.setUserId(signedInUser);
+
+
+        // Set dateEntered attribute value
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = java.sql.Date.valueOf(localDate);
+
+        // Set Date in the format of YYYY-MM-DD
+        selected.setDateEntered(currentDate);
+        selected.setLatitude(new BigDecimal(0.0));
+        selected.setLongitude(new BigDecimal(0.0));
         /*
         Show the message "Your Apartment has been successfully listed!"
 
@@ -337,19 +375,21 @@ public class ApartmentController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The CREATE operation is successfully performed.
             selected = null; // Remove selection
+            items = null; // Invalidate list to trigger requery
         }
     }
 
+    // TODO
     public void update() { // TODO
         persist(PersistAction.UPDATE,"Apartment was successfully updated.");
     }
 
     /*
-    ***************************************************
+    ***********************************************
     Delete the Selected Apartment from the Database
-    ***************************************************
-     */
-    public void deleteSurvey() {
+    ***********************************************
+    */
+    public void delete() {
         /*
         We need to preserve the messages since we will redirect to show a
         different JSF page after successful deletion of the Survey.
@@ -365,7 +405,28 @@ public class ApartmentController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The DELETE operation is successfully performed.
             selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    /*
+    ******************************************************
+    *   Cancel to Display List.xhtml JSF Facelets Page   *
+    ******************************************************
+    */
+    public String cancel() {
+        // Unselect previously selected apartment if any
+        selected = null;
+        return "/apartment/UsersApartments?faces-redirect=true";
+    }
+
+    /*
+    **************************************
+    Return List of U.S. State Postal Codes
+    **************************************
+     */
+    public String[] listOfStates() {
+        return Constants.STATES;
     }
 
     /*
