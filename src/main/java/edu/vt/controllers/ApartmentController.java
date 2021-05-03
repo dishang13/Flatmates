@@ -410,6 +410,33 @@ public class ApartmentController implements Serializable {
     }
 
     /*
+    ****************************************
+    Archive/Unarchive the Selected Apartment
+    ****************************************
+    */
+    public void archive() {
+        /*
+        We need to preserve the messages since we will redirect to show a
+        different JSF page after successful deletion of the Survey.
+         */
+        Methods.preserveMessages();
+        selected.setArchived(!selected.getArchived());
+        /*
+        Show the message "The Apartment was successfully archived!"
+
+        Prevent displaying the same msg twice, one for Summary and one for Detail, by setting the
+        message Detail to "" in the addSuccessMessage(String msg) method in the jsfUtil.java file.
+         */
+        persist(PersistAction.UPDATE, selected.getArchived() ? "The Apartment was successfully archived!\n"
+                                                             : "The Apartment was successfully unarchived!\n");
+        if (!JsfUtil.isValidationFailed()) {
+            // No JSF validation error. The DELETE operation is successfully performed.
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    /*
     ******************************************************
     *   Cancel to Display List.xhtml JSF Facelets Page   *
     ******************************************************

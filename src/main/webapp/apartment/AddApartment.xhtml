@@ -72,7 +72,7 @@
                         </h:selectOneMenu>
 
                         <p:outputLabel value="Rent per Month:" for="rent" />
-                        <!--
+                        <!--TODO
                         Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.
                         *****************************************************************
                         *   mask="9?99999"   min=1 & max=999999 )   *
@@ -81,40 +81,31 @@
                         ? ==> number of 9s on the left of ? defines the minimum number of digits required.
                         Total number of 9s defines the maximum number of digits allowed.
                         -->
-                        <p:inputMask id="rent" class="dataFields" value="#{apartmentController.selected.rent}"
-                                     required="true" requiredMessage="The Rent field is required."
-                                     mask="9?999999" >
+                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"
+                                     required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"
+                                     decimalPlaces="0" maxValue="100000000">
                             <p:watermark for="rent" value="Enter the Monthly Rent!" />
-                        </p:inputMask>
+                        </p:inputNumber>
 
                         <p:outputLabel value="Number of Bedrooms:" for="numBed" />
-                        <!--TODO
-                        Use mask to allow only digits 0 to 9 with minimum 3 and maximum 7 digits.
-                        *************************************************
-                        *   mask="999?9999"   min=100 & max=9,999,999)  *
-                        *************************************************
-                        9 ==> indicates a digit 0 to 9.
-                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.
-                        Total number of 9s defines the maximum number of digits allowed.
-                        -->
-                        <p:inputMask id="numBed" class="dataFields" value="#{apartmentController.selected.numBed}"
-                                     required="true" requiredMessage="The Number of Bedrooms field is required."
-                                     mask="9?99" >
-                            <p:watermark for="numBed" value="Enter Number of Bedrooms!" />
-                        </p:inputMask>
+                        <p:inputNumber id="numBed" class="dataFields" value="#{apartmentController.selected.numBed}"
+                                       required="true" requiredMessage="The Number of Bedrooms field is required." minValue="0"
+                                       decimalPlaces="0" maxValue="100">
+                            <p:watermark for="rent" value="Enter Number of Bedrooms!" />
+                        </p:inputNumber>
 
                         <p:outputLabel value="Number of Bathrooms:" for="numBath" />
-                        <p:inputMask id="numBath" class="dataFields" value="#{apartmentController.selected.numBath}"
+                        <p:inputNumber id="numBath" class="dataFields" value="#{apartmentController.selected.numBath}"
                                      required="true" requiredMessage="The Number of Bathrooms field is required."
-                                     mask="9?99" >
+                                     minValue="0" decimalPlaces="0" maxValue="100">
                             <p:watermark for="numBath" value="Enter Number of Bathrooms!" />
-                        </p:inputMask>
+                        </p:inputNumber>
 
+                        <!-- TODO url validation-->
                         <p:outputLabel value="Apartment Complex Website:" for="website" />
-                        <!-- The entered value is set to be the selected new apartment object's property 'website'  -->
+                        <!-- The entered value is set to be the selected new apartment object's property 'website' -->
                         <p:inputText id="website" class="dataFields" value="#{apartmentController.selected.complexWebsite}"
-                                     placeholder="Enter Apartment's Home Website URL" required="true"
-                                     requiredMessage="The Apartment Complex Website field is required."/>
+                                     placeholder="Enter Apartment's Home Website URL"/>
 
                         <p:outputLabel value="Start Date:" for="startDate" />
                         <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" title="Start Date"

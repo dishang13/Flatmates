@@ -48,8 +48,8 @@
                                  class="dataTable"
                     >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton archiveButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton archiveButton deleteButton"/>
 <!--                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton playButton shareButton "/>-->
 <!--                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton playButton shareButton "/>-->
 
@@ -75,7 +75,7 @@
                         *    User Video Title   *
                         ***************************
                         -->
-                        <p:column sortBy="#{item.name}" headerText="Title" style="width:100px;">
+                        <p:column sortBy="#{item.name}" headerText="Apartment Name" style="width:100px;">
                             <h:outputText class="inputTextField" value="#{item.name}"/>
                         </p:column>
 
@@ -135,13 +135,13 @@
 <!--                        </p:column>-->
 
                         <!--
-                        ********************************
-                        *    User ID  *
-                        ********************************
+                        *****************
+                        *    Archived?  *
+                        *****************
                         -->
-                        <p:column headerText="UserId" style="width:80px;">
+                        <p:column headerText="Archived?" style="width:80px;">
                             <div align="center">
-                                <h:outputText class="inputTextField" value="#{item.userId}"/>
+                                <h:selectBooleanCheckbox class="inputTextField" value="#{item.archived}" readonly="true" disabled="true"/>
                             </div>
                         </p:column>
 
@@ -159,7 +159,7 @@
 
                             <!-- VIEW button -->
                             <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
-                                             update=":ApartmentViewDlg" oncomplete="PF('ApartmentViewDlg').show()"
+                                             update=":ApartmentViewDlg" oncomplete="PF('ApartmentViewDialog').show()"
                                              disabled="#{empty apartmentController.selected}"/>
 
                             <!-- EDIT button -->
@@ -177,6 +177,19 @@
 
                                 <p:confirm header="Confirmation"
                                            message="Are you sure you want to permanently delete the selected apartment from the database?"
+                                           icon="fas fa-exclamation-triangle fa-2x" />
+                            </p:commandButton>
+
+
+                            <p:commandButton id="archiveButton" icon="fas fa-trash-alt"  value="#{ empty apartmentController.selected or apartmentController.selected.archived == false ? 'Archive' : 'Unarchive'}"
+                                             actionListener="#{apartmentController.archive}"
+                                             update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                             disabled="#{empty apartmentController.selected}">
+
+
+                                <p:confirm header="Confirmation"
+                                           message="#{ empty apartmentController.selected or apartmentController.selected.archived == false ? 'Are you sure you want to archive the selected apartment? This will hide the apartment from other users.'
+                                                        : 'Are you sure you want to unarchive the selected apartment? This will allow users to see this apartment.'}"
                                            icon="fas fa-exclamation-triangle fa-2x" />
                             </p:commandButton>
 
