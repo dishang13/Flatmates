@@ -15,9 +15,8 @@ edu/vt/FacadeBeans/AbstractFacade.java
  edu.vt.FacadeBeans.AbstractFacade
 edu/vt/EntityBeans/User.java
  edu.vt.EntityBeans.User
-edu/vt/controllers/ApartmentController.java
- edu.vt.controllers.ApartmentController
- edu.vt.controllers.ApartmentController$ApartmentControllerConverter
+edu/vt/EntityBeans/UserPhoto.java
+ edu.vt.EntityBeans.UserPhoto
 edu/vt/FacadeBeans/ApartmentPhotoFacade.java
  edu.vt.FacadeBeans.ApartmentPhotoFacade
 edu/vt/managers/PasswordResetManager.java
@@ -51,5 +50,6 @@ edu/vt/validators/EmailValidator.java
  edu.vt.validators.EmailValidator
 edu/vt/validators/UsernameValidator.java
  edu.vt.validators.UsernameValidator
-edu/vt/EntityBeans/UserPhoto.java
- edu.vt.EntityBeans.UserPhoto
+edu/vt/controllers/ApartmentController.java
+ edu.vt.controllers.ApartmentController
+ edu.vt.controllers.ApartmentController$ApartmentControllerConverter

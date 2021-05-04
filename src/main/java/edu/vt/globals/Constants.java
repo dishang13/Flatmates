@@ -171,4 +171,6 @@ public final class Constants {
         "Party-goer",
         "Quiet",
     };
+
+    public static final String geocodingApiUrlTemplate = "https://api.geoapify.com/v1/geocode/search?text={0}&apiKey=679dd2b006364ecab99a87315b33e34c";
 }
