@@ -17,10 +17,10 @@
     Dialog pop-up window to VIEW (READ) an apartment
     ************************************************
     -->
-    <p:dialog id="ApartmentViewDlg" widgetVar="ApartmentViewDialog" modal="true"
+    <p:dialog id="ApartmentSearchViewDlg" widgetVar="ApartmentSearchViewDialog" modal="true"
               resizable="false" appendTo="@(body)" header="View Apartment">
 
-        <h:form id="ApartmentViewForm" class="ui-datatable-data">
+        <h:form id="ApartmentSearchViewForm" class="ui-datatable-data">
             <div align="center">
                 <h:panelGroup id="display">
 
@@ -40,7 +40,7 @@
                 <br /><br />
                 <h:panelGroup>
                     <!-- CLOSE button -->
-                    <p:commandButton value="Close" onclick="ApartmentViewDialog.hide()"
+                    <p:commandButton value="Close" onclick="ApartmentSearchViewDialog.hide()"
                                      icon="fas fa-window-close" />
                 </h:panelGroup>
                 <br /><br />

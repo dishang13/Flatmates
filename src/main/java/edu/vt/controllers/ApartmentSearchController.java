@@ -75,6 +75,7 @@ public class ApartmentSearchController implements Serializable {
     private List<Apartment> searchResults;
 
     // Search filter parameters
+    private String name;
     private String minBeds;
     private String maxBeds;
     private String numBaths;
@@ -124,6 +125,14 @@ public class ApartmentSearchController implements Serializable {
 
     public void setSearchResults(List<Apartment> searchResults) {
         this.searchResults = searchResults;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMinBeds() {
@@ -226,26 +235,44 @@ public class ApartmentSearchController implements Serializable {
     private String processSearchFilters() {
         String searchFilters = "SELECT a FROM Apartment a WHERE a.archived = false";
 
+        if(name != null && !name.isBlank()) {
+            searchFilters += " AND a.name LIKE '%" + name + "%'";
+        }
         if(minBeds != null && !minBeds.isBlank()) {
-            searchFilters += "AND a.numBed >=" + minBeds;
+            searchFilters += " AND a.numBed >=" + minBeds;
         }
         if(maxBeds != null && !maxBeds.isBlank()) {
-            searchFilters += "AND a.numBed <=" + maxBeds;
+            searchFilters += " AND a.numBed <=" + maxBeds;
         }
         if(minRent != null && !minRent.isBlank()) {
-            searchFilters += "AND a.rent >=" + minRent;
+            searchFilters += " AND a.rent >=" + minRent;
         }
         if(maxRent != null && !maxRent.isBlank()) {
-            searchFilters += "AND a.rent <=" + maxRent;
+            searchFilters += " AND a.rent <=" + maxRent;
         }
         if(startDate != null) {
-            searchFilters += "AND a.start_date <=" + startDate.toString();
+            searchFilters += " AND a.start_date <=" + startDate.toString();
         }
         if(endDate != null) {
-            searchFilters += "AND a.end_date <=" + endDate.toString();
+            searchFilters += " AND a.end_date <=" + endDate.toString();
         }
         System.out.println(searchFilters);
         return searchFilters;
+    }
+
+    /*
+     ***********************************
+     *   Display the List.xhtml Page   *
+     ***********************************
+     */
+    public String search() {
+        // Unselect previously selected public video if any before showing the search results
+        selected = null;
+
+        // Invalidate list of search items to trigger re-query.
+        searchResults = null;
+
+        return "/searchApartment/List?faces-redirect=true";
     }
 
 }
