@@ -126,4 +126,66 @@ public final class Constants {
         "What was your favorite place to visit as a child?"
     };
 
+    /*
+    Pets owned preference options for users
+    */
+    public static final String[] PETS_OWNED_USER_PREF = {
+        "Yes",
+        "No"
+    };
+
+    /*
+    Pets owned preference options for apartment listing
+    */
+    public static final String[] PETS_OWN_APARTMENT_PREF = {
+        "No Preference",
+        "Yes",
+        "No"
+    };
+
+    /*
+    Eating Preference option
+    */
+    public static final String[] EATING_PREF = {
+        "No Preference",
+        "Non-Vegetarian",
+        "Vegetarian",
+        "Vegan"
+    };
+
+    /*
+    Smoking preference options
+    */
+    public static final String[] SMOKING_PREF = {
+        "No Preference",
+        "Smoking",
+        "Non-Smoking"
+    };
+
+    /*
+    Alcohol drinking preference options
+    */
+    public static final String[] ALCOHOL_PREF = {
+        "No Preference",
+        "Alcohol Drinker",
+        "Alcohol Non-Drinker",
+    };
+
+    /*
+    Sleeping preference options
+    */
+    public static final String[] SLEEPING_PREF = {
+        "Flexible",
+        "Morning Person",
+        "Night Person"
+    };
+
+    /*
+    Social Life preference options
+    */
+    public static final String[] SOCIAL_PREF = {
+        "No Preference",
+        "Party-goer",
+        "Quiet",
+    };
 }

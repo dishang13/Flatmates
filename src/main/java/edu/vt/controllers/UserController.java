@@ -92,6 +92,12 @@ public class UserController implements Serializable {
     private int socialPrefNumber;
 
     private Map<String, Object> security_questions;
+    private Map<String, Object> pet_owned_preferences;
+    private Map<String, Object> eating_preferences;
+    private Map<String, Object> smoking_preferences;
+    private Map<String, Object> alcohol_preferences;
+    private Map<String, Object> sleep_preferences;
+    private Map<String, Object> social_preferences;
 
     private User selected;
 
@@ -340,6 +346,138 @@ public class UserController implements Serializable {
         this.security_questions = security_questions;
     }
 
+    public Map<String, Object> getPet_owned_preferences() {
+        if (pet_owned_preferences == null) {
+            /*
+            Difference between HashMap and LinkedHashMap:
+            HashMap stores key-value pairings in no particular order.
+                Values are retrieved based on their corresponding Keys.
+            LinkedHashMap stores and retrieves key-value pairings
+                in the order they were put into the map.
+             */
+            pet_owned_preferences = new LinkedHashMap<>();
+
+            for (int i = 0; i < Constants.PETS_OWNED_USER_PREF.length; i++) {
+                pet_owned_preferences.put(Constants.PETS_OWNED_USER_PREF[i], i);
+            }
+        }
+        return pet_owned_preferences;
+    }
+
+    public void setPet_owned_preferences(Map<String, Object> pet_owned_preferences) {
+        this.pet_owned_preferences = pet_owned_preferences;
+    }
+
+    public Map<String, Object> getEating_preferences() {
+        if (eating_preferences == null) {
+            /*
+            Difference between HashMap and LinkedHashMap:
+            HashMap stores key-value pairings in no particular order.
+                Values are retrieved based on their corresponding Keys.
+            LinkedHashMap stores and retrieves key-value pairings
+                in the order they were put into the map.
+             */
+            eating_preferences = new LinkedHashMap<>();
+
+            for (int i = 0; i < Constants.EATING_PREF.length; i++) {
+                eating_preferences.put(Constants.EATING_PREF[i], i);
+            }
+        }
+        return eating_preferences;
+    }
+
+    public void setEating_preferences(Map<String, Object> eating_preferences) {
+        this.eating_preferences = eating_preferences;
+    }
+
+    public Map<String, Object> getSmoking_preferences() {
+        if (smoking_preferences == null) {
+            /*
+            Difference between HashMap and LinkedHashMap:
+            HashMap stores key-value pairings in no particular order.
+                Values are retrieved based on their corresponding Keys.
+            LinkedHashMap stores and retrieves key-value pairings
+                in the order they were put into the map.
+             */
+            smoking_preferences = new LinkedHashMap<>();
+
+            for (int i = 0; i < Constants.SMOKING_PREF.length; i++) {
+                smoking_preferences.put(Constants.SMOKING_PREF[i], i);
+            }
+        }
+        return smoking_preferences;
+    }
+
+    public void setSmoking_preferences(Map<String, Object> smoking_preferences) {
+        this.smoking_preferences = smoking_preferences;
+    }
+
+    public Map<String, Object> getAlcohol_preferences() {
+        if (alcohol_preferences == null) {
+            /*
+            Difference between HashMap and LinkedHashMap:
+            HashMap stores key-value pairings in no particular order.
+                Values are retrieved based on their corresponding Keys.
+            LinkedHashMap stores and retrieves key-value pairings
+                in the order they were put into the map.
+             */
+            alcohol_preferences = new LinkedHashMap<>();
+
+            for (int i = 0; i < Constants.ALCOHOL_PREF.length; i++) {
+                alcohol_preferences.put(Constants.ALCOHOL_PREF[i], i);
+            }
+        }
+        return alcohol_preferences;
+    }
+
+    public void setAlcohol_preferences(Map<String, Object> alcohol_preferences) {
+        this.alcohol_preferences = alcohol_preferences;
+    }
+
+    public Map<String, Object> getSleep_preferences() {
+        if (sleep_preferences == null) {
+            /*
+            Difference between HashMap and LinkedHashMap:
+            HashMap stores key-value pairings in no particular order.
+                Values are retrieved based on their corresponding Keys.
+            LinkedHashMap stores and retrieves key-value pairings
+                in the order they were put into the map.
+             */
+            sleep_preferences = new LinkedHashMap<>();
+
+            for (int i = 0; i < Constants.SLEEPING_PREF.length; i++) {
+                sleep_preferences.put(Constants.SLEEPING_PREF[i], i);
+            }
+        }
+        return sleep_preferences;
+    }
+
+    public void setSleep_preferences(Map<String, Object> sleep_preferences) {
+        this.sleep_preferences = sleep_preferences;
+    }
+
+    public Map<String, Object> getSocial_preferences() {
+        if (social_preferences == null) {
+            /*
+            Difference between HashMap and LinkedHashMap:
+            HashMap stores key-value pairings in no particular order.
+                Values are retrieved based on their corresponding Keys.
+            LinkedHashMap stores and retrieves key-value pairings
+                in the order they were put into the map.
+             */
+            social_preferences = new LinkedHashMap<>();
+
+            for (int i = 0; i < Constants.SOCIAL_PREF.length; i++) {
+                social_preferences.put(Constants.SOCIAL_PREF[i], i);
+            }
+        }
+        return social_preferences;
+    }
+
+    public void setSocial_preferences(Map<String, Object> social_preferences) {
+        this.social_preferences = social_preferences;
+    }
+
     public User getSelected() {
         if (selected == null) {
             // Store the object reference of the signed-in User into the instance variable selected.
@@ -414,6 +552,42 @@ public class UserController implements Serializable {
 
         // Return the security question corresponding to the question number
         return Constants.QUESTIONS[questionNumber];
+    }
+
+    /*
+     */
+    public String[] petsOwnedList() {
+        return Constants.PETS_OWNED_USER_PREF;
+    }
+
+    /*
+     */
+    public String[] eatingPrefList() {
+        return Constants.EATING_PREF;
+    }
+
+    /*
+     */
+    public String[] smokingPrefList() {
+        return Constants.SMOKING_PREF;
+    }
+
+    /*
+     */
+    public String[] alcoholPrefList() {
+        return Constants.ALCOHOL_PREF;
+    }
+
+    /*
+     */
+    public String[] sleepingPrefList() {
+        return Constants.SLEEPING_PREF;
+    }
+
+    /*
+     */
+    public String[] socialPrefList() {
+        return Constants.SOCIAL_PREF;
     }
 
     /*
