@@ -13,34 +13,34 @@
 <ui:composition>
 
     <!--
-    **************************************************
-    Dialog pop-up window to EDIT (Update) an apartment
-    **************************************************
+    ************************************************
+    Dialog pop-up window to VIEW (READ) an apartment
+    ************************************************
     -->
-    <p:dialog id="ApartmentEditDlg" widgetVar="ApartmentEditDialog" modal="true"
-              resizable="false" appendTo="@(body)" header="Edit Apartment">
+    <p:dialog id="ApartmentViewDlg" widgetVar="ApartmentViewDialog" modal="true"
+              resizable="false" appendTo="@(body)" header="View Apartment">
 
-        <h:form id="ApartmentEditForm" class="ui-datatable-data">
+        <h:form id="ApartmentViewForm" class="ui-datatable-data">
             <div align="center">
                 <h:panelGroup id="display">
-                    asd
+
                     <br /><br />
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                                 rendered="#{apartmentController.selected != null}">
+                                 rendered="#{apartmentSearchController.selected != null}">
 
                         <h:outputText value="Apartment Name:"/>
-                        <h:outputText value="#{apartmentController.selected.name}" />
+                        <h:outputText value="#{apartmentSearchController.selected.name}" />
 
 
                         <h:outputText value="Apartment Complex Website:"/>
-                        <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
+                        <h:outputText value="#{apartmentSearchController.selected.complexWebsite}"/>
 
                     </p:panelGrid>
                 </h:panelGroup>
                 <br /><br />
                 <h:panelGroup>
                     <!-- CLOSE button -->
-                    <p:commandButton value="Close" onclick="ApartmentEditDialog.hide()"
+                    <p:commandButton value="Close" onclick="ApartmentViewDialog.hide()"
                                      icon="fas fa-window-close" />
                 </h:panelGroup>
                 <br /><br />

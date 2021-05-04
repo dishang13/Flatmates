@@ -444,7 +444,7 @@ public class ApartmentController implements Serializable {
     public String cancel() {
         // Unselect previously selected apartment if any
         selected = null;
-        return "/apartment/UsersApartments?faces-redirect=true";
+        return "/usersApartment/List?faces-redirect=true";
     }
 
     /*

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Dishang, Siva on 2021.04.10
+  - Copyright © 2021 Dishang, Siva. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition>
+
+    <!--
+    **************************************************
+    Dialog pop-up window to EDIT (Update) an apartment
+    **************************************************
+    -->
+    <p:dialog id="ApartmentEditDlg" widgetVar="ApartmentEditDialog" modal="true"
+              resizable="false" appendTo="@(body)" header="Edit Apartment">
+
+        <h:form id="ApartmentEditForm" class="ui-datatable-data">
+            <div align="center">
+                <h:panelGroup id="display">
+
+                    <br /><br />
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                 rendered="#{apartmentController.selected != null}">
+
+                        <h:outputText value="Apartment Name:"/>
+                        <h:outputText value="#{apartmentController.selected.name}" />
+
+
+                        <h:outputText value="Apartment Complex Website:"/>
+                        <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br /><br />
+                <h:panelGroup>
+                    <!-- CLOSE button -->
+                    <p:commandButton value="Close" onclick="ApartmentEditDialog.hide()"
+                                     icon="fas fa-window-close" />
+                </h:panelGroup>
+                <br /><br />
+            </div>
+        </h:form>
+
+    </p:dialog>
+</ui:composition>
+</html>
