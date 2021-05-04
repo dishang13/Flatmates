@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Dishang Rajendra Valotia on 2021.3.12
+  - Copyright © 2021 Dishang Rajendra Valotia. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Search Apartments" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <!-- In case of JSF validation error, set 'selected' to null in apartmentController -->
+        <c:if test="#{facesContext.validationFailed}">
+            ${apartmentSearchController.unselect()}
+        </c:if>
+
+        <!-- Set 'selected' to null in apartmentSearchController when the user refreshes / reloads this JSF page -->
+        <f:metadata>
+            <f:viewAction action="#{apartmentSearchController.unselect()}" rendered="#{facesContext.postBack}" />
+        </f:metadata>
+
+        <div align="center" style="width:97%">
+
+            <h:form id="apartmentSearchForm">
+                <p:panel header="Search">
+
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:accordionPanel id="filterAccordionPanel">
+                                <p:tab title="Filter">
+                                    <p:inputText id="searchString" value="#{apartmentSearchController.name}"
+                                                 placeholder="Search Name" >
+                                    </p:inputText>
+
+                                    <span>&nbsp;</span>
+
+                                    <p:inputText id="minBeds" value="#{apartmentSearchController.minBeds}"
+                                                 placeholder="Min Number of Beds" >
+                                    </p:inputText>
+
+                                    <span>&nbsp;</span>
+
+                                    <p:inputText id="maxBeds" value="#{apartmentSearchController.maxBeds}"
+                                                 placeholder="Max Number of Beds" >
+                                    </p:inputText>
+
+                                    <span>&nbsp;</span>
+
+                                    <!-- SEARCH button -->
+                                    <p:commandButton value="Search" icon="fas fa-arrow-up" ajax="false"
+                                                     action="#{apartmentSearchController.search()}" />
+                                </p:tab>
+                            </p:accordionPanel>
+                        </div>
+                        <div class="ui-g-6"><p:dataTable id="datalist" value="#{apartmentSearchController.searchResults}" var="item"
+                                                         selectionMode="single" selection="#{apartmentSearchController.selected}"
+                                                         reflow="true"
+                                                         paginator="true"
+                                                         rowKey="#{item.id}"
+                                                         rows="10"
+                                                         rowsPerPageTemplate="5,10,20,30,50,70,90"
+                                                         class="dataTable"
+                        >
+
+                            <p:ajax event="rowSelect"   update="viewButton"/>
+                            <p:ajax event="rowUnselect" update="viewButton"/>
+
+                            <!--
+                            Clicking the header of a column with 'sortBy' redisplays the table with that
+                            column sorted in alphabetical order A to Z or numerically in ascending order.
+                            Clicking it again reverses the order to Z to A or numerically in descending order.
+                            -->
+
+                            <!--
+                            ************************
+                            *    Public Video Id   *
+                            ************************
+                            -->
+                            <p:column headerText="Id" style="width:20px;">
+                                <div align="center">
+                                    <h:outputText class="inputTextField" value="#{item.id}"/>
+                                </div>
+                            </p:column>
+
+                            <!--
+                            ***************************
+                            *    Public Video Title   * TODO Name?
+                            ***************************
+                            -->
+                            <p:column sortBy="#{item.name}" headerText="Name" style="width:100px;">
+                                <h:outputText class="inputTextField" value="#{item.name}"/>
+                            </p:column>
+
+                            <!--
+                            *******************************
+                            *    Public Video Thumbnail   *
+                            *******************************
+                            -->
+                            <!--                        <p:column headerText="Thumbnail" style="align-content: center; width:80px;">-->
+                            <!--                            <img src="https://i1.ytimg.com/vi/#{item.youtubeVideoId}/hqdefault.jpg"-->
+                            <!--                                 alt="Thumbnail" class="scalableImage"/>-->
+                            <!--                        </p:column>-->
+
+                            <!--                        &lt;!&ndash;-->
+                            <!--                        ********************************-->
+                            <!--                        *    Public Video Description  *-->
+                            <!--                        ********************************-->
+                            <!--                        &ndash;&gt;-->
+                            <!--                        <p:column headerText="Description" style="width:250px;">-->
+                            <!--                            <h:outputText class="inputTextField" value="#{item.description}"/>-->
+                            <!--                        </p:column>-->
+
+                            <!--                        &lt;!&ndash;-->
+                            <!--                        *****************************-->
+                            <!--                        *    Public Video Duration  *-->
+                            <!--                        *****************************-->
+                            <!--                        &ndash;&gt;-->
+                            <!--                        <p:column sortBy="#{item.duration}" headerText="Duration" style="width:80px;">-->
+                            <!--                            <div align="center">-->
+                            <!--                                <h:outputText class="inputTextField" value="#{item.duration}"/>-->
+                            <!--                            </div>-->
+                            <!--                        </p:column>-->
+
+                            <!--                        &lt;!&ndash;-->
+                            <!--                        ***********************************-->
+                            <!--                        *    Public Video Date Published  *-->
+                            <!--                        ***********************************-->
+                            <!--                        &ndash;&gt;-->
+                            <!--                        <p:column sortBy="#{item.datePublished}" headerText="Date Published" style="width:100px;">-->
+                            <!--                            <div align="center">-->
+                            <!--                                <h:outputText class="inputTextField" value="#{item.datePublished}">-->
+                            <!--                                    &lt;!&ndash; Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0&ndash;&gt;-->
+                            <!--                                    <f:convertDateTime pattern="MM/dd/yyyy" />-->
+                            <!--                                </h:outputText>-->
+                            <!--                            </div>-->
+                            <!--                        </p:column>-->
+
+                            <!--                        &lt;!&ndash;-->
+                            <!--                        ********************************-->
+                            <!--                        *    Public Video Category  *-->
+                            <!--                        ********************************-->
+                            <!--                        &ndash;&gt;-->
+                            <!--                        <p:column sortBy="#{item.category}" headerText="Category" style="width:80px;">-->
+                            <!--                            <div align="center">-->
+                            <!--                                <h:outputText class="inputTextField" value="#{item.category}"/>-->
+                            <!--                            </div>-->
+                            <!--                        </p:column>-->
+
+                            <br /><br />
+
+                            <!--
+                            The "footer" facet is defined for p:dataTable. See PrimeFaces User Guide.
+                            -->
+
+                            <f:facet name="footer">
+                                <!-- VIEW button -->
+                                <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
+                                                 update=":ApartmentSearchViewDlg" oncomplete="PF('ApartmentSearchViewDialog').show()"
+                                                 disabled="#{empty apartmentSearchController.selected}"/>
+
+                            </f:facet>
+
+                        </p:dataTable></div>
+                        <div class="ui-g-6">Google Map comes here</div>
+                    </div>
+
+                </p:panel>
+
+            </h:form>
+
+        </div>
+
+        <!--
+        Clicking the View button displays the included
+        View.xhtml file in a dialog box on top of this page.
+        -->
+        <ui:include src="/searchApartment/View.xhtml"/>
+
+    </ui:define>
+
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

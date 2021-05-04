@@ -155,7 +155,7 @@
                             <!-- ADD AN APARTMENT button -->
                             <p:commandButton id="createButton" icon="fas fa-plus" value="Add an Apartment"
                                              actionListener="#{apartmentController.prepareCreate()}"
-                                             action="/apartment/AddApartment?faces-redirect=true" />
+                                             action="/usersApartment/Add?faces-redirect=true" />
 
                             <!-- VIEW button -->
                             <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
@@ -218,15 +218,15 @@
 
         <!--
         Clicking the View button displays the included
-        ViewApartment.xhtml file in a dialog box on top of this page.
+        View.xhtml file in a dialog box on top of this page.
         -->
-        <ui:include src="/apartment/ViewApartment.xhtml"/>
+        <ui:include src="/usersApartment/View.xhtml"/>
 
         <!--
         Clicking the Edit button displays the included
         Edit.xhtml file in a dialog box on top of this page.
         -->
-        <ui:include src="/apartment/EditApartment.xhtml"/>
+        <ui:include src="/usersApartment/Edit.xhtml"/>
 
     </ui:define>
 

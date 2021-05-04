@@ -27,7 +27,7 @@
                 <tr>
                     <!--
                     ********************************
-                    Column 1 (Left): BevQ Logo Image
+                    Column 1 (Left): Flatmates Logo Image
                     ********************************
                     -->
                     <td align="left" valign="middle" style="width:239px;">
@@ -82,8 +82,8 @@
                                     <i class="fas fa-home" />&nbsp;Home
                                 </h:link>
 
-                                <!-- Clicking "Search Apartments" displays the ListApartments.xhtml file -->
-                                <h:link outcome="/apartment/ListApartments" class="standardText" >
+                                <!-- Clicking "Search Apartments" displays the searchApartments/List.xhtml file -->
+                                <h:link outcome="/searchApartment/List" class="standardText" >
                                     <i class="fas fa-pencil-alt" />&nbsp;Search Apartments
                                 </h:link>
                                 <!-- 
@@ -92,8 +92,8 @@
                                 ===========================================
                                 -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
-                                    <!-- Clicking "My Apartments" displays the UsersApartments.xhtml file -->
-                                    <h:link outcome="/apartment/UsersApartments" class="standardText" >
+                                    <!-- Clicking "My Apartments" displays the List.xhtml file -->
+                                    <h:link outcome="/usersApartment/List" class="standardText" >
                                         <i class="fas fa-check" />&nbsp;My Apartments
                                     </h:link>
 

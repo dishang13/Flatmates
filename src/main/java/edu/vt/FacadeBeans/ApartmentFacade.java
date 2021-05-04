@@ -52,7 +52,6 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
      * @return object reference of the Apartment object whose primary key is id
      */
     public Apartment getApartment(int id) {
-
         // The find method is inherited from the parent AbstractFacade class
         return em.find(Apartment.class, id);
     }
@@ -62,10 +61,9 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
      * @return object reference of the List of Apartment entities whose user id is user_id
      */
     public List<Apartment> findApartmentsByUserPrimaryKey(int id) {
-        List<Apartment> result = (List<Apartment>) em.createNamedQuery("Apartment.findByUserId")
+        return (List<Apartment>) em.createNamedQuery("Apartment.findByUserId")
                 .setParameter("userId", id)
                 .getResultList();
-        return result;
     }
 
     /**
@@ -81,5 +79,11 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
         em.remove(apartment);
 
         //TODO remove apartment photos
+    }
+
+
+    public List<Apartment> searchApartments(String searchQuery) {
+        return (List<Apartment>) em.createQuery(searchQuery)
+                .getResultList();
     }
 }

@@ -46,8 +46,6 @@ public final class Constants {
     //public static final String USER_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
     //public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
 
-
-
     // To run on your AWS EC2 instance
 //    public static final String USER_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/UserPhotoStorage/";
 //    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
