@@ -35,10 +35,14 @@
                         ********************************
                         -->
                         <p:outputLabel value="First Name:" for="firstName" />
-                        <p:inputText id="firstName" value="#{userController.selected.firstName}" required="true" class="inputTextField"
-                                     requiredMessage="The First Name field is required." label="First Name">
+                        <!--
+                        The required="true" attribute automatically places an asterisk *
+                        at the end of the value to indicate that the field is required.
+                        -->
+                        <p:inputText id="firstName" value="#{userController.firstName}" required="true" class="inputTextField"
+                                     requiredMessage="The First Name field is required." >
                             <f:validateLength minimum="2" />
-                        </p:inputText>   
+                        </p:inputText>
 
                         <!--
                         ********************************
@@ -46,8 +50,8 @@
                         ********************************
                         -->
                         <p:outputLabel value="Middle Name:" for="middleName" />
-                        <p:inputText id="middleName" value="#{userController.selected.middleName}"
-                                     required="false" class="inputTextField" label="Middle Name">
+                        <p:inputText id="middleName" value="#{userController.middleName}"
+                                     required="false" class="inputTextField" >
                         </p:inputText>
 
                         <!--
@@ -56,8 +60,8 @@
                         ********************************
                         -->
                         <p:outputLabel value="Last Name:" for="lastName" />
-                        <p:inputText id="lastName" value="#{userController.selected.lastName}" required="true" class="inputTextField"
-                                     requiredMessage="The Last Name field is required." label="Last Name">
+                        <p:inputText id="lastName" value="#{userController.lastName}" required="true" class="inputTextField"
+                                     requiredMessage="The Last Name field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
@@ -67,8 +71,8 @@
                         ********************************
                         -->
                         <p:outputLabel value="Address Line 1:" for="address1" />
-                        <p:inputText id="address1" value="#{userController.selected.address1}" required="true" class="inputTextField"
-                                     requiredMessage="The Address Line 1 field is required." label="Address Line 1">
+                        <p:inputText id="address1" value="#{userController.address1}" required="true" class="inputTextField"
+                                     requiredMessage="The Address Line 1 field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
@@ -78,7 +82,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="Address Line 2:" for="address2" />
-                        <p:inputText id="address2" value="#{userController.selected.address2}" class="inputTextField" label="Address Line 2">
+                        <p:inputText id="address2" value="#{userController.address2}" class="inputTextField">
                         </p:inputText>
 
                         <!--
@@ -87,8 +91,8 @@
                         ********************************
                         -->
                         <p:outputLabel value="City:" for="city" />
-                        <p:inputText id="city" value="#{userController.selected.city}" required="true" class="inputTextField"
-                                     requiredMessage="The City field is required." label="City">
+                        <p:inputText id="city" value="#{userController.city}" required="true" class="inputTextField"
+                                     requiredMessage="The City field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
@@ -98,7 +102,11 @@
                         ********************************
                         -->
                         <p:outputLabel value="State:" for="state" />
-                        <h:selectOneMenu id="state" value="#{userController.selected.state}" required="true" >
+                        <h:selectOneMenu id="state" value="#{userController.state}" required="true">
+                            <!--
+                            List of U.S. state postal codes is iterated over
+                            to display the list for the user to select one.
+                            -->
                             <f:selectItems value="#{userController.listOfStates()}" var="state"
                                            itemLabel="#{state}" itemValue="#{state}" />
                         </h:selectOneMenu>
@@ -108,14 +116,100 @@
                         *           ZIP CODE           *
                         ********************************
                         -->
-                        <p:outputLabel value="Zip Code:" for="zipcode" />
-                        <p:inputText id="zipcode" value="#{userController.selected.zipcode}" required="true" class="inputTextField"
-                                     requiredMessage="The Zip code field is required." label="Zip Code" >
+                        <p:outputLabel id="zipcodeEntry" value="Zip Code:" for="zipcode" >
+                            &nbsp;<i class="fas fa-question-circle" />
+                            <!--
+                            When the user mouses over the icon, a tooltip is displayed
+                            to provide context-sensitive help information to the user.
+                            -->
+                            <p:tooltip for="zipcodeEntry" value="Enter 5 digits or 9 digits with hyphen, e.g., 24060-1804"
+                                       showEffect="clip" hideEffect="explode" position="top" />
+                        </p:outputLabel>
+
+                        <p:inputText id="zipcode" value="#{userController.zipcode}" required="true" class="inputTextField"
+                                     requiredMessage="The Zip code field is required." >
                             <f:validateLength minimum="5" />
-                            <f:validator validatorId="zipCodeValidator"/> 
+                            <!--
+                            Execute the "validate" method in the "ZipCodeValidator.java"
+                            class file to validate the ZIP code entered.
+                            -->
+                            <f:validator validatorId="zipCodeValidator"/>
                         </p:inputText>
 
-<!--                        TODO add preferences -->
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Eating Preference:" for="eatingPref" />
+                        <p:selectOneMenu id="eatingPref" value="#{userController.eatingPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.eating_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Smoking Preference:" for="smokingPref" />
+                        <p:selectOneMenu id="smokingPref" value="#{userController.smokingPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.smoking_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Alcohol Preference:" for="alcoholPref" />
+                        <p:selectOneMenu id="alcoholPref" value="#{userController.alcoholPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.alcohol_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Sleep Preferences:" for="sleepPref" />
+                        <p:selectOneMenu id="sleepPref" value="#{userController.sleepPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.sleep_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Social Preferences:" for="socialPref" />
+                        <p:selectOneMenu id="socialPref" value="#{userController.socialPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.social_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ********************************
+                        *       SECURITY QUESTION      *
+                        ********************************
+                        -->
+                        <p:outputLabel value="Security Question:" for="securityQuestion" />
+                        <p:selectOneMenu id="securityQuestion" value="#{userController.securityQuestionNumber}" required="true" >
+                            <!--
+                            List of security questions is displayed for the user to select one.
+                            -->
+                            <f:selectItems value="#{userController.security_questions}"/>
+                        </p:selectOneMenu>
+
+                        <!--
+                        ********************************
+                        *        SECURITY ANSWER       *
+                        ********************************
+                        -->
+                        <p:outputLabel value="Security Answer:" for="securityAnswer" />
+                        <p:inputText id="securityAnswer" value="#{userController.answerToSecurityQuestion}"
+                                     required="true" class="inputTextField"
+                                     requiredMessage="The Security Answer field is required.">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
 
                         <!--
                         ********************************
@@ -123,34 +217,235 @@
                         ********************************
                         -->
                         <p:outputLabel value="Email:" for="email" />
-                        <p:inputText id="email" value="#{userController.selected.email}" required="true" class="inputTextField"
-                                     requiredMessage="The Email field is required." label="Email">
+                        <p:inputText id="email" value="#{userController.email}" required="true" class="inputTextField"
+                                     requiredMessage="The Email field is required." >
                             <f:validateLength minimum="2" />
-                            <f:validator validatorId="emailValidator" />  
+                            <!--
+                            Execute the "validate" method in the "EmailValidator.java"
+                            class file to validate the email address entered.
+                            -->
+                            <f:validator validatorId="emailValidator" />
                         </p:inputText>
 
-                        <!-- Username is listed in an uneditable mode and cannot be changed -->
-                        <h:outputText value="Username:" />
-                        <h:outputText value="#{userController.selected.username}" />
+                        <!--
+                        ********************************
+                        *       ACCOUNT USERNAME       *
+                        ********************************
+                        -->
+                        <p:outputLabel id="usernameEntry" value="Username:" for="username" >
+                            &nbsp;<i class="fas fa-question-circle" />
+                            <!--
+                            When the user mouses over the icon, a tooltip is displayed
+                            to provide context-sensitive help information to the user.
+                            -->
+                            <p:tooltip for="usernameEntry" value="Enter 6 to 32 characters with capital letter, lowercase letter, number, or special character _ . - @"
+                                       showEffect="clip" hideEffect="explode" position="top" />
+                        </p:outputLabel>
+
+                        <p:inputText id="username" value="#{userController.username}" required="true" class="inputTextField"
+                                     requiredMessage="The Username field is required." >
+                            <!--
+                            Execute the "validate" method in the "UsernameValidator.java"
+                            class file to validate the username entered.
+                            -->
+                            <f:validator validatorId="usernameValidator"/>
+                        </p:inputText>
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *       ACCOUNT PASSWORD       *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel id="passwordEntry" value="Password:" for="password" >-->
+<!--                            &nbsp;<i class="fas fa-question-circle" />-->
+<!--                            &lt;!&ndash;-->
+<!--                            When the user mouses over the icon, a tooltip is displayed-->
+<!--                            to provide context-sensitive help information to the user.-->
+<!--                            &ndash;&gt;-->
+<!--                            <p:tooltip for="passwordEntry" value="Enter 8 to 32 characters with at least 1: capital letter, lowercase letter, number, and special characters above the numbers on the keyboard."-->
+<!--                                       showEffect="clip" hideEffect="explode" position="top" />-->
+<!--                        </p:outputLabel>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        p:password changes the characters typed to bullets to hide the password as it is typed.-->
+<!--                        feedback="true" displays password strength indicator.-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:password id="password" value="#{userController.password}" feedback="true"-->
+<!--                                    required="true" class="inputTextField" >-->
+<!--                            &lt;!&ndash;-->
+<!--                            Execute the "validate" method in the "PasswordValidator.java"-->
+<!--                            class file to validate the password entered.-->
+<!--                            &ndash;&gt;-->
+<!--                            <f:validator validatorId="passwordValidator" />-->
+<!--                        </p:password>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *       CONFIRM PASSWORD       *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Confirm Password:" for="confirmPassword" />-->
+<!--                        <p:password id="confirmPassword" value="#{userController.confirmPassword}"-->
+<!--                                    required="true" class="inputTextField"/>-->
+
                     </p:panelGrid>
-
                     <br />
-                    <!--
-                    ================================
-                    |          SAVE Button         |
-                    ================================
-                    -->
-                    <p:commandButton id="submit" value="Save" action="#{userController.updateAccount()}" 
-                                     ajax="false" icon="fas fa-save" />
-                    &nbsp;
-                    <!--
-                    ================================
-                    |         CANCEL Button        |
-                    ================================
-                    -->
-                    <p:button outcome="/userAccount/Profile" value="Cancel" icon="fas fa-ban"  />
 
-                    <br /><br />
+<!--                                        ================================-->
+<!--                                        |          SAVE Button         |-->
+<!--                                        ================================-->
+
+                                        <p:commandButton id="submit" value="Save" action="#{userController.updateAccount()}"
+                                                         ajax="false" icon="fas fa-save" />
+                                        &nbsp;
+                                        <!--
+                                        ================================
+                                        |         CANCEL Button        |
+                                        ================================
+                                        -->
+                                        <p:button outcome="/userAccount/Profile" value="Cancel" icon="fas fa-ban"  />
+
+                                        <br /><br />
+
+<!--                    &lt;!&ndash;-->
+<!--                    ================================-->
+<!--                    |        SUBMIT Button         |-->
+<!--                    ================================-->
+<!--                    &ndash;&gt;-->
+<!--                    <p:commandButton id="Submit" value="Submit" action="#{userController.createAccount()}"-->
+<!--                                     ajax="false" icon="fas fa-arrow-up" />-->
+<!--                    &nbsp;&nbsp;-->
+<!--                    &lt;!&ndash;-->
+<!--                    ================================-->
+<!--                    |        CANCEL Button         |-->
+<!--                    ================================-->
+<!--                    &ndash;&gt;-->
+<!--                    <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />-->
+
+
+                    <!--                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">-->
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *          FIRST NAME          *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="First Name:" for="firstName" />-->
+<!--                        <p:inputText id="firstName" value="#{userController.selected.firstName}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The First Name field is required." label="First Name">-->
+<!--                            <f:validateLength minimum="2" />-->
+<!--                        </p:inputText>   -->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *         MIDDLE NAME          *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Middle Name:" for="middleName" />-->
+<!--                        <p:inputText id="middleName" value="#{userController.selected.middleName}"-->
+<!--                                     required="false" class="inputTextField" label="Middle Name">-->
+<!--                        </p:inputText>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *           LAST NAME          *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Last Name:" for="lastName" />-->
+<!--                        <p:inputText id="lastName" value="#{userController.selected.lastName}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The Last Name field is required." label="Last Name">-->
+<!--                            <f:validateLength minimum="2" />-->
+<!--                        </p:inputText>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *        ADDRESS LINE 1        *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Address Line 1:" for="address1" />-->
+<!--                        <p:inputText id="address1" value="#{userController.selected.address1}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The Address Line 1 field is required." label="Address Line 1">-->
+<!--                            <f:validateLength minimum="2" />-->
+<!--                        </p:inputText>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *        ADDRESS LINE 2        *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Address Line 2:" for="address2" />-->
+<!--                        <p:inputText id="address2" value="#{userController.selected.address2}" class="inputTextField" label="Address Line 2">-->
+<!--                        </p:inputText>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *             CITY             *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="City:" for="city" />-->
+<!--                        <p:inputText id="city" value="#{userController.selected.city}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The City field is required." label="City">-->
+<!--                            <f:validateLength minimum="2" />-->
+<!--                        </p:inputText>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *      STATE ABBREVIATION      *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="State:" for="state" />-->
+<!--                        <h:selectOneMenu id="state" value="#{userController.selected.state}" required="true" >-->
+<!--                            <f:selectItems value="#{userController.listOfStates()}" var="state"-->
+<!--                                           itemLabel="#{state}" itemValue="#{state}" />-->
+<!--                        </h:selectOneMenu>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *           ZIP CODE           *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Zip Code:" for="zipcode" />-->
+<!--                        <p:inputText id="zipcode" value="#{userController.selected.zipcode}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The Zip code field is required." label="Zip Code" >-->
+<!--                            <f:validateLength minimum="5" />-->
+<!--                            <f:validator validatorId="zipCodeValidator"/> -->
+<!--                        </p:inputText>-->
+
+<!--&lt;!&ndash;                        TODO add preferences &ndash;&gt;-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        ********************************-->
+<!--                        *         EMAIL ADDRESS        *-->
+<!--                        ********************************-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:outputLabel value="Email:" for="email" />-->
+<!--                        <p:inputText id="email" value="#{userController.selected.email}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The Email field is required." label="Email">-->
+<!--                            <f:validateLength minimum="2" />-->
+<!--                            <f:validator validatorId="emailValidator" />  -->
+<!--                        </p:inputText>-->
+
+<!--                        &lt;!&ndash; Username is listed in an uneditable mode and cannot be changed &ndash;&gt;-->
+<!--                        <h:outputText value="Username:" />-->
+<!--                        <h:outputText value="#{userController.selected.username}" />-->
+<!--                    </p:panelGrid>-->
+
+<!--                    <br />-->
+<!--                    &lt;!&ndash;-->
+<!--                    ================================-->
+<!--                    |          SAVE Button         |-->
+<!--                    ================================-->
+<!--                    &ndash;&gt;-->
+<!--                    <p:commandButton id="submit" value="Save" action="#{userController.updateAccount()}" -->
+<!--                                     ajax="false" icon="fas fa-save" />-->
+<!--                    &nbsp;-->
+<!--                    &lt;!&ndash;-->
+<!--                    ================================-->
+<!--                    |         CANCEL Button        |-->
+<!--                    ================================-->
+<!--                    &ndash;&gt;-->
+<!--                    <p:button outcome="/userAccount/Profile" value="Cancel" icon="fas fa-ban"  />-->
+
+<!--                    <br /><br />-->
                 </h:form>
 
             </div>
