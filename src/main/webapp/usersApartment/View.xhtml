@@ -10,17 +10,120 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<ui:composition>
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
-    <!--
-    ************************************************
-    Dialog pop-up window to VIEW (READ) an apartment
-    ************************************************
-    -->
-    <p:dialog id="ApartmentViewDlg" widgetVar="ApartmentViewDialog" modal="true"
-              resizable="false" appendTo="@(body)" header="View Apartment">
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="View Apartment" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
 
         <h:form id="ApartmentViewForm" class="ui-datatable-data">
+            <!--
+            <tr> defines a row in the table
+            <td> defines a column within a row.
+            Number of <td> elements = number of columns
+            The table below has 1 row and 2 columns.
+            Left column contains the vertical navigation menu.
+            Right column contains the user's profile data.
+            -->
+<!--            <table width="100%" border="0" cellspacing="0" cellpadding="10">-->
+<!--                <tr>-->
+<!--                    &lt;!&ndash;-->
+<!--                    ***********************************************-->
+<!--                    Row 1 Column 1 (Left): VERTICAL NAVIGATION MENU-->
+<!--                    ***********************************************-->
+<!--                    &ndash;&gt;-->
+<!--                    <td width="180" align="left" valign="middle" nowrap="nowrap">-->
+<!--                        <ul class="verticalMenu">-->
+
+<!--                            <li class="verticalMenuItem">-->
+<!--                                &lt;!&ndash;-->
+<!--                                ================================-->
+<!--                                |          HOME Link           |-->
+<!--                                ================================-->
+<!--                                &ndash;&gt;-->
+<!--                                <h:link outcome="/index">-->
+<!--                                    <i class="fas fa-home" />&nbsp;Home-->
+<!--                                </h:link>-->
+<!--                            </li>-->
+
+<!--                        </ul>-->
+<!--                    </td>-->
+<!--                    &lt;!&ndash;-->
+<!--                    *****************************************-->
+<!--                    Row 1 Column 2 (Right): USER PROFILE DATA-->
+<!--                    *****************************************-->
+<!--                    &ndash;&gt;-->
+<!--                    <td align="center" valign="top">-->
+
+<!--                        <h1> #{apartmentController.selected.name} </h1>-->
+
+<!--                        &lt;!&ndash;-->
+<!--                        USER'S PROFILE PHOTO: Display the user's account profile photo in a circle.-->
+<!--                        The cache="false" option enables immediate display of a newly uploaded photo without using cache.-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:graphicImage cache="false" class="profilePhoto" value="#{userController.userPhoto()}" />-->
+<!--                        <br />-->
+<!--                        <br />-->
+<!--                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >-->
+
+<!--                            <h:outputText value="First Name:"/>-->
+<!--                            <h:outputText value="#{userController.selected.firstName}" />-->
+
+<!--                            <h:outputText value="Middle Name:"/>-->
+<!--                            <h:outputText value="#{userController.selected.middleName}" />-->
+
+<!--                            <h:outputText value="Last Name:"/>-->
+<!--                            <h:outputText value="#{userController.selected.lastName}" />-->
+
+<!--                            <h:outputText value="Address Line 1:"/>-->
+<!--                            <h:outputText value="#{userController.selected.address1}" />-->
+
+<!--                            <h:outputText value="Address Line 2:"/>-->
+<!--                            <h:outputText value="#{userController.selected.address2}" />-->
+
+<!--                            <h:outputText value="City:"/>-->
+<!--                            <h:outputText value="#{userController.selected.city}" />-->
+
+<!--                            <h:outputText value="State:"/>-->
+<!--                            <h:outputText value="#{userController.selected.state}" />-->
+
+<!--                            <h:outputText value="Zip Code:"/>-->
+<!--                            <h:outputText value="#{userController.selected.zipcode}" />-->
+
+<!--                            <h:outputText value="Eating Preferences:"/>-->
+<!--                            <h:outputText value="#{userController.eatingPrefList()[userController.selected.eatingPrefNumber]}" />-->
+
+<!--                            <h:outputText value="Smoking Preferences:"/>-->
+<!--                            <h:outputText value="#{userController.smokingPrefList()[userController.selected.smokingPrefNumber]}" />-->
+
+<!--                            <h:outputText value="Alcohol Preferences:"/>-->
+<!--                            <h:outputText value="#{userController.alcoholPrefList()[userController.selected.alcoholPrefNumber]}" />-->
+
+<!--                            <h:outputText value="Sleep Preferences:"/>-->
+<!--                            <h:outputText value="#{userController.sleepingPrefList()[userController.selected.sleepPrefNumber]}" />-->
+
+<!--                            <h:outputText value="Social Preferences:"/>-->
+<!--                            <h:outputText value="#{userController.socialPrefList()[userController.selected.socialPrefNumber]}" />-->
+
+<!--                            <h:outputText value="Email:"/>-->
+<!--                            <h:outputText value="#{userController.selected.email}" />-->
+
+<!--                            <h:outputText value="Username:"/>-->
+<!--                            <h:outputText value="#{userController.selected.username}" />-->
+
+<!--                        </p:panelGrid>-->
+
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+
             <div align="center">
                 <h:panelGroup id="display">
 
@@ -31,22 +134,64 @@
                         <h:outputText value="Apartment Name:"/>
                         <h:outputText value="#{apartmentController.selected.name}" />
 
+                        <h:outputText value="Apartment Description:"/>
+                        <h:outputText value="#{apartmentController.selected.description}" />
 
+                        <h:outputText value="Address:"/>
+                        <h:outputText value="#{apartmentController.selected.address}" />
+
+                        <h:outputText value="Number of Bedrooms:"/>
+                        <h:outputText value="#{apartmentController.selected.numBed}" />
+
+                        <h:outputText value="Number of Bathrooms:"/>
+                        <h:outputText value="#{apartmentController.selected.numBath}" />
+
+<!--                        TODO currency format-->
+                        <h:outputText value="Monthly Rent:"/>
+                        <h:outputText value="#{apartmentController.selected.rent}" />
+
+<!--                        TODO date format-->
+                        <h:outputText value="Start Date:"/>
+                        <h:outputText value="#{apartmentController.selected.startDate}" />
+                        <!--                        TODO date format-->
+                        <h:outputText value="End Date:"/>
+                        <h:outputText value="#{apartmentController.selected.endDate}" />
+
+<!--                        TODO output link-->
                         <h:outputText value="Apartment Complex Website:"/>
                         <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
+
+
 
                     </p:panelGrid>
                 </h:panelGroup>
                 <br /><br />
+                <!--
+                        p:gmap is a map component integrated with Google Maps JavaScript API.
+                        See PrimeFaces User Guide for its documentation.
+
+                        You must register as Google developer and obtain an API key to use p:gmap
+                        by following the instructions in siteTemplate.xhtml
+                        -->
+                <p:gmap center="#{apartmentController.selected.getLatLong()}"
+                        zoom="100" type="roadmap"
+                        style="width:600px;height:400px" />
                 <h:panelGroup>
-                    <!-- CLOSE button -->
-                    <p:commandButton value="Close" onclick="ApartmentViewDialog.hide()"
-                                     icon="fas fa-window-close" />
+                    <!-- GO BACK button -->
+<!--                    <p:commandButton id="backButton" value="Go Back" action="/usersApartment/List?faces-redirect=true"-->
+<!--                                     icon="fas fa-arrow-left" ajax="false" immediate="true" />-->
+                    <!-- GO BACK button -->
+                    <p:commandButton id="backButton" value="Go Back" action="/usersApartment/List?faces-redirect=true"
+                                     icon="fas fa-arrow-left" ajax="false" immediate="true" />
                 </h:panelGroup>
                 <br /><br />
             </div>
         </h:form>
 
-    </p:dialog>
+    </ui:define>
+
 </ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+
 </html>

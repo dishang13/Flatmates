@@ -199,6 +199,21 @@
                                 <h:outputText value="Zip Code:"/>
                                 <h:outputText value="#{userController.selected.zipcode}" />
 
+                                <h:outputText value="Eating Preferences:"/>
+                                <h:outputText value="#{userController.eatingPrefList()[userController.selected.eatingPrefNumber]}" />
+
+                                <h:outputText value="Smoking Preferences:"/>
+                                <h:outputText value="#{userController.smokingPrefList()[userController.selected.smokingPrefNumber]}" />
+
+                                <h:outputText value="Alcohol Preferences:"/>
+                                <h:outputText value="#{userController.alcoholPrefList()[userController.selected.alcoholPrefNumber]}" />
+
+                                <h:outputText value="Sleep Preferences:"/>
+                                <h:outputText value="#{userController.sleepingPrefList()[userController.selected.sleepPrefNumber]}" />
+
+                                <h:outputText value="Social Preferences:"/>
+                                <h:outputText value="#{userController.socialPrefList()[userController.selected.socialPrefNumber]}" />
+
                                 <h:outputText value="Email:"/>
                                 <h:outputText value="#{userController.selected.email}" />
 

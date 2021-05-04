@@ -141,11 +141,6 @@ public class User implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "pet_owned_number")
-    private int petOwnedNumber;
-
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "eating_pref_number")
     private int eatingPrefNumber;
 
@@ -208,7 +203,6 @@ public class User implements Serializable {
         this.securityAnswer = securityAnswer;
         this.email = email;
         this.phone = phone;
-        this.petOwnedNumber = petOwnedNumber;
         this.eatingPrefNumber = eatingPrefNumber;
         this.smokingPrefNumber = smokingPrefNumber;
         this.alcoholPrefNumber = alcoholPrefNumber;
@@ -340,14 +334,6 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public int getPetOwnedNumber() {
-        return petOwnedNumber;
-    }
-
-    public void setPetOwnedNumber(int petOwnedNumber) {
-        this.petOwnedNumber = petOwnedNumber;
     }
 
     public int getEatingPrefNumber() {

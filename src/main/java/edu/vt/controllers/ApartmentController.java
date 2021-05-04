@@ -17,10 +17,8 @@ import edu.vt.globals.Methods;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -30,8 +28,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 /*
@@ -74,12 +70,10 @@ public class ApartmentController implements Serializable {
      */
     private Integer id;
     private String name;
+    private String description;
     private Date dateEntered;
     private boolean archived;
-    private String address1;
-    private String address2;
-    private String city;
-    private String state;
+    private String address;
     private int numBed;
     private int numBath;
     private int rent;
@@ -88,7 +82,6 @@ public class ApartmentController implements Serializable {
     private BigDecimal latitude;
     private BigDecimal longitude;
     private String complexWebsite;
-    private boolean petsAllowed;
 
     private List<Apartment> items;
     private List<ApartmentPhoto> apartmentPhotoList;
@@ -141,6 +134,14 @@ public class ApartmentController implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Date getDateEntered() {
         return dateEntered;
     }
@@ -157,36 +158,12 @@ public class ApartmentController implements Serializable {
         this.archived = archived;
     }
 
-    public String getAddress1() {
-        return address1;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getNumBed() {
@@ -251,14 +228,6 @@ public class ApartmentController implements Serializable {
 
     public void setComplexWebsite(String complexWebsite) {
         this.complexWebsite = complexWebsite;
-    }
-
-    public boolean isPetsAllowed() {
-        return petsAllowed;
-    }
-
-    public void setPetsAllowed(boolean petsAllowed) {
-        this.petsAllowed = petsAllowed;
     }
 
     public List<ApartmentPhoto> getApartmentPhotoList() {
@@ -444,6 +413,7 @@ public class ApartmentController implements Serializable {
     public String cancel() {
         // Unselect previously selected apartment if any
         selected = null;
+        items = null;
         return "/usersApartment/List?faces-redirect=true";
     }
 

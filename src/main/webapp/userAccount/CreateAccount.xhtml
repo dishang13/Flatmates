@@ -143,21 +143,6 @@
                         *  PETS OWNED PREFERENCE  * TODO add tooltips
                         ***************************
                         -->
-                        <p:outputLabel value="Pets Owned:" for="petsPref" />
-                        <p:selectOneMenu id="petsPref" value="#{userController.petOwnedNumber}" required="true" >
-                            <f:selectItems value="#{userController.pet_owned_preferences}" />
-                        </p:selectOneMenu>
-<!--                        <p:selectOneMenu id="petsPref" value="#{userController.petOwned}" required="true" >-->
-<!--                            <f:selectItem itemLabel="Select Pets Owned" itemValue="" noSelectionOption="true"/>-->
-<!--                            <f:selectItems value="#{userController.petsOwnedList()}" var="pref"-->
-<!--                                           itemLabel="#{pref}" itemValue="#{pref}" />-->
-<!--                        </p:selectOneMenu>-->
-
-                        <!--
-                        ***************************
-                        *  PETS OWNED PREFERENCE  * TODO add tooltips
-                        ***************************
-                        -->
                         <p:outputLabel value="Eating Preference:" for="eatingPref" />
                         <p:selectOneMenu id="eatingPref" value="#{userController.eatingPrefNumber}" required="true" >
                             <f:selectItems value="#{userController.eating_preferences}" />

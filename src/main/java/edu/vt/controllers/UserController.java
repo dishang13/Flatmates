@@ -84,7 +84,6 @@ public class UserController implements Serializable {
     private String email;
     private String phone;
 
-    private int petOwnedNumber;
     private int eatingPrefNumber;
     private int smokingPrefNumber;
     private int alcoholPrefNumber;
@@ -92,7 +91,6 @@ public class UserController implements Serializable {
     private int socialPrefNumber;
 
     private Map<String, Object> security_questions;
-    private Map<String, Object> pet_owned_preferences;
     private Map<String, Object> eating_preferences;
     private Map<String, Object> smoking_preferences;
     private Map<String, Object> alcohol_preferences;
@@ -250,14 +248,6 @@ public class UserController implements Serializable {
         this.phone = phone;
     }
 
-    public int getPetOwnedNumber() {
-        return petOwnedNumber;
-    }
-
-    public void setPetOwnedNumber(int petOwnedNumber) {
-        this.petOwnedNumber = petOwnedNumber;
-    }
-
     public int getEatingPrefNumber() {
         return eatingPrefNumber;
     }
@@ -346,27 +336,7 @@ public class UserController implements Serializable {
         this.security_questions = security_questions;
     }
 
-    public Map<String, Object> getPet_owned_preferences() {
-        if (pet_owned_preferences == null) {
-            /*
-            Difference between HashMap and LinkedHashMap:
-            HashMap stores key-value pairings in no particular order.
-                Values are retrieved based on their corresponding Keys.
-            LinkedHashMap stores and retrieves key-value pairings
-                in the order they were put into the map.
-             */
-            pet_owned_preferences = new LinkedHashMap<>();
 
-            for (int i = 0; i < Constants.PETS_OWNED_USER_PREF.length; i++) {
-                pet_owned_preferences.put(Constants.PETS_OWNED_USER_PREF[i], i);
-            }
-        }
-        return pet_owned_preferences;
-    }
-
-    public void setPet_owned_preferences(Map<String, Object> pet_owned_preferences) {
-        this.pet_owned_preferences = pet_owned_preferences;
-    }
 
     public Map<String, Object> getEating_preferences() {
         if (eating_preferences == null) {
@@ -556,12 +526,6 @@ public class UserController implements Serializable {
 
     /*
      */
-    public String[] petsOwnedList() {
-        return Constants.PETS_OWNED_USER_PREF;
-    }
-
-    /*
-     */
     public String[] eatingPrefList() {
         return Constants.EATING_PREF;
     }
@@ -662,7 +626,6 @@ public class UserController implements Serializable {
             newUser.setEmail(email);
             newUser.setUsername(username);
             newUser.setPhone(phone);
-            newUser.setPetOwnedNumber(petOwnedNumber);
             newUser.setEatingPrefNumber(eatingPrefNumber);
             newUser.setSmokingPrefNumber(smokingPrefNumber);
             newUser.setAlcoholPrefNumber(alcoholPrefNumber);
@@ -729,7 +692,6 @@ public class UserController implements Serializable {
             editUser.setEmail(this.selected.getEmail());
             editUser.setPhone(this.selected.getPhone());
 
-            editUser.setPetOwnedNumber(this.selected.getPetOwnedNumber());
             editUser.setEatingPrefNumber(this.selected.getEatingPrefNumber());
             editUser.setSmokingPrefNumber(this.selected.getSmokingPrefNumber());
             editUser.setAlcoholPrefNumber(this.selected.getAlcoholPrefNumber());

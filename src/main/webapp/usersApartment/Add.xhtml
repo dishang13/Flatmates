@@ -40,36 +40,20 @@
                         intended to assign user-provided values to the properties.
                         -->
                         <p:outputLabel value="Apartment Name:" for="name" />
-                        <!-- The entered value is set to be the selected new apartment object's property 'name'  -->
                         <p:inputText id="name" class="dataFields" value="#{apartmentController.selected.name}"
                                      placeholder="Enter Apartment Name" required="true"
                                      requiredMessage="The Apartment Name field is required."/>
 
-                        <p:outputLabel value="Address Line 1:" for="address1" />
-                        <p:inputText id="address1" value="#{apartmentController.selected.address1}" required="true" class="inputTextField"
-                                     requiredMessage="The Address Line 1 field is required." >
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
+                        <p:outputLabel value="Apartment Description:" for="description" />
+                        <p:inputTextarea id="description" class="inputTextField" value="#{apartmentController.selected.description}"
+                                            placeholder="Enter Apartment Description"
+                                            maxlength="1000" autoResize="true"/>
 
-                        <p:outputLabel value="Address Line 2:" for="address2" />
-                        <p:inputText id="address2" value="#{apartmentController.selected.address2}" class="inputTextField">
-                        </p:inputText>
-
-                        <p:outputLabel value="City:" for="city" />
-                        <p:inputText id="city" value="#{apartmentController.selected.city}" required="true" class="inputTextField"
-                                     requiredMessage="The City field is required." >
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
-
-                        <p:outputLabel value="State:" for="state" />
-                        <h:selectOneMenu id="state" value="#{apartmentController.selected.state}" required="true">
-                            <!--
-                            List of U.S. state postal codes is iterated over
-                            to display the list for the user to select one.
-                            -->
-                            <f:selectItems value="#{apartmentController.listOfStates()}" var="state"
-                                           itemLabel="#{state}" itemValue="#{state}" />
-                        </h:selectOneMenu>
+                        <p:outputLabel value="Address:" for="address" />
+                        <p:inputTextarea id="address" value="#{apartmentController.selected.address}" required="true" class="inputTextField"
+                                         placeholder="Enter Apartment Address"
+                                         maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
+                        </p:inputTextarea>
 
                         <p:outputLabel value="Rent per Month:" for="rent" />
                         <!--TODO
@@ -104,7 +88,7 @@
                         <!-- TODO url validation-->
                         <p:outputLabel value="Apartment Complex Website:" for="website" />
                         <!-- The entered value is set to be the selected new apartment object's property 'website' -->
-                        <p:inputText id="website" class="dataFields" value="#{apartmentController.selected.complexWebsite}"
+                        <p:inputText id="website" class="inputTextField" value="#{apartmentController.selected.complexWebsite}"
                                      placeholder="Enter Apartment's Home Website URL"/>
 
                         <p:outputLabel value="Start Date:" for="startDate" />

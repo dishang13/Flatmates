@@ -127,23 +127,6 @@ public final class Constants {
     };
 
     /*
-    Pets owned preference options for users
-    */
-    public static final String[] PETS_OWNED_USER_PREF = {
-        "Yes",
-        "No"
-    };
-
-    /*
-    Pets owned preference options for apartment listing
-    */
-    public static final String[] PETS_OWN_APARTMENT_PREF = {
-        "No Preference",
-        "Yes",
-        "No"
-    };
-
-    /*
     Eating Preference option
     */
     public static final String[] EATING_PREF = {
