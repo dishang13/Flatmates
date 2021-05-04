@@ -170,14 +170,14 @@
                 </h:panelGroup>
                 <br /><br />
                 <!--
-                        p:gmap is a map component integrated with Google Maps JavaScript API.
-                        See PrimeFaces User Guide for its documentation.
+                p:gmap is a map component integrated with Google Maps JavaScript API.
+                See PrimeFaces User Guide for its documentation.
 
-                        You must register as Google developer and obtain an API key to use p:gmap
-                        by following the instructions in siteTemplate.xhtml
-                        -->
+                You must register as Google developer and obtain an API key to use p:gmap
+                by following the instructions in siteTemplate.xhtml
+                -->
                 <p:gmap center="#{apartmentController.selected.getLatLong()}"
-                        zoom="100" type="roadmap"
+                        zoom="15" type="roadmap" model="#{apartmentController.mapModel}"
                         style="width:600px;height:400px" />
                 <h:panelGroup>
                     <!-- GO BACK button -->

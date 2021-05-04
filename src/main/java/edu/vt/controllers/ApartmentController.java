@@ -13,10 +13,17 @@ import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
+import org.primefaces.json.JSONObject;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -91,6 +98,8 @@ public class ApartmentController implements Serializable {
     private List<ApartmentPhoto> apartmentPhotoList;
 
     private Apartment selected;
+
+    private MapModel mapModel;
 
     /*
     The instance variable 'apartmentFacade' is annotated with the @EJB annotation.
@@ -251,6 +260,8 @@ public class ApartmentController implements Serializable {
     }
 
     public void setSelected(Apartment selected) {
+        // We need to update mapModel everytime selected changes
+        this.mapModel = null;
         this.selected = selected;
     }
 
@@ -290,6 +301,18 @@ public class ApartmentController implements Serializable {
 
     public void setItems(List<Apartment> items) {
         this.items = items;
+    }
+
+    public MapModel getMapModel() {
+        if(mapModel == null && selected != null) {
+            mapModel = new DefaultMapModel();
+            mapModel.addOverlay(new Marker(new LatLng(selected.getLatitude().doubleValue(), selected.getLongitude().doubleValue())));
+        }
+        return mapModel;
+    }
+
+    public void setMapModel(MapModel mapModel) {
+        this.mapModel = mapModel;
     }
 
     /*
@@ -336,8 +359,10 @@ public class ApartmentController implements Serializable {
 
         // Set Date in the format of YYYY-MM-DD
         selected.setDateEntered(currentDate);
-        selected.setLatitude(new BigDecimal(0.0));
-        selected.setLongitude(new BigDecimal(0.0));
+
+        // Set the latitude and longitude from address using GeocodingAPI
+        setLatLong(selected);
+
         /*
         Show the message "Your Apartment has been successfully listed!"
 
@@ -429,6 +454,8 @@ public class ApartmentController implements Serializable {
     public String[] listOfStates() {
         return Constants.STATES;
     }
+
+
 
     /*
      ****************************************************************************
@@ -563,5 +590,92 @@ public class ApartmentController implements Serializable {
 //                    "See: " + ex.getMessage());
 //        }
 //    }
+
+    private void setLatLong(Apartment apartment) {
+        String geocodingApiUrl = Constants.geocodingApiUrlTemplate.replace("{0}", URLEncoder.encode(apartment.getAddress(), StandardCharsets.UTF_8));
+        try {
+            // Obtain the JSON file from the searchApiUrl
+            String geocodingJsonData = Methods.readUrlContent(geocodingApiUrl);
+
+            /*
+            https://api.geoapify.com/v1/geocode/search?text=38%20Upper%20Montagu%20Street%2C%20Westminster%20W1H%201LJ%2C%20United%20Kingdom&apiKey=679dd2b006364ecab99a87315b33e34c
+            returns the following JSON data:
+            {
+                  "type": "FeatureCollection",
+                  "features": [
+                    {
+                      "type": "Feature",
+                      "properties": {
+                        "datasource": {
+                          "sourcename": "openstreetmap",
+                          "attribution": "© OpenStreetMap contributors",
+                          "license": "Open Database Licence",
+                          "url": "https://www.openstreetmap.org/copyright"
+                        },
+                        "housenumber": "38",
+                        "street": "Upper Montagu Street",
+                        "suburb": "Marylebone",
+                        "city": "Westminster",
+                        "county": "Greater London",
+                        "state": "England",
+                        "postcode": "W1H 1LJ",
+                        "country": "United Kingdom",
+                        "country_code": "gb",
+                        "lon": -0.16030636023550826,
+                        "lat": 51.52016005,
+                        "formatted": "38 Upper Montagu Street, Westminster W1H 1LJ, United Kingdom",
+                        "address_line1": "38 Upper Montagu Street",
+                        "address_line2": "Westminster W1H 1LJ, United Kingdom",
+                        "state_code": "ENG",
+                        "result_type": "building",
+                        "rank": {
+                          "importance": 0.811,
+                          "popularity": 8.988490181891963,
+                          "confidence": 1,
+                          "confidence_city_level": 1,
+                          "confidence_street_level": 1,
+                          "match_type": "full_match"
+                        },
+                        "place_id": "51dcb14637eb84c4bf59c6b7c19a94c24940f00102f901370cef1100000000c00203"
+                      },
+                      "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                          -0.16030636023550826,
+                          51.52016005
+                        ]
+                      },
+                      "bbox": [
+                        -0.160394,
+                        51.5201061,
+                        -0.1602251,
+                        51.5202273
+                      ]
+                    }
+                  ],
+                  "query": {
+                    "text": "38 Upper Montagu Street, Westminster W1H 1LJ, United Kingdom",
+                    "parsed": {
+                      "housenumber": "38",
+                      "street": "upper montagu street",
+                      "postcode": "w1h 1lj",
+                      "district": "westminster",
+                      "country": "united kingdom",
+                      "expected_type": "building"
+                    }
+                  }
+                }
+             */
+
+            // Get the latitude and longitudes from the JSON
+            JSONObject geocodingJsonObject = new JSONObject(geocodingJsonData);
+            JSONObject properties = geocodingJsonObject.getJSONArray("features").getJSONObject(0).getJSONObject("properties");
+
+            apartment.setLatitude(properties.getBigDecimal("lat"));
+            apartment.setLongitude(properties.getBigDecimal("lon"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
