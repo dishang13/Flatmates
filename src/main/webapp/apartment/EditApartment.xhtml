@@ -23,25 +23,108 @@
         <h:form id="ApartmentEditForm" class="ui-datatable-data">
             <div align="center">
                 <h:panelGroup id="display">
-                    asd
+                    <h:graphicImage value="#{apartmentController.logoFileStoragePath()}#{apartmentController.selected.name}.jpg"
+                                    style="width:300px" />
                     <br /><br />
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
                                  rendered="#{apartmentController.selected != null}">
 
-                        <h:outputText value="Apartment Name:"/>
-                        <h:outputText value="#{apartmentController.selected.name}" />
+                        <p:outputLabel value="Apartment Name:" for="name" />
+                        <!-- The entered value is set to be the selected new apartment object's property 'name'  -->
+                        <p:inputText id="name" class="dataFields" value="#{apartmentController.selected.name}"
+                                     placeholder="Enter Apartment Name" required="true"
+                                     requiredMessage="The Apartment Name field is required."/>
+
+                        <p:outputLabel value="Address Line 1:" for="address1" />
+                        <p:inputText id="address1" value="#{apartmentController.selected.address1}" required="true" class="inputTextField"
+                                     requiredMessage="The Address Line 1 field is required." >
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Address Line 2:" for="address2" />
+                        <p:inputText id="address2" value="#{apartmentController.selected.address2}" class="inputTextField">
+                        </p:inputText>
+
+                        <p:outputLabel value="City:" for="city" />
+                        <p:inputText id="city" value="#{apartmentController.selected.city}" required="true" class="inputTextField"
+                                     requiredMessage="The City field is required." >
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <p:outputLabel value="State:" for="state" />
+                        <h:selectOneMenu id="state" value="#{apartmentController.selected.state}" required="true">
+                            <!--
+                            List of U.S. state postal codes is iterated over
+                            to display the list for the user to select one.
+                            -->
+                            <f:selectItems value="#{apartmentController.listOfStates()}" var="state"
+                                           itemLabel="#{state}" itemValue="#{state}" />
+                        </h:selectOneMenu>
+
+                        <p:outputLabel value="Rent per Month:" for="rent" />
+                        <!--TODO
+                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.
+                        *****************************************************************
+                        *   mask="9?99999"   min=1 & max=999999 )   *
+                        *****************************************************************
+                        9 ==> indicates a digit 0 to 9.
+                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.
+                        Total number of 9s defines the maximum number of digits allowed.
+                        -->
+                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"
+                                       required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"
+                                       decimalPlaces="0" maxValue="100000000">
+                            <p:watermark for="rent" value="Enter the Monthly Rent!" />
+                        </p:inputNumber>
+
+                        <p:outputLabel value="Number of Bedrooms:" for="numBed" />
+                        <p:inputNumber id="numBed" class="dataFields" value="#{apartmentController.selected.numBed}"
+                                       required="true" requiredMessage="The Number of Bedrooms field is required." minValue="0"
+                                       decimalPlaces="0" maxValue="100">
+                            <p:watermark for="rent" value="Enter Number of Bedrooms!" />
+                        </p:inputNumber>
+
+                        <p:outputLabel value="Number of Bathrooms:" for="numBath" />
+                        <p:inputNumber id="numBath" class="dataFields" value="#{apartmentController.selected.numBath}"
+                                       required="true" requiredMessage="The Number of Bathrooms field is required."
+                                       minValue="0" decimalPlaces="0" maxValue="100">
+                            <p:watermark for="numBath" value="Enter Number of Bathrooms!" />
+                        </p:inputNumber>
+
+                        <!-- TODO url validation-->
+                        <p:outputLabel value="Apartment Complex Website:" for="website" />
+                        <!-- The entered value is set to be the selected new apartment object's property 'website' -->
+                        <p:inputText id="website" class="dataFields" value="#{apartmentController.selected.complexWebsite}"
+                                     placeholder="Enter Apartment's Home Website URL"/>
+
+                        <p:outputLabel value="Start Date:" for="startDate" />
+                        <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" title="Start Date"
+                                    pattern="dd/MM/yyyy"  required="true" mask="true"
+                                    requiredMessage="The Start Date field is required."/>
+
+                        <p:outputLabel value="End Date:" for="endDate" />
+                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}" title="End Date"
+                                    pattern="dd/MM/yyyy"  required="true" mask="true"
+                                    requiredMessage="The End Date field is required."/>
 
 
-                        <h:outputText value="Apartment Complex Website:"/>
-                        <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
 
                     </p:panelGrid>
                 </h:panelGroup>
                 <br /><br />
                 <h:panelGroup>
-                    <!-- CLOSE button -->
-                    <p:commandButton value="Close" onclick="ApartmentEditDialog.hide()"
-                                     icon="fas fa-window-close" />
+                    <div align="center">
+                        <!-- SAVE button -->
+                        <p:commandButton actionListener="#{apartmentController.update}" value="Save"
+                                         icon="fas fa-save" ajax="false"
+                                         update="display,:ApartmentListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         oncomplete="handleSubmit(args, 'ApartmentEditDialog');"/>
+                        &nbsp;
+                        <!-- CANCEL button -->
+                        <p:commandButton value="Cancel" onclick="PF('ApartmentEditDialog').hide()"
+                                         immediate="true" icon="fas fa-ban"/>
+                    </div>
+
                 </h:panelGroup>
                 <br /><br />
             </div>

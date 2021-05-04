@@ -35,12 +35,12 @@ public final class Constants {
      */
     // To run locally
     // Dishang's Paths
-    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/UserPhotoStorage/";
-    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
+//    public static final String USER_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+//    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
 
 
-//    public static final String USER_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
-//    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+    public static final String USER_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+    public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
 
     // Siva's Paths
     //public static final String USER_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";

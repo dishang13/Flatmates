@@ -14,8 +14,12 @@ import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
@@ -549,4 +553,45 @@ public class ApartmentController implements Serializable {
             }
         }
     }
+
+    /*
+     ****************************
+     *   Return Logo File URI   *
+     ****************************
+     */
+    public String logoFileStoragePath() {
+        return Constants.APARTMENT_PHOTOS_URI;
+    }
+
+    /*
+     *****************************************
+     *   Delete Uploaded Company Logo File   *
+     *****************************************
+     */
+//    public void deleteLogoFile() {
+//
+//        // This sets the necessary flag to ensure the messages are preserved.
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+//
+//        // Delete the company logo file stored in a directory external to the app directory
+//        try {
+//            // Obtain the company logo file URI
+//            String companyLogoFileURI = Constants.APARTMENT_PHOTOS_URI + getSelected().getTicker() + ".png";
+//
+//            // Obtain a Path object by converting the company logo file URI
+//            Path fileToDeletePath = Paths.get(companyLogoFileURI);
+//
+//            // Delete the file under the Path object if it exists
+//            Files.deleteIfExists(fileToDeletePath);
+//
+//            // Unselect previously selected company if any
+//            selected = null;
+//            setLogoFileUploaded(false);
+//
+//        } catch (IOException ex) {
+//            Methods.showMessage("Fatal Error", "Something went wrong during logo file deletion!",
+//                    "See: " + ex.getMessage());
+//        }
+//    }
+
 }
