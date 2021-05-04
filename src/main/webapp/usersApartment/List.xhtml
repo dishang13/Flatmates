@@ -159,7 +159,7 @@
 
                             <!-- VIEW button -->
                             <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
-                                             update=":ApartmentViewDlg" oncomplete="PF('ApartmentViewDialog').show()"
+                                             action="/usersApartment/View?faces-redirect=true"
                                              disabled="#{empty apartmentController.selected}"/>
 
                             <!-- EDIT button -->
@@ -220,7 +220,7 @@
         Clicking the View button displays the included
         View.xhtml file in a dialog box on top of this page.
         -->
-        <ui:include src="/usersApartment/View.xhtml"/>
+<!--        <ui:include src="/usersApartment/View.xhtml"/>-->
 
         <!--
         Clicking the Edit button displays the included

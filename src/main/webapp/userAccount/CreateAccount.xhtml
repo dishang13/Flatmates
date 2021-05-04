@@ -8,7 +8,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -136,6 +137,56 @@
                             -->
                             <f:validator validatorId="zipCodeValidator"/> 
                         </p:inputText>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Eating Preference:" for="eatingPref" />
+                        <p:selectOneMenu id="eatingPref" value="#{userController.eatingPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.eating_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Smoking Preference:" for="smokingPref" />
+                        <p:selectOneMenu id="smokingPref" value="#{userController.smokingPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.smoking_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Alcohol Preference:" for="alcoholPref" />
+                        <p:selectOneMenu id="alcoholPref" value="#{userController.alcoholPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.alcohol_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Sleep Preferences:" for="sleepPref" />
+                        <p:selectOneMenu id="sleepPref" value="#{userController.sleepPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.sleep_preferences}" />
+                        </p:selectOneMenu>
+
+                        <!--
+                        ***************************
+                        *  PETS OWNED PREFERENCE  * TODO add tooltips
+                        ***************************
+                        -->
+                        <p:outputLabel value="Social Preferences:" for="socialPref" />
+                        <p:selectOneMenu id="socialPref" value="#{userController.socialPrefNumber}" required="true" >
+                            <f:selectItems value="#{userController.social_preferences}" />
+                        </p:selectOneMenu>
 
                         <!--
                         ********************************

@@ -28,7 +28,6 @@ CREATE TABLE User (
 	security_answer varchar(128) NOT NULL,
 	email varchar(128) NOT NULL,
 	phone varchar(20),
-    pet_owned_number INT NOT NULL ,
     eating_pref_number INT NOT NULL,
     smoking_pref_number INT NOT NULL,
     alcohol_pref_number INT NOT NULL,
@@ -49,13 +48,11 @@ CREATE TABLE UserPhoto (
 CREATE TABLE Apartment (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	name varchar(256) NOT NULL,
+    description varchar(1000),
 	date_entered DATE NOT NULL, /* YYYY-MM-DD */
 	user_id INT UNSIGNED NOT NULL,
 	archived BOOLEAN NOT NULL DEFAULT false,
-	address1 varchar(128) NOT NULL,
-	address2 varchar(128),
-	city varchar(64) NOT NULL,
-	state varchar(2) NOT NULL,
+	address varchar(500) NOT NULL,
 	num_bed INT NOT NULL,
 	num_bath INT NOT NULL,
 	rent INT NOT NULL,

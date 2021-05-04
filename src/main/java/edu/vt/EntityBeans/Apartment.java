@@ -24,10 +24,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Apartment.findByName", query = "SELECT a FROM Apartment a WHERE a.name = :name"),
     @NamedQuery(name = "Apartment.findByDateEntered", query = "SELECT a FROM Apartment a WHERE a.dateEntered = :dateEntered"),
     @NamedQuery(name = "Apartment.findByArchived", query = "SELECT a FROM Apartment a WHERE a.archived = :archived"),
-    @NamedQuery(name = "Apartment.findByAddress1", query = "SELECT a FROM Apartment a WHERE a.address1 = :address1"),
-    @NamedQuery(name = "Apartment.findByAddress2", query = "SELECT a FROM Apartment a WHERE a.address2 = :address2"),
-    @NamedQuery(name = "Apartment.findByCity", query = "SELECT a FROM Apartment a WHERE a.city = :city"),
-    @NamedQuery(name = "Apartment.findByState", query = "SELECT a FROM Apartment a WHERE a.state = :state"),
+    @NamedQuery(name = "Apartment.findByAddress", query = "SELECT a FROM Apartment a WHERE a.address = :address"),
     @NamedQuery(name = "Apartment.findByNumBed", query = "SELECT a FROM Apartment a WHERE a.numBed = :numBed"),
     @NamedQuery(name = "Apartment.findByNumBath", query = "SELECT a FROM Apartment a WHERE a.numBath = :numBath"),
     @NamedQuery(name = "Apartment.findByRent", query = "SELECT a FROM Apartment a WHERE a.rent = :rent"),
@@ -36,7 +33,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Apartment.findByLatitude", query = "SELECT a FROM Apartment a WHERE a.latitude = :latitude"),
     @NamedQuery(name = "Apartment.findByLongitude", query = "SELECT a FROM Apartment a WHERE a.longitude = :longitude"),
     @NamedQuery(name = "Apartment.findByComplexWebsite", query = "SELECT a FROM Apartment a WHERE a.complexWebsite = :complexWebsite"),
-    @NamedQuery(name = "Apartment.findByPetsAllowed", query = "SELECT a FROM Apartment a WHERE a.petsAllowed = :petsAllowed"),
     @NamedQuery(name = "Apartment.findByUserId", query = "SELECT a FROM Apartment a WHERE a.userId.id = :userId")
 })
 
@@ -62,6 +58,10 @@ public class Apartment implements Serializable {
     @Column(nullable = false, length = 256)
     private String name;
 
+    @Size(max = 1000)
+    @Column( length = 1000)
+    private String description;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "date_entered", nullable = false)
@@ -75,25 +75,9 @@ public class Apartment implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 128)
-    @Column(nullable = false, length = 128)
-    private String address1;
-
-    @Size(max = 128)
-    @Column(length = 128)
-    private String address2;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(nullable = false, length = 64)
-    private String city;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
-    @Column(nullable = false, length = 2)
-    private String state;
+    @Size(max = 500)
+    @Column(nullable = false, length = 500)
+    private String address;
 
     @Basic(optional = false)
     @NotNull
@@ -136,11 +120,6 @@ public class Apartment implements Serializable {
     @Column(name = "complex_website", length = 1028)
     private String complexWebsite;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "pets_allowed", nullable = false)
-    private boolean petsAllowed;
-
     // User Id
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
@@ -162,14 +141,13 @@ public class Apartment implements Serializable {
         this.id = id;
     }
 
-    public Apartment(Integer id, String name, Date dateEntered, boolean archived, String address1, String city, String state, int numBed, int numBath, int rent, Date startDate, Date endDate, BigDecimal latitude, BigDecimal longitude, boolean petsAllowed) {
+    public Apartment(Integer id, String name, String description, Date dateEntered, boolean archived, String address, int numBed, int numBath, int rent, Date startDate, Date endDate, BigDecimal latitude, BigDecimal longitude) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.dateEntered = dateEntered;
         this.archived = archived;
-        this.address1 = address1;
-        this.city = city;
-        this.state = state;
+        this.address = address;
         this.numBed = numBed;
         this.numBath = numBath;
         this.rent = rent;
@@ -177,7 +155,6 @@ public class Apartment implements Serializable {
         this.endDate = endDate;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.petsAllowed = petsAllowed;
     }
 
     /*
@@ -202,6 +179,14 @@ public class Apartment implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Date getDateEntered() {
         return dateEntered;
     }
@@ -218,36 +203,12 @@ public class Apartment implements Serializable {
         this.archived = archived;
     }
 
-    public String getAddress1() {
-        return address1;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getNumBed() {
@@ -314,14 +275,6 @@ public class Apartment implements Serializable {
         this.complexWebsite = complexWebsite;
     }
 
-    public boolean getPetsAllowed() {
-        return petsAllowed;
-    }
-
-    public void setPetsAllowed(boolean petsAllowed) {
-        this.petsAllowed = petsAllowed;
-    }
-
     public Collection<ApartmentPhoto> getApartmentPhotoCollection() {
         return apartmentPhotoCollection;
     }
@@ -334,16 +287,17 @@ public class Apartment implements Serializable {
         return archived;
     }
 
-    public boolean isPetsAllowed() {
-        return petsAllowed;
-    }
-
     public User getUserId() {
         return userId;
     }
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public String getLatLong() {
+        System.out.println(latitude.doubleValue() + ", " + longitude.doubleValue());
+        return latitude.doubleValue() + ", " + longitude.doubleValue();
     }
 
     /*
