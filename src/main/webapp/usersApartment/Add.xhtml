@@ -91,15 +91,28 @@
                         <p:inputText id="website" class="inputTextField" value="#{apartmentController.selected.complexWebsite}"
                                      placeholder="Enter Apartment's Home Website URL"/>
 
+
+
+
                         <p:outputLabel value="Start Date:" for="startDate" />
-                        <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" title="Start Date"
-                                    pattern="dd/MM/yyyy"  required="true" mask="true"
-                                    requiredMessage="The Start Date field is required."/>
+
+                        <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" mindate="#{apartmentController.today}"
+                                    pattern="dd/MM/yyyy"     required="true" mask="true"
+                                    requiredMessage="The Start Date field is required.">
+                            <p:ajax event="dateSelect" update="endDate"/>
+                        </p:calendar>
+
+<!--                        pattern="dd/MM/yyyy"-->
+
+
+
 
                         <p:outputLabel value="End Date:" for="endDate" />
-                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}" title="End Date"
-                                    pattern="dd/MM/yyyy"  required="true" mask="true"
-                                    requiredMessage="The End Date field is required."/>
+                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}" mindate="#{apartmentController.startDate}"
+                                               pattern="dd/MM/yyyy" required="true" mask="true"
+                                    requiredMessage="The End Date field is required.">
+                            <p:ajax event="dateSelect"/>
+                        </p:calendar>
 
 
                         <!-- Asterisk * indicates that the field is required and must have a value -->
@@ -111,6 +124,7 @@
 <!--                                        class="apartmentLogo" />-->
 
                     </p:panelGrid>
+
                 </h:panelGroup>
                 <br /><br />
                 <h:panelGroup>

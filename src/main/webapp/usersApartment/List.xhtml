@@ -79,6 +79,51 @@
                             <h:outputText class="inputTextField" value="#{item.name}"/>
                         </p:column>
 
+
+                        <!--
+                      ***************************
+                      *    Rent Per Month   *
+                      ***************************
+                      -->
+                        <p:column sortBy="#{item.rent}" headerText="Rent Per Month($):" style="width:100px;">
+                            <h:outputText class="inputTextField" value="#{item.rent}"/>
+                        </p:column>
+
+                        <!--
+                       *************************
+                       *   dateEntered  *
+                       *************************
+                       -->
+                        <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
+                                  style="text-align: center; width:100px;">
+                            <h:outputText class="inputDateField" value="#{item.dateEntered}"/>
+                        </p:column>
+
+                        <!--
+                       *************************
+                       *   Start Date  *
+                       *************************
+                       -->
+                        <p:column sortBy="#{item.startDate}" headerText="Start Date "
+                                  style="text-align: center; width:100px;">
+                            <h:outputText class="inputDateField" value="#{item.startDate}"/>
+                        </p:column>
+
+                        <!--
+                       *************************
+                       *   End Date  *
+                       *************************
+                       -->
+                        <p:column sortBy="#{item.endDate}" headerText="End Date "
+                                  style="text-align: center; width:100px;">
+                            <h:outputText class="inputDateField" value="#{item.endDate}"/>
+                        </p:column>
+
+
+
+<!--                        <h:outputText value="Rent Per Month:"/>-->
+<!--                        <h:outputText value="#{apartmentController.selected.rent}"/>-->
+
 <!--                         &lt;!&ndash;-->
 <!--                        *******************************-->
 <!--                        *    User Video Thumbnail   *-->
