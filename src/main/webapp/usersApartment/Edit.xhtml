@@ -21,6 +21,11 @@
               resizable="false" appendTo="@(body)" header="Edit Apartment">
 
         <h:form id="ApartmentEditForm" class="ui-datatable-data">
+            <h:inputHidden id="dates" value="true">
+                <f:validator validatorId="dateValidator" />
+                <f:attribute name="hiddenStartDate" value="#{hiddenStartDate}" />
+                <f:attribute name="hiddenEndDate" value="#{hiddenEndDate}" />
+            </h:inputHidden>
             <div align="center">
                 <h:panelGroup id="display">
                     <h:graphicImage value="#{apartmentController.logoFileStoragePath()}#{apartmentController.selected.name}.jpg"
@@ -78,13 +83,13 @@
                                      placeholder="Enter Apartment's Home Website URL"/>
 
                         <p:outputLabel value="Start Date:" for="startDate" />
-                        <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" title="Start Date"
-                                    pattern="dd/MM/yyyy"  required="true" mask="true"
+                        <p:calendar id="startDate" binding="#{hiddenStartDate}" value="#{apartmentController.selected.startDate}" title="Start Date"
+                                    pattern="MM/dd/yyyy"  required="true" mask="true"
                                     requiredMessage="The Start Date field is required."/>
 
                         <p:outputLabel value="End Date:" for="endDate" />
-                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}" title="End Date"
-                                    pattern="dd/MM/yyyy"  required="true" mask="true"
+                        <p:calendar id="endDate" binding="#{hiddenEndDate}" value="#{apartmentController.selected.endDate}" title="End Date"
+                                    pattern="MM/dd/yyyy"  required="true" mask="true"
                                     requiredMessage="The End Date field is required."/>
 
 

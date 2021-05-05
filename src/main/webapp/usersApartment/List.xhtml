@@ -50,8 +50,6 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton archiveButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton archiveButton deleteButton"/>
-<!--                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton playButton shareButton "/>-->
-<!--                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton playButton shareButton "/>-->
 
                         <!--
                         Clicking the header of a column with 'sortBy' redisplays the table with that
@@ -61,7 +59,7 @@
 
                         <!--
                         ************************
-                        *    User Video Id   *
+                        *   Apartment Id   *
                         ************************
                         -->
                         <p:column headerText="Id" style="width:20px;">
@@ -72,7 +70,7 @@
 
                         <!--
                         ***************************
-                        *    User Video Title   *
+                        *    Apartment Name   *
                         ***************************
                         -->
                         <p:column sortBy="#{item.name}" headerText="Apartment Name" style="width:100px;">
@@ -90,9 +88,9 @@
                         </p:column>
 
                         <!--
-                       *************************
-                       *   dateEntered  *
-                       *************************
+                       *******************
+                       *   Date Entered  *
+                       *******************
                        -->
                         <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
                                   style="text-align: center; width:100px;">
@@ -100,9 +98,9 @@
                         </p:column>
 
                         <!--
-                       *************************
+                       *****************
                        *   Start Date  *
-                       *************************
+                       *****************
                        -->
                         <p:column sortBy="#{item.startDate}" headerText="Start Date "
                                   style="text-align: center; width:100px;">
@@ -110,74 +108,14 @@
                         </p:column>
 
                         <!--
-                       *************************
+                       ***************
                        *   End Date  *
-                       *************************
+                       ***************
                        -->
                         <p:column sortBy="#{item.endDate}" headerText="End Date "
                                   style="text-align: center; width:100px;">
                             <h:outputText class="inputDateField" value="#{item.endDate}"/>
                         </p:column>
-
-
-
-<!--                        <h:outputText value="Rent Per Month:"/>-->
-<!--                        <h:outputText value="#{apartmentController.selected.rent}"/>-->
-
-<!--                         &lt;!&ndash;-->
-<!--                        *******************************-->
-<!--                        *    User Video Thumbnail   *-->
-<!--                        *******************************-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:column headerText="Thumbnail" style="align-content: center; width:80px;">-->
-<!--                            <img src="https://i1.ytimg.com/vi/#{item.youtubeVideoId}/hqdefault.jpg"-->
-<!--                                 alt="Thumbnail" class="scalableImage"/>-->
-<!--                        </p:column>-->
-
-<!--                        &lt;!&ndash;-->
-<!--                        ********************************-->
-<!--                        *    User Video Description  *-->
-<!--                        ********************************-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:column headerText="Description" style="width:250px;">-->
-<!--                            <h:outputText class="inputTextField" value="#{item.description}"/>-->
-<!--                        </p:column>-->
-
-<!--                        &lt;!&ndash;-->
-<!--                        ********************************-->
-<!--                        *    User Video Duration  *-->
-<!--                        ********************************-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:column sortBy="#{item.duration}" headerText="Duration" style="width:80px;">-->
-<!--                            <div align="center">-->
-<!--                                <h:outputText class="inputTextField" value="#{item.duration}"/>-->
-<!--                            </div>-->
-<!--                        </p:column>-->
-
-<!--                        &lt;!&ndash;-->
-<!--                        ********************************-->
-<!--                        *    User Video Date Published  *-->
-<!--                        ********************************-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:column sortBy="#{item.datePublished}" headerText="Date Published" style="width:100px;">-->
-<!--                            <div align="center">-->
-<!--                                <h:outputText class="inputTextField" value="#{item.datePublished}">-->
-<!--                                    &lt;!&ndash; Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0&ndash;&gt;-->
-<!--                                    <f:convertDateTime pattern="MM/dd/yyyy" />-->
-<!--                                </h:outputText>-->
-<!--                            </div>-->
-<!--                        </p:column>-->
-
-<!--                        &lt;!&ndash;-->
-<!--                        ********************************-->
-<!--                        *    User Video Category  *-->
-<!--                        ********************************-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:column sortBy="#{item.category}" headerText="Category" style="width:80px;">-->
-<!--                            <div align="center">-->
-<!--                                <h:outputText class="inputTextField" value="#{item.category}"/>-->
-<!--                            </div>-->
-<!--                        </p:column>-->
 
                         <!--
                         *****************
@@ -186,7 +124,7 @@
                         -->
                         <p:column headerText="Archived?" style="width:80px;">
                             <div align="center">
-                                <h:selectBooleanCheckbox class="inputTextField" value="#{item.archived}" readonly="true" disabled="true"/>
+                                <h:selectBooleanCheckbox value="#{item.archived}" readonly="true" disabled="true"/>
                             </div>
                         </p:column>
 
