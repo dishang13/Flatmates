@@ -184,8 +184,15 @@
                                 -->
                                 <p:commandButton id="displayButton" value="Display Photo"
                                                  action="/usersApartment/DisplayPhoto?faces-redirect=true"
-                                                 ajax="false" icon="fas fa-file-alt"  
+                                                 ajax="false" icon="fas fa-file-alt"
                                                  disabled="#{empty apartmentPhotoController.selected}" />
+
+                                <!--
+                                ================================
+                                |         BACK Button          |
+                                ================================
+                                -->
+                                <p:button outcome="/usersApartment/ListPhotos?faces-redirect=true" value="Go Back" icon="fas fa-arrow-left" />
                             </f:facet>
 
                         </p:dataTable>

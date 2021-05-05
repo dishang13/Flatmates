@@ -296,7 +296,6 @@ public class Apartment implements Serializable {
     }
 
     public String getLatLong() {
-        System.out.println(latitude.doubleValue() + ", " + longitude.doubleValue());
         return latitude.doubleValue() + ", " + longitude.doubleValue();
     }
 
