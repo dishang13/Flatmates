@@ -86,83 +86,78 @@
                             Clicking it again reverses the order to Z to A or numerically in descending order.
                             -->
 
-                            <!--
+                                <!--
                             ************************
-                            *    Public Video Id   *
+                            *    User Id   *
                             ************************
                             -->
-                            <p:column headerText="Id" style="width:20px;">
-                                <div align="center">
-                                    <h:outputText class="inputTextField" value="#{item.id}"/>
-                                </div>
-                            </p:column>
+                                <p:column headerText="Id" style="width:20px;">
+                                    <div align="center">
+                                        <h:outputText class="inputTextField" value="#{item.id}"/>
+                                    </div>
+                                </p:column>
 
-                            <!--
-                            ***************************
-                            *    Public Video Title   * TODO Name?
-                            ***************************
-                            -->
-                            <p:column sortBy="#{item.name}" headerText="Name" style="width:100px;">
-                                <h:outputText class="inputTextField" value="#{item.name}"/>
-                            </p:column>
+                                <!--
+                                ***************************
+                                *    Apartment Name   *
+                                ***************************
+                                -->
+                                <p:column sortBy="#{item.name}" headerText="Apartment Name" style="width:100px;">
+                                    <h:outputText class="inputTextField" value="#{item.name}"/>
+                                </p:column>
 
-                            <!--
-                            *******************************
-                            *    Public Video Thumbnail   *
-                            *******************************
-                            -->
-                            <!--                        <p:column headerText="Thumbnail" style="align-content: center; width:80px;">-->
-                            <!--                            <img src="https://i1.ytimg.com/vi/#{item.youtubeVideoId}/hqdefault.jpg"-->
-                            <!--                                 alt="Thumbnail" class="scalableImage"/>-->
-                            <!--                        </p:column>-->
 
-                            <!--                        &lt;!&ndash;-->
-                            <!--                        ********************************-->
-                            <!--                        *    Public Video Description  *-->
-                            <!--                        ********************************-->
-                            <!--                        &ndash;&gt;-->
-                            <!--                        <p:column headerText="Description" style="width:250px;">-->
-                            <!--                            <h:outputText class="inputTextField" value="#{item.description}"/>-->
-                            <!--                        </p:column>-->
+                                <!--
+                              ***************************
+                              *    Rent Per Month   *
+                              ***************************
+                              -->
+                                <p:column sortBy="#{item.rent}" headerText="Rent Per Month($):" style="width:100px;">
+                                    <h:outputText class="inputTextField" value="#{item.rent}"/>
+                                </p:column>
 
-                            <!--                        &lt;!&ndash;-->
-                            <!--                        *****************************-->
-                            <!--                        *    Public Video Duration  *-->
-                            <!--                        *****************************-->
-                            <!--                        &ndash;&gt;-->
-                            <!--                        <p:column sortBy="#{item.duration}" headerText="Duration" style="width:80px;">-->
-                            <!--                            <div align="center">-->
-                            <!--                                <h:outputText class="inputTextField" value="#{item.duration}"/>-->
-                            <!--                            </div>-->
-                            <!--                        </p:column>-->
+                                <!--
+                               *************************
+                               *   dateEntered  *
+                               *************************
+                               -->
+                                <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
+                                          style="text-align: center; width:100px;">
+                                    <h:outputText class="inputDateField" value="#{item.dateEntered}"/>
+                                </p:column>
 
-                            <!--                        &lt;!&ndash;-->
-                            <!--                        ***********************************-->
-                            <!--                        *    Public Video Date Published  *-->
-                            <!--                        ***********************************-->
-                            <!--                        &ndash;&gt;-->
-                            <!--                        <p:column sortBy="#{item.datePublished}" headerText="Date Published" style="width:100px;">-->
-                            <!--                            <div align="center">-->
-                            <!--                                <h:outputText class="inputTextField" value="#{item.datePublished}">-->
-                            <!--                                    &lt;!&ndash; Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0&ndash;&gt;-->
-                            <!--                                    <f:convertDateTime pattern="MM/dd/yyyy" />-->
-                            <!--                                </h:outputText>-->
-                            <!--                            </div>-->
-                            <!--                        </p:column>-->
+                                <!--
+                               *************************
+                               *   Start Date  *
+                               *************************
+                               -->
+                                <p:column sortBy="#{item.startDate}" headerText="Start Date "
+                                          style="text-align: center; width:100px;">
+                                    <h:outputText class="inputDateField" value="#{item.startDate}"/>
+                                </p:column>
 
-                            <!--                        &lt;!&ndash;-->
-                            <!--                        ********************************-->
-                            <!--                        *    Public Video Category  *-->
-                            <!--                        ********************************-->
-                            <!--                        &ndash;&gt;-->
-                            <!--                        <p:column sortBy="#{item.category}" headerText="Category" style="width:80px;">-->
-                            <!--                            <div align="center">-->
-                            <!--                                <h:outputText class="inputTextField" value="#{item.category}"/>-->
-                            <!--                            </div>-->
-                            <!--                        </p:column>-->
+                                <!--
+                               *************************
+                               *   End Date  *
+                               *************************
+                               -->
+                                <p:column sortBy="#{item.endDate}" headerText="End Date "
+                                          style="text-align: center; width:100px;">
+                                    <h:outputText class="inputDateField" value="#{item.endDate}"/>
+                                </p:column>
 
-                            <br /><br />
+                                <!--
+                                *****************
+                                *    Archived?  *
+                                *****************
+                                -->
+                                <p:column headerText="Archived?" style="width:80px;">
+                                    <div align="center">
+                                        <h:selectBooleanCheckbox class="inputTextField" value="#{item.archived}" readonly="true" disabled="true"/>
+                                    </div>
+                                </p:column>
 
+                                <br /><br />
                             <!--
                             The "footer" facet is defined for p:dataTable. See PrimeFaces User Guide.
                             -->
