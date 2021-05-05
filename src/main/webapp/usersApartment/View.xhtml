@@ -127,7 +127,7 @@
             <div align="center">
                 <h:panelGroup id="display">
 
-                    <h:graphicImage value="#{apartmentController.logoFileStoragePath()}#{apartmentController.selected.name}.jpg"
+                    <h:graphicImage value="#{apartmentController.getApartmentFirstPhoto(apartmentController.selected.id)}"
                                     style="width:300px" />
 
                     <br /><br />

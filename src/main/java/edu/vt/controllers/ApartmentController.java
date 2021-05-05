@@ -644,7 +644,7 @@ public class ApartmentController implements Serializable {
 //        }
 //    }
 
-    private void setLatLong(Apartment apartment) {
+    public void setLatLong(Apartment apartment) {
         String geocodingApiUrl = Constants.geocodingApiUrlTemplate.replace("{0}", URLEncoder.encode(apartment.getAddress(), StandardCharsets.UTF_8));
         try {
             // Obtain the JSON file from the searchApiUrl
@@ -729,6 +729,15 @@ public class ApartmentController implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+//    TODO doc comment
+    public String getApartmentFirstPhoto(int primaryKey) {
+        List<ApartmentPhoto> userFilesList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
+        if(userFilesList.isEmpty()) {
+            return Constants.APARTMENT_PHOTOS_URI + Constants.DEFAULT_APARTMENT_PHOTO_FILE_NAME;
+        }
+        return userFilesList.get(0).getFilePath();
     }
 
 }
