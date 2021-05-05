@@ -27,30 +27,41 @@
 
             <div align="center">
                 <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" class="borderless" style="max-width:650px">
+                        <p:outputLabel value="From Address:" for="fromAddress" />
+                        <p:inputTextarea id="fromAddress" value="#{apartmentSearchController.fromAddress}" required="true" class="inputTextField"
+                                         placeholder="Enter Apartment Address"
+                                         maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
+                        </p:inputTextarea>
 
-                    <h:graphicImage value=""
-                                    style="width:300px" />
-
-                    <br /><br />
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                                 rendered="#{apartmentSearchController.selected != null}">
-
-                        <h:outputText value="Apartment Name:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.name}" />
-
+                        <p:outputLabel value="To Address:" for="toAddress" />
+                        <p:inputTextarea id="toAddress" value="#{apartmentSearchController.toAddress}" required="true" class="inputTextField"
+                                         placeholder="Enter Apartment Address"
+                                         maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
+                        </p:inputTextarea>
                     </p:panelGrid>
-                </h:panelGroup>
-                <br /><br />
-                <!--
-                p:gmap is a map component integrated with Google Maps JavaScript API.
-                See PrimeFaces User Guide for its documentation.
 
-                You must register as Google developer and obtain an API key to use p:gmap
-                by following the instructions in siteTemplate.xhtml
-                -->
-                <p:gmap center="#{apartmentSearchController.selected.getLatLong()}"
-                        zoom="15" type="roadmap" model="#{apartmentSearchController.mapModel}"
-                        style="width:600px;height:400px" />
+                    <br/><br/>
+
+                    <span>Show Directions via:</span>
+
+                    <br/><br/>
+
+<!--                    <p:panelGrid columns="4" style="max-width:850px">-->
+                        <p:commandButton id="Walking" value="Walking" action="#{apartmentSearchController.directions('Walking')}"
+                                         icon="fas fa-arrow-left" ajax="false"/>&nbsp;&nbsp;
+                        <p:commandButton id="Driving" value="Driving" action="#{apartmentSearchController.directions('Driving')}"
+                                         icon="fas fa-arrow-left" ajax="false" />&nbsp;&nbsp;
+                        <p:commandButton id="Bicycling" value="Bicycling" action="#{apartmentSearchController.directions('Bicycling')}"
+                                         icon="fas fa-arrow-left" ajax="false" immediate="true" />&nbsp;&nbsp;
+                        <p:commandButton id="Transit" value="Transit" action="#{apartmentSearchController.directions('Transit')}"
+                                         icon="fas fa-arrow-left" ajax="false" immediate="true" />&nbsp;&nbsp;
+<!--                    </p:panelGrid>-->
+
+                </h:panelGroup>
+
+                <br /><br />
+
                 <h:panelGroup>
                     <!-- GO BACK button -->
                     <p:commandButton id="backButton" value="Go Back" action="/searchApartment/View?faces-redirect=true"

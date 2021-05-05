@@ -94,6 +94,10 @@ public class ApartmentSearchController implements Serializable {
 
     private MapModel mapModel;
 
+    private String fromAddress;
+    private String toAddress;
+    private String directionType;
+
     /*
     The instance variable 'apartmentFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
@@ -214,6 +218,8 @@ public class ApartmentSearchController implements Serializable {
         // We need to update mapModel everytime selected changes
 //        this.mapModel = null;
         this.selected = selected;
+        this.fromAddress = selected.getAddress();
+        this.toAddress = selected.getAddress();
 //        mapModel = getMapModel();
     }
 
@@ -252,6 +258,30 @@ public class ApartmentSearchController implements Serializable {
         this.mapModel = mapModel;
     }
 
+    public String getFromAddress() {
+        return fromAddress;
+    }
+
+    public void setFromAddress(String fromAddress) {
+        this.fromAddress = fromAddress;
+    }
+
+    public String getToAddress() {
+        return toAddress;
+    }
+
+    public void setToAddress(String toAddress) {
+        this.toAddress = toAddress;
+    }
+
+    public String getDirectionType() {
+        return directionType;
+    }
+
+    public void setDirectionType(String directionType) {
+        this.directionType = directionType;
+    }
+
     /* Get center for the map.
     *  If selected != null use that as center
     *  Other wise use Blacksburg as center
@@ -263,7 +293,28 @@ public class ApartmentSearchController implements Serializable {
         if(searchResults.size() == 1) {
             return searchResults.get(0).getLatLong();
         }
+        // Get Blacksburg location
         return "37.2296, -80.4139";
+    }
+
+    public void onMarkerSelect(OverlaySelectEvent event) {
+        Marker marker = (Marker) event.getOverlay();
+//TODO
+// && marker.getLatlng().toString().equals(a.getLatLong())
+        for(Apartment a: searchResults) {
+            if(a.getName().equals(marker.getTitle())) {
+                System.out.println(a.getName());
+                setSelected(a);
+                break;
+            }
+        }
+    }
+
+    public String directions(String type){
+        System.out.println(type);
+        directionType = type;
+        mapModel = null;
+        return "/searchApartment/Directions?faces-redirect=true";
     }
 
     /*
@@ -318,18 +369,4 @@ public class ApartmentSearchController implements Serializable {
 
         return "/searchApartment/List?faces-redirect=true";
     }
-
-    public void onMarkerSelect(OverlaySelectEvent event) {
-        Marker marker = (Marker) event.getOverlay();
-
-// && marker.getLatlng().toString().equals(a.getLatLong())
-        for(Apartment a: searchResults) {
-            if(a.getName().equals(marker.getTitle())) {
-                System.out.println(a.getName());
-                setSelected(a);
-                break;
-            }
-        }
-    }
-
 }

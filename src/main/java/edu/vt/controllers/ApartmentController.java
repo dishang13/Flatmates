@@ -737,7 +737,6 @@ public class ApartmentController implements Serializable {
         if(userFilesList.isEmpty()) {
             return Constants.APARTMENT_PHOTOS_URI + Constants.DEFAULT_APARTMENT_PHOTO_FILE_NAME;
         }
-        System.out.println(userFilesList.get(0).getFilePath());
         return Constants.APARTMENT_PHOTOS_URI + userFilesList.get(0).getFilename();
     }
 
