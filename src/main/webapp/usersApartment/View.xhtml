@@ -127,6 +127,9 @@
             <div align="center">
                 <h:panelGroup id="display">
 
+                    <h:graphicImage value="#{apartmentController.logoFileStoragePath()}#{apartmentController.selected.name}.jpg"
+                                    style="width:300px" />
+
                     <br /><br />
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
                                  rendered="#{apartmentController.selected != null}">
