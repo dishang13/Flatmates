@@ -149,45 +149,50 @@
                         <h:outputText value="Number of Bathrooms:"/>
                         <h:outputText value="#{apartmentController.selected.numBath}" />
 
-<!--&lt;!&ndash;                        TODO currency format&ndash;&gt;-->
-<!--                        <h:outputText value="Monthly Rent:"/>-->
-<!--                        <h:outputText value="#{apartmentController.selected.rent}" />-->
-
-                        <p:outputLabel value="Rent per Month:" for="rent" />
-                        <!--TODO
-                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.
-                        *****************************************************************
-                        *   mask="9?99999"   min=1 & max=999999 )   *
-                        *****************************************************************
-                        9 ==> indicates a digit 0 to 9.
-                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.
-                        Total number of 9s defines the maximum number of digits allowed.
-                        -->
-                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"
-                                       required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"
-                                       decimalPlaces="0" maxValue="100000000">
-                            <p:watermark for="rent" value="Enter the Monthly Rent!" />
-                        </p:inputNumber>
-
-<!--                        TODO date format-->
-                        <h:outputText value="Start Date:"/>
-                        <h:outputText value="#{apartmentController.selected.startDate}" />
+<!--                        TODO currency format-->
+                        <h:outputText value="Monthly Rent($):"/>
+                        <h:outputText value="#{apartmentController.selected.rent}" />
 
 
-                        <!--                        TODO date format-->
-<!--                        <h:outputText value="End Date:" />-->
-<!--                        <h:outputText value="#{apartmentController.selected.endDate}" />-->
+<!--                        <p:outputLabel value="Rent per Month:" for="rent" />-->
+<!--                        &lt;!&ndash;TODO-->
+<!--                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.-->
+<!--                        *****************************************************************-->
+<!--                        *   mask="9?99999"   min=1 & max=999999 )   *-->
+<!--                        *****************************************************************-->
+<!--                        9 ==> indicates a digit 0 to 9.-->
+<!--                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.-->
+<!--                        Total number of 9s defines the maximum number of digits allowed.-->
+<!--                        &ndash;&gt;-->
+<!--                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"-->
+<!--                                       required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"-->
+<!--                                       decimalPlaces="0" maxValue="100000000">-->
+<!--                            <p:watermark for="rent" value="Enter the Monthly Rent!" />-->
+<!--                        </p:inputNumber>-->
 
-                        <p:outputLabel value="End Date:" for="endDate" />
-                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}"
-                                    pattern="dd/MM/yyyy"  required="true" mask="true">
-                        </p:calendar>
+
+                        <h:outputText value="Start Date:" />
+                        <h:outputText value="#{apartmentController.selected.startDate}">
+                             <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                        </h:outputText>
 
 
+                        <h:outputText value="End Date:" />
+                        <h:outputText value="#{apartmentController.selected.endDate}">
+                            <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                        </h:outputText>
 
 <!--                        TODO output link-->
                         <h:outputText value="Apartment Complex Website:"/>
                         <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
+
+<!--                        <h:outputText value="Apartment Complex Website:"/>-->
+<!--                        <h:outputText >-->
+<!--                                <a href="#{apartmentController.selected.complexWebsite}" target="_blank">Apartment Complex Website</a>-->
+<!--                            -->
+<!--                        </h:outputText>-->
+
+
 
 
 

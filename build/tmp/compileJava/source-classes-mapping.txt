@@ -4,8 +4,9 @@ edu/vt/globals/Constants.java
  edu.vt.globals.Constants
 edu/vt/EntityBeans/ApartmentPhoto.java
  edu.vt.EntityBeans.ApartmentPhoto
-edu/vt/validators/EmailValidator.java
- edu.vt.validators.EmailValidator
+edu/vt/controllers/ApartmentPhotoController.java
+ edu.vt.controllers.ApartmentPhotoController
+ edu.vt.controllers.ApartmentPhotoController$ApartmentPhotoControllerConverter
 edu/vt/globals/Methods.java
  edu.vt.globals.Methods
 edu/vt/validators/PasswordValidator.java
@@ -16,8 +17,9 @@ edu/vt/FacadeBeans/AbstractFacade.java
  edu.vt.FacadeBeans.AbstractFacade
 edu/vt/EntityBeans/User.java
  edu.vt.EntityBeans.User
-edu/vt/validators/UsernameValidator.java
- edu.vt.validators.UsernameValidator
+edu/vt/controllers/ApartmentController.java
+ edu.vt.controllers.ApartmentController
+ edu.vt.controllers.ApartmentController$ApartmentControllerConverter
 edu/vt/FacadeBeans/ApartmentPhotoFacade.java
  edu.vt.FacadeBeans.ApartmentPhotoFacade
 edu/vt/managers/PasswordResetManager.java
@@ -45,13 +47,11 @@ edu/vt/FacadeBeans/UserFacade.java
  edu.vt.FacadeBeans.UserFacade
 edu/vt/controllers/UserController.java
  edu.vt.controllers.UserController
-edu/vt/EntityBeans/UserPhoto.java
- edu.vt.EntityBeans.UserPhoto
 edu/vt/managers/PhotoUploadManager.java
  edu.vt.managers.PhotoUploadManager
-edu/vt/controllers/ApartmentController.java
- edu.vt.controllers.ApartmentController
- edu.vt.controllers.ApartmentController$ApartmentControllerConverter
-edu/vt/controllers/ApartmentPhotoController.java
- edu.vt.controllers.ApartmentPhotoController
- edu.vt.controllers.ApartmentPhotoController$ApartmentPhotoControllerConverter
+edu/vt/validators/EmailValidator.java
+ edu.vt.validators.EmailValidator
+edu/vt/validators/UsernameValidator.java
+ edu.vt.validators.UsernameValidator
+edu/vt/EntityBeans/UserPhoto.java
+ edu.vt.EntityBeans.UserPhoto
