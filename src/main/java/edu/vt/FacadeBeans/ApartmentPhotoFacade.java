@@ -15,7 +15,7 @@ import java.util.List;
 public class ApartmentPhotoFacade extends AbstractFacade<ApartmentPhoto> {
     /*
     ---------------------------------------------------------------------------------------------
-    Annotating 'private EntityManagerfindPhotosByApartmentPrimaryKey em;' with '@PersistenceContext(unitName = "FlatmatesPU")'
+    Annotating 'private EntityManager em;' with '@PersistenceContext(unitName = "FlatmatesPU")'
     implies that the EntityManager instance pointed to by 'em' is associated with the 'FlatmatesPU'
     persistence context. The persistence context is a set of entity (ApartmentPhoto) instances in which for
     any persistent entity (ApartmentPhoto) identity, there is a unique entity (ApartmentPhoto) instance.

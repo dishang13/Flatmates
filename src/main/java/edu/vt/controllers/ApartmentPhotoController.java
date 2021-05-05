@@ -86,8 +86,8 @@ public class ApartmentPhotoController implements Serializable {
             ApartmentController apartmentController = (ApartmentController) elContext.getELResolver().getValue(elContext, null, "apartmentController");
 
             // Obtain only those files from the database that belong to the apartment
-            //items = apartmentPhotoFacade.deleteSelectedUserFile(apartmentController.getSelected().getId());
-            items = apartmentController.deleteSelectedUserFile(apartmentController.getSelected().getId());
+            items = apartmentPhotoFacade.findPhotosByApartmentPrimaryKey(apartmentController.getSelected().getId());
+
             // Instantiate a new hash map object
             cleanedFileNameHashMap = new HashMap<>();
 
