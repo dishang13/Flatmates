@@ -588,6 +588,8 @@ public class ApartmentController implements Serializable {
         return Constants.APARTMENT_PHOTOS_URI;
     }
 
+
+
     /*
      *****************************************
      *   Delete Uploaded Company Logo File   *
