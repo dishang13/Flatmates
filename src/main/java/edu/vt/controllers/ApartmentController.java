@@ -393,6 +393,8 @@ public class ApartmentController implements Serializable {
         different JSF page after successful deletion of the Survey.
          */
         Methods.preserveMessages();
+
+        deleteAllApartmentPhotos(selected.getId());
         /*
         Show the message "The Apartment was successfully deleted!"
 
@@ -404,6 +406,32 @@ public class ApartmentController implements Serializable {
             // No JSF validation error. The DELETE operation is successfully performed.
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    // Delete all apartment photos for apartment with id 'primaryKey'
+    public void deleteAllApartmentPhotos(int primaryKey) {
+        // Obtain the List of files that belongs to the user with primaryKey
+        List<ApartmentPhoto> userFilesList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
+        if (!userFilesList.isEmpty()) {
+            // Java 8 looping over a list with lambda
+            userFilesList.forEach(photo -> {
+                try {
+                    /*
+                    Delete the user file if it exists.
+                    getFilePath() is given in UserFile.java.
+                     */
+                    Files.deleteIfExists(Paths.get(photo.getFilePath()));
+                    // Remove the user's file record from the database
+                    getApartmentPhotoFacade().remove(photo);
+
+                } catch (IOException ex) {
+                    System.out.println("See: " + ex.getMessage());
+                    Methods.showMessage("Fatal Error",
+                            "Something went wrong while deleting user files!",
+                            "See: " + ex.getMessage());
+                }
+            });
         }
     }
 

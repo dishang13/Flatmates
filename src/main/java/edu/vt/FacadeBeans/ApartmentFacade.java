@@ -5,10 +5,16 @@
 package edu.vt.FacadeBeans;
 
 import edu.vt.EntityBeans.Apartment;
+import edu.vt.EntityBeans.ApartmentPhoto;
+import edu.vt.globals.Methods;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Stateless
@@ -33,6 +39,9 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
         return em;
     }
 
+    @EJB
+    private ApartmentPhotoFacade apartmentPhotoFacade;
+
     /*
     This constructor method invokes the parent abstract class AbstractFacade.java's
     constructor method AbstractFacade, which in turn initializes its entityClass instance
@@ -56,6 +65,14 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
         return em.find(Apartment.class, id);
     }
 
+    public ApartmentPhotoFacade getApartmentPhotoFacade() {
+        return apartmentPhotoFacade;
+    }
+
+    public void setApartmentPhotoFacade(ApartmentPhotoFacade apartmentPhotoFacade) {
+        this.apartmentPhotoFacade = apartmentPhotoFacade;
+    }
+
     /**
      * @param id is the user_id attribute (column) value of the Apartment
      * @return object reference of the List of Apartment entities whose user id is user_id
@@ -75,15 +92,45 @@ public class ApartmentFacade extends AbstractFacade<Apartment> {
         // The find method is inherited from the parent AbstractFacade class
         Apartment apartment = em.find(Apartment.class, id);
 
+        // First delete any photos
+        deleteAllApartmentPhotos(apartment.getId());
+
         // The remove method is inherited from the parent AbstractFacade class
         em.remove(apartment);
-
-        //TODO remove apartment photos
     }
 
 
     public List<Apartment> searchApartments(String searchQuery) {
         return (List<Apartment>) em.createQuery(searchQuery)
                 .getResultList();
+    }
+
+    // Delete all apartment photos for apartment with id 'primaryKey'
+    public void deleteAllApartmentPhotos(int primaryKey) {
+        // Obtain the List of files that belongs to the user with primaryKey
+        System.out.println("deleteAllApartmentPhotos for " + primaryKey);
+        List<ApartmentPhoto> apartmentPhotoList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
+        System.out.println("apartmentPhotoList " + apartmentPhotoList.size());
+        if (!apartmentPhotoList.isEmpty()) {
+            // Java 8 looping over a list with lambda
+            apartmentPhotoList.forEach(photo -> {
+                System.out.println("photo.getFilePath() for " + photo.getFilePath());
+                try {
+                    /*
+                    Delete the user file if it exists.
+                    getFilePath() is given in UserFile.java.
+                     */
+                    Files.deleteIfExists(Paths.get(photo.getFilePath()));
+                    // Remove the user's file record from the database
+                    getApartmentPhotoFacade().remove(photo);
+
+                } catch (IOException ex) {
+                    System.out.println("See: " + ex.getMessage());
+                    Methods.showMessage("Fatal Error",
+                            "Something went wrong while deleting Apartment Photo files!",
+                            "See: " + ex.getMessage());
+                }
+            });
+        }
     }
 }

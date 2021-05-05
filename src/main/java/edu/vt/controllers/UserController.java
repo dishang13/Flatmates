@@ -4,8 +4,10 @@
  */
 package edu.vt.controllers;
 
+import edu.vt.EntityBeans.Apartment;
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserPhoto;
+import edu.vt.FacadeBeans.ApartmentFacade;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
@@ -114,6 +116,10 @@ public class UserController implements Serializable {
      */
     @EJB
     private UserPhotoFacade userPhotoFacade;
+
+    // TODO
+    @EJB
+    private ApartmentFacade apartmentFacade;
 
     /*
     ==================
@@ -759,6 +765,9 @@ public class UserController implements Serializable {
             // Delete all of the photo files associated with the signed-in user whose primary key is userPrimaryKey
             deleteAllUserPhotos(userPrimaryKey);
 
+            // Delete all apartments associated with the signed-in user whose primary key is userPrimaryKey
+            deleteAllApartments(userPrimaryKey);
+
             // Delete the User entity, whose primary key is user_id, from the database
             getUserFacade().deleteUser(userPrimaryKey);
 
@@ -900,6 +909,25 @@ public class UserController implements Serializable {
                         "See: " + ex.getMessage());
             }
         }
+    }
+
+    /*
+    *************************************************************
+    Delete the apartment and apartment image files that belong to
+    the User object whose database primary key is primaryKey
+    *************************************************************
+     */
+    public void deleteAllApartments(int primaryKey) {
+
+        /*
+        Obtain the list of Apartment objects that belong to the User whose
+        database primary key is userId.
+         */
+        List<Apartment> apartmentList = apartmentFacade.findApartmentsByUserPrimaryKey(primaryKey);
+
+        apartmentList.forEach(apartment -> {
+            apartmentFacade.deleteApartment(apartment.getId());
+        });
     }
 
 }
