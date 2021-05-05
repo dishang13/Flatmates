@@ -39,7 +39,7 @@
                         The required="true" attribute automatically places an asterisk *
                         at the end of the value to indicate that the field is required.
                         -->
-                        <p:inputText id="firstName" value="#{userController.firstName}" required="true" class="inputTextField"
+                        <p:inputText id="firstName" value="#{userController.selected.firstName}" required="true" class="inputTextField"
                                      requiredMessage="The First Name field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
@@ -50,7 +50,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="Middle Name:" for="middleName" />
-                        <p:inputText id="middleName" value="#{userController.middleName}"
+                        <p:inputText id="middleName" value="#{userController.selected.middleName}"
                                      required="false" class="inputTextField" >
                         </p:inputText>
 
@@ -60,7 +60,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="Last Name:" for="lastName" />
-                        <p:inputText id="lastName" value="#{userController.lastName}" required="true" class="inputTextField"
+                        <p:inputText id="lastName" value="#{userController.selected.lastName}" required="true" class="inputTextField"
                                      requiredMessage="The Last Name field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
@@ -71,7 +71,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="Address Line 1:" for="address1" />
-                        <p:inputText id="address1" value="#{userController.address1}" required="true" class="inputTextField"
+                        <p:inputText id="address1" value="#{userController.selected.address1}" required="true" class="inputTextField"
                                      requiredMessage="The Address Line 1 field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
@@ -82,7 +82,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="Address Line 2:" for="address2" />
-                        <p:inputText id="address2" value="#{userController.address2}" class="inputTextField">
+                        <p:inputText id="address2" value="#{userController.selected.address2}" class="inputTextField">
                         </p:inputText>
 
                         <!--
@@ -91,7 +91,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="City:" for="city" />
-                        <p:inputText id="city" value="#{userController.city}" required="true" class="inputTextField"
+                        <p:inputText id="city" value="#{userController.selected.city}" required="true" class="inputTextField"
                                      requiredMessage="The City field is required." >
                             <f:validateLength minimum="2" />
                         </p:inputText>
@@ -102,7 +102,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="State:" for="state" />
-                        <h:selectOneMenu id="state" value="#{userController.state}" required="true">
+                        <h:selectOneMenu id="state" value="#{userController.selected.state}" required="true">
                             <!--
                             List of U.S. state postal codes is iterated over
                             to display the list for the user to select one.
@@ -126,7 +126,7 @@
                                        showEffect="clip" hideEffect="explode" position="top" />
                         </p:outputLabel>
 
-                        <p:inputText id="zipcode" value="#{userController.zipcode}" required="true" class="inputTextField"
+                        <p:inputText id="zipcode" value="#{userController.selected.zipcode}" required="true" class="inputTextField"
                                      requiredMessage="The Zip code field is required." >
                             <f:validateLength minimum="5" />
                             <!--
@@ -142,7 +142,7 @@
                         ***************************
                         -->
                         <p:outputLabel value="Eating Preference:" for="eatingPref" />
-                        <p:selectOneMenu id="eatingPref" value="#{userController.eatingPrefNumber}" required="true" >
+                        <p:selectOneMenu id="eatingPref" value="#{userController.selected.eatingPrefNumber}" required="true" >
                             <f:selectItems value="#{userController.eating_preferences}" />
                         </p:selectOneMenu>
 
@@ -152,7 +152,7 @@
                         ***************************
                         -->
                         <p:outputLabel value="Smoking Preference:" for="smokingPref" />
-                        <p:selectOneMenu id="smokingPref" value="#{userController.smokingPrefNumber}" required="true" >
+                        <p:selectOneMenu id="smokingPref" value="#{userController.selected.smokingPrefNumber}" required="true" >
                             <f:selectItems value="#{userController.smoking_preferences}" />
                         </p:selectOneMenu>
 
@@ -162,7 +162,7 @@
                         ***************************
                         -->
                         <p:outputLabel value="Alcohol Preference:" for="alcoholPref" />
-                        <p:selectOneMenu id="alcoholPref" value="#{userController.alcoholPrefNumber}" required="true" >
+                        <p:selectOneMenu id="alcoholPref" value="#{userController.selected.alcoholPrefNumber}" required="true" >
                             <f:selectItems value="#{userController.alcohol_preferences}" />
                         </p:selectOneMenu>
 
@@ -172,7 +172,7 @@
                         ***************************
                         -->
                         <p:outputLabel value="Sleep Preferences:" for="sleepPref" />
-                        <p:selectOneMenu id="sleepPref" value="#{userController.sleepPrefNumber}" required="true" >
+                        <p:selectOneMenu id="sleepPref" value="#{userController.selected.sleepPrefNumber}" required="true" >
                             <f:selectItems value="#{userController.sleep_preferences}" />
                         </p:selectOneMenu>
 
@@ -182,7 +182,7 @@
                         ***************************
                         -->
                         <p:outputLabel value="Social Preferences:" for="socialPref" />
-                        <p:selectOneMenu id="socialPref" value="#{userController.socialPrefNumber}" required="true" >
+                        <p:selectOneMenu id="socialPref" value="#{userController.selected.socialPrefNumber}" required="true" >
                             <f:selectItems value="#{userController.social_preferences}" />
                         </p:selectOneMenu>
 
@@ -191,25 +191,25 @@
                         *       SECURITY QUESTION      *
                         ********************************
                         -->
-                        <p:outputLabel value="Security Question:" for="securityQuestion" />
-                        <p:selectOneMenu id="securityQuestion" value="#{userController.securityQuestionNumber}" required="true" >
-                            <!--
-                            List of security questions is displayed for the user to select one.
-                            -->
-                            <f:selectItems value="#{userController.security_questions}"/>
-                        </p:selectOneMenu>
+<!--                        <p:outputLabel value="Security Question:" for="securityQuestion" />-->
+<!--                        <p:selectOneMenu id="securityQuestion" value="#{userController.selected.securityQuestionNumber}" required="true" >-->
+<!--                            &lt;!&ndash;-->
+<!--                            List of security questions is displayed for the user to select one.-->
+<!--                            &ndash;&gt;-->
+<!--                            <f:selectItems value="#{userController.security_questions}"/>-->
+<!--                        </p:selectOneMenu>-->
 
                         <!--
                         ********************************
                         *        SECURITY ANSWER       *
                         ********************************
                         -->
-                        <p:outputLabel value="Security Answer:" for="securityAnswer" />
-                        <p:inputText id="securityAnswer" value="#{userController.answerToSecurityQuestion}"
-                                     required="true" class="inputTextField"
-                                     requiredMessage="The Security Answer field is required.">
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
+<!--                        <p:outputLabel value="Security Answer:" for="securityAnswer" />-->
+<!--                        <p:inputText id="securityAnswer" value="#{userController.answerToSecurityQuestion}"-->
+<!--                                     required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The Security Answer field is required.">-->
+<!--                            <f:validateLength minimum="2" />-->
+<!--                        </p:inputText>-->
 
                         <!--
                         ********************************
@@ -217,7 +217,7 @@
                         ********************************
                         -->
                         <p:outputLabel value="Email:" for="email" />
-                        <p:inputText id="email" value="#{userController.email}" required="true" class="inputTextField"
+                        <p:inputText id="email" value="#{userController.selected.email}" required="true" class="inputTextField"
                                      requiredMessage="The Email field is required." >
                             <f:validateLength minimum="2" />
                             <!--
@@ -232,24 +232,30 @@
                         *       ACCOUNT USERNAME       *
                         ********************************
                         -->
-                        <p:outputLabel id="usernameEntry" value="Username:" for="username" >
-                            &nbsp;<i class="fas fa-question-circle" />
-                            <!--
-                            When the user mouses over the icon, a tooltip is displayed
-                            to provide context-sensitive help information to the user.
-                            -->
-                            <p:tooltip for="usernameEntry" value="Enter 6 to 32 characters with capital letter, lowercase letter, number, or special character _ . - @"
-                                       showEffect="clip" hideEffect="explode" position="top" />
-                        </p:outputLabel>
 
-                        <p:inputText id="username" value="#{userController.username}" required="true" class="inputTextField"
-                                     requiredMessage="The Username field is required." >
+                        <!-- Username is listed in an uneditable mode and cannot be changed -->
+                        <h:outputText value="Username:" />
+                        <h:outputText value="#{userController.selected.username}" />
+
+
+<!--                        <p:outputLabel id="usernameEntry" value="Username:" for="username" >-->
+<!--                            &nbsp;<i class="fas fa-question-circle" />-->
+<!--                            &lt;!&ndash;-->
+<!--                            When the user mouses over the icon, a tooltip is displayed-->
+<!--                            to provide context-sensitive help information to the user.-->
+<!--                            &ndash;&gt;-->
+<!--                            <p:tooltip for="usernameEntry" value="Enter 6 to 32 characters with capital letter, lowercase letter, number, or special character _ . - @"-->
+<!--                                       showEffect="clip" hideEffect="explode" position="top" />-->
+<!--                        </p:outputLabel>-->
+
+<!--                        <p:inputText id="username" value="#{userController.username}" required="true" class="inputTextField"-->
+<!--                                     requiredMessage="The Username field is required." >-->
                             <!--
                             Execute the "validate" method in the "UsernameValidator.java"
                             class file to validate the username entered.
                             -->
-                            <f:validator validatorId="usernameValidator"/>
-                        </p:inputText>
+<!--                            <f:validator validatorId="usernameValidator"/>-->
+<!--                        </p:inputText>-->
 
 <!--                        &lt;!&ndash;-->
 <!--                        ********************************-->

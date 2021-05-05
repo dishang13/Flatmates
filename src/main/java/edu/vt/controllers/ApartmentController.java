@@ -13,6 +13,7 @@ import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
+
 import org.primefaces.json.JSONObject;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -27,7 +28,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -90,6 +94,7 @@ public class ApartmentController implements Serializable {
     private int rent;
     private Date startDate;
     private Date endDate;
+    private DateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
     private BigDecimal latitude;
     private BigDecimal longitude;
     private String complexWebsite;
@@ -123,7 +128,14 @@ public class ApartmentController implements Serializable {
     ==================
      */
     public ApartmentController() {
+        Calendar c1 = Calendar.getInstance();
+        endDate = c1.getTime();
+        Calendar c2 = Calendar.getInstance();
+        c2.set(Calendar.YEAR, c1.get(Calendar.YEAR));
+        c2.set(Calendar.DAY_OF_YEAR, 1);
+        startDate = c2.getTime();
     }
+
 
     /*
     =========================
@@ -209,6 +221,9 @@ public class ApartmentController implements Serializable {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+        if(endDate.before(startDate)){
+            endDate = startDate;
+        }
     }
 
     public Date getEndDate() {
@@ -217,6 +232,10 @@ public class ApartmentController implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+    public String getDateRangeString() {
+        return String.format("From: %s To: %s%n",
+                formatter.format(startDate), formatter.format(endDate));
     }
 
     public BigDecimal getLatitude() {
@@ -320,6 +339,10 @@ public class ApartmentController implements Serializable {
     Instance Methods
     ================
     */
+
+    public Date getToday(){
+        return new Date();
+    }
 
     /*
     *************************************
@@ -587,6 +610,8 @@ public class ApartmentController implements Serializable {
     public String logoFileStoragePath() {
         return Constants.APARTMENT_PHOTOS_URI;
     }
+
+
 
     /*
      *****************************************
