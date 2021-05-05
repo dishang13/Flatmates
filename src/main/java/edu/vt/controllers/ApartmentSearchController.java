@@ -241,8 +241,8 @@ public class ApartmentSearchController implements Serializable {
 
     public MapModel getMapModel() {
         if(mapModel == null) {
+            mapModel = new DefaultMapModel();
             if(selected == null) {
-                mapModel = new DefaultMapModel();
                 for(Apartment a : searchResults) {
                     mapModel.addOverlay(new Marker(new LatLng(a.getLatitude().doubleValue(), a.getLongitude().doubleValue()), a.getId() + ". " + a.getName()));
                 }
@@ -282,7 +282,7 @@ public class ApartmentSearchController implements Serializable {
         this.directionType = directionType;
     }
 
-    /* Get center for the map.
+    /* Get center for the gmap.
     *  If selected != null use that as center
     *  Other wise use Blacksburg as center
     */
@@ -313,7 +313,7 @@ public class ApartmentSearchController implements Serializable {
     public String directions(String type){
         System.out.println(type);
         directionType = type;
-        mapModel = null;
+//        mapModel = null;
         return "/searchApartment/Directions?faces-redirect=true";
     }
 

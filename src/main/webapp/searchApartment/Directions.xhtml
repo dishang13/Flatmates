@@ -26,13 +26,14 @@
         <h:form id="ApartmentViewDirectionsForm" class="ui-datatable-data">
             <h:inputHidden id="fromAddress" value="#{apartmentSearchController.fromAddress}" />
             <h:inputHidden id="toAddress" value="#{apartmentSearchController.toAddress}" />
+            <h:inputHidden id="directionType" value="#{apartmentSearchController.directionType}" />
 
             <div align="center">
                 <span>Directions from #{apartmentSearchController.fromAddress} to #{apartmentSearchController.toAddress} via #{apartmentSearchController.directionType}</span>
 
                 <br/><br/>
 
-                <p:gmap widgetVar="w_gmap"
+                <p:gmap widgetVar="gMap" id="gmap"
                         center="#{apartmentSearchController.getCenter()}"
                         zoom="15" type="roadmap" model="#{apartmentSearchController.mapModel}"
                         style="width:600px;height:400px" >
@@ -48,6 +49,18 @@
                 <br /><br />
             </div>
         </h:form>
+
+        <script type="text/javascript">
+            // Instantiate a DirectionsService object and store its object reference into directionsService.
+            var directionsService = new google.maps.DirectionsService();
+
+            // Instantiate a DirectionsRenderer object and store its object reference into directionsDisplay.
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            // Initialize and display a Google Map of VT campus
+            jQuery(document).ready(function() {
+                initializeMap();
+            });
+        </script>
 
     </ui:define>
 
