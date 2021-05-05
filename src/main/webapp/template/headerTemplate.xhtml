@@ -84,7 +84,7 @@
 
                                 <!-- Clicking "Search Apartments" displays the searchApartments/List.xhtml file -->
                                 <h:link outcome="/searchApartment/List" class="standardText" >
-                                    <i class="fas fa-pencil-alt" />&nbsp;Search Apartments
+                                    <i class="fas fa-search" />&nbsp;Search Apartments
                                 </h:link>
                                 <!-- 
                                 ===========================================
@@ -94,7 +94,7 @@
                                 <c:if test="#{userController.isLoggedIn() == true}">
                                     <!-- Clicking "My Apartments" displays the List.xhtml file -->
                                     <h:link outcome="/usersApartment/List" class="standardText" >
-                                        <i class="fas fa-check" />&nbsp;My Apartments
+                                        <i class="fas fa-list" />&nbsp;My Apartments
                                     </h:link>
 
                                     <!-- Clicking "My Account" displays the Profile.xhtml file -->
@@ -122,7 +122,7 @@
                                 <c:if test="#{userController.isLoggedIn() == false}">
                                     <!-- Clicking "Add a Listing" displays the SignIn.xhtml file TODO ordering -->
                                     <h:link outcome="/SignIn" class="standardText" >
-                                        <i class="fas fa-check" />&nbsp;Add a Listing
+                                        <i class="fas fa-list" /> Add a Listing
                                     </h:link>
 
                                     <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
