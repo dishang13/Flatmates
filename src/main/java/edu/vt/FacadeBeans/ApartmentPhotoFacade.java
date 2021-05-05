@@ -57,4 +57,27 @@ public class ApartmentPhotoFacade extends AbstractFacade<ApartmentPhoto> {
                 .setParameter("primaryKey", primaryKey)
                 .getResultList();
     }
+
+    public ApartmentPhoto getApartmentPhoto(int id) {
+        return em.find(ApartmentPhoto.class, id);
+    }
+
+    /**
+     *
+     * @param file_name
+     * @return a list of object references of apartmentPhotos with the name file_name
+     */
+    public List<ApartmentPhoto> findByFilename(String file_name) {
+        /*
+        The following @NamedQuery definition is given in UserFile.java entity class file:
+        @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
+
+        The following statement obtaines the results from the named database query.
+         */
+        List<ApartmentPhoto> files = em.createNamedQuery("ApartmentPhoto.findByFilename")
+                .setParameter("filename", file_name)
+                .getResultList();
+
+        return files;
+    }
 }

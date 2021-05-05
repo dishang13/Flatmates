@@ -4,6 +4,8 @@
  */
 package edu.vt.EntityBeans;
 
+import edu.vt.globals.Constants;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -34,7 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "ApartmentPhoto.findPhotosByApartmentDatabasePrimaryKey", query = "SELECT a FROM ApartmentPhoto a WHERE a.apartmentId.id = :primaryKey"),
     @NamedQuery(name = "ApartmentPhoto.findAll", query = "SELECT a FROM ApartmentPhoto a"),
     @NamedQuery(name = "ApartmentPhoto.findById", query = "SELECT a FROM ApartmentPhoto a WHERE a.id = :id"),
-    @NamedQuery(name = "ApartmentPhoto.findByExtension", query = "SELECT a FROM ApartmentPhoto a WHERE a.extension = :extension")
+    @NamedQuery(name = "ApartmentPhoto.findByFilename", query = "SELECT a FROM ApartmentPhoto a WHERE a.filename = :filename")
 })
 
 public class ApartmentPhoto implements Serializable {
@@ -55,9 +57,9 @@ public class ApartmentPhoto implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4)
-    @Column(nullable = false, length = 4)
-    private String extension;
+    @Size(min = 1, max = 256)
+    @Column(name = "filename")
+    private String filename;
 
     /*
     apartmentId is the unique object reference of the Apartment object auto generated
@@ -81,9 +83,9 @@ public class ApartmentPhoto implements Serializable {
         this.id = id;
     }
 
-    public ApartmentPhoto(Integer id, String extension) {
-        this.id = id;
-        this.extension = extension;
+    public ApartmentPhoto(Apartment apartment, String filename) {
+        this.apartmentId = apartment;
+        this.filename = filename;
     }
 
     /*
@@ -100,12 +102,12 @@ public class ApartmentPhoto implements Serializable {
         this.id = id;
     }
 
-    public String getExtension() {
-        return extension;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setExtension(String extension) {
-        this.extension = extension;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public Apartment getApartmentId() {
@@ -154,5 +156,14 @@ public class ApartmentPhoto implements Serializable {
     public String toString() {
         // Convert the ApartmentPhoto object's database primary key (Integer) to String type and return it.
         return id.toString();
+    }
+
+    /*
+    ===================================================
+    The following method is added to the generated code
+    ===================================================
+     */
+    public String getFilePath() {
+        return Constants.APARTMENT_PHOTOS_ABSOLUTE_PATH + getFilename();
     }
 }

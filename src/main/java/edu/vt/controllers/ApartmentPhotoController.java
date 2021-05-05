@@ -1,4 +1,4 @@
-/*
+/* TODO comments
  * Created by Dishang, Siva on 2021.04.10
  * Copyright © 2021 Dishang Siva. All rights reserved.
  */
@@ -6,78 +6,49 @@ package edu.vt.controllers;
 
 import edu.vt.EntityBeans.Apartment;
 import edu.vt.EntityBeans.ApartmentPhoto;
-import edu.vt.EntityBeans.User;
-import edu.vt.EntityBeans.UserPhoto;
 import edu.vt.FacadeBeans.ApartmentFacade;
 import edu.vt.FacadeBeans.ApartmentPhotoFacade;
-import edu.vt.FacadeBeans.UserFacade;
-import edu.vt.FacadeBeans.UserPhotoFacade;
+import edu.vt.controllers.util.JsfUtil;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
-import org.imgscalr.Scalr;
-import org.primefaces.model.UploadedFile;
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.math.BigDecimal;
+import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.el.ELContext;
+import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
-import javax.faces.model.SelectItem;
-import javax.imageio.ImageIO;
-import javax.inject.Named;
 
-/*
----------------------------------------------------------------------------
-The @Named (javax.inject.Named) annotation indicates that the objects
-instantiated from this class will be managed by the Contexts and Dependency
-Injection (CDI) container. The name "userController" is used within
-Expression Language (EL) expressions in JSF (XHTML) facelets pages to
-access the properties and invoke methods of this class.
----------------------------------------------------------------------------
- */
 @Named("apartmentPhotoController")
-
-/*
-The @SessionScoped annotation preserves the values of the UserController
-object's instance variables across multiple HTTP request-response cycles
-as long as the user's established HTTP session is alive.
- */
 @SessionScoped
 
-/*
---------------------------------------------------------------------------
-Marking the UserController class as "implements Serializable" implies that
-instances of the class can be automatically serialized and deserialized.
-
-Serialization is the process of converting a class instance (object)
-from memory into a suitable format for storage in a file or memory buffer,
-or for transmission across a network connection link.
-
-Deserialization is the process of recreating a class instance (object)
-in memory from the format under which it was stored.
---------------------------------------------------------------------------
- */
 public class ApartmentPhotoController implements Serializable {
 
+    /*
+    cleanedFileNameHashMap<KEY, VALUE>
+        KEY   = Integer fileId
+        VALUE = String cleanedFileNameForSelected
+     */
+    HashMap<Integer, String> cleanedFileNameHashMap = null;
     /*
     ===============================
     Instance Variables (Properties)
     ===============================
      */
-    private List<UploadedFile> fileList;
-
+    private ApartmentPhoto selected;
+    private List<ApartmentPhoto> items;
     /*
     The instance variable 'apartmentFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
@@ -85,7 +56,6 @@ public class ApartmentPhotoController implements Serializable {
      */
     @EJB
     private ApartmentFacade apartmentFacade;
-
     /*
     The instance variable 'apartmentPhotoFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
@@ -93,6 +63,8 @@ public class ApartmentPhotoController implements Serializable {
      */
     @EJB
     private ApartmentPhotoFacade apartmentPhotoFacade;
+    // Selected row number in p:dataTable in ListPhotos.xhtml
+    private String selectedRowNumber = "0";
 
     /*
     ==================
@@ -107,318 +79,382 @@ public class ApartmentPhotoController implements Serializable {
     Getter and Setter Methods
     =========================
      */
-    public List<UploadedFile> getFileList() {
-        return fileList;
+    public List<ApartmentPhoto> getItems() {
+        if (items == null) {
+            // Get the ApartmentController for the current session
+            ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+            ApartmentController apartmentController = (ApartmentController) elContext.getELResolver().getValue(elContext, null, "apartmentController");
+
+            // Obtain only those files from the database that belong to the apartment
+            items = apartmentPhotoFacade.findPhotosByApartmentPrimaryKey(apartmentController.getSelected().getId());
+
+            // Instantiate a new hash map object
+            cleanedFileNameHashMap = new HashMap<>();
+
+            /*
+            cleanedFileNameHashMap<KEY, VALUE>
+                KEY   = Integer fileId
+                VALUE = String cleanedFileNameForSelected
+             */
+            // Java 8 looping over a list with lambda
+            items.forEach(photoFile -> {
+
+                // Obtain the filename stored in Team4-FileStorage/ApartmentPhotoStorage as 'userId_filename'
+                String storedFileName = photoFile.getFilename();
+
+                // Remove the "userId_" (e.g., "4_") prefix in the stored filename
+                String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+
+                // Obtain the file database Primary Key id
+                Integer fileId = photoFile.getId();
+
+                // Create an entry in the hash map as a key-value pair
+                cleanedFileNameHashMap.put(fileId, cleanedFileName);
+            });
+        }
+        return items;
     }
 
-    public void setFile(List<UploadedFile> fileList) {
-        this.fileList = fileList;
+    public void setItems(List<ApartmentPhoto> items) {
+        this.items = items;
+    }
+
+    public ApartmentPhoto getSelected() {
+        return selected;
+    }
+
+    public void setSelected(ApartmentPhoto selected) {
+        this.selected = selected;
+    }
+
+    public HashMap<Integer, String> getCleanedFileNameHashMap() {
+        return cleanedFileNameHashMap;
+    }
+
+    public void setCleanedFileNameHashMap(HashMap<Integer, String> cleanedFileNameHashMap) {
+        this.cleanedFileNameHashMap = cleanedFileNameHashMap;
+    }
+
+    public String getSelectedRowNumber() {
+        return selectedRowNumber;
+    }
+
+    public void setSelectedRowNumber(String selectedRowNumber) {
+        this.selectedRowNumber = selectedRowNumber;
     }
 
     public ApartmentFacade getApartmentFacade() {
         return apartmentFacade;
     }
 
+    public void setApartmentFacade(ApartmentFacade apartmentFacade) {
+        this.apartmentFacade = apartmentFacade;
+    }
+
     public ApartmentPhotoFacade getApartmentPhotoFacade() {
         return apartmentPhotoFacade;
+    }
+
+    public void setApartmentPhotoFacade(ApartmentPhotoFacade apartmentPhotoFacade) {
+        this.apartmentPhotoFacade = apartmentPhotoFacade;
     }
 
     /*
     ================
     Instance Methods
     ================
-
-    ************************
-    Handle User Photo Upload
-    ************************
      */
-//    public String upload() {
+
+    public ApartmentPhoto prepareCreate() {
+        // Instantiate a new ApartmentPhoto object and store its object reference into instance variable 'selected'
+        // The ApartmentPhoto class is defined in ApartmentPhoto.java
+        selected = new ApartmentPhoto();
+        return selected;
+    }
+
+    /*
+    ***************************
+    Create New Apartment Photo
+    ***************************
+     */
+    public void create() {
+        persist(JsfUtil.PersistAction.CREATE, "Photo was Successfully Created!");
+
+        /*
+        JsfUtil.isValidationFailed() returns TRUE if the validationFailed() method has been called
+        for the current request. Return of FALSE means that the create operation was successful and
+        we can reset items to null so that it will be recreated with the newly created user file.
+         */
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    // We do not allow update of a Apartment Photo.
+    public void update() {
+        persist(JsfUtil.PersistAction.UPDATE, "Photo was Successfully Updated!");
+    }
+
+    public void destroy() {
+
+        Methods.preserveMessages();
+//        try {
+////            Files.deleteIfExists(Paths.get(selected.getFilePath()));
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//        }
+
+        persist(JsfUtil.PersistAction.DELETE, "Photo was Successfully Deleted from the Database!");
+        /*
+        JsfUtil.isValidationFailed() returns TRUE if the validationFailed() method has been called
+        for the current request. Return of FALSE means that the destroy operation was successful and
+        we can reset items to null so that it will be recreated without the destroyed user file.
+         */
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    /*
+    =========================
+    Delete Selected User Photo
+    =========================
+     */
+    public String deleteSelectedUserFile() {
+
+        ApartmentPhoto userFileToDelete = selected;
+
+        /*
+        We need to preserve the messages since we will redirect to show a
+        different JSF page after successful deletion of the user file.
+         */
+        Methods.preserveMessages();
+
+        if (userFileToDelete == null) {
+            Methods.showMessage("Fatal Error", "No File Selected!", "You do not have a file to delete!");
+            return "";
+        } else {
+            try {
+                // Delete the file from CloudStorage/FileStorage
+                Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
+
+                // Delete the user file record from the database
+                getApartmentPhotoFacade().remove(userFileToDelete);
+                // ApartmentPhotoFacade inherits the remove() method from AbstractFacade
+
+                Methods.showMessage("Information", "Success!", "Selected File is Successfully Deleted!");
+
+                // See method below
+                refreshFileList();
+
+                return "/usersApartment/ListPhotos?faces-redirect=true";
+
+            } catch (IOException ex) {
+                Methods.showMessage("Fatal Error", "Something went wrong while deleting the user file!",
+                        "See: " + ex.getMessage());
+                return "";
+            }
+        }
+
+//        ApartmentPhoto apartmentPhotoToDelete = selected;
+//
 //        /*
-//        Redirecting to show a JSF page involves more than one subsequent requests and
-//        the messages would die from one request to another if not kept in the Flash scope.
-//        Since we will redirect to show the Profile page, we invoke preserveMessages().
-//        */
+//        We need to preserve the messages since we will redirect to show a
+//        different JSF page after successful deletion of the user file.
+//         */
 //        Methods.preserveMessages();
 //
-//        // Check if a file is selected
-//        if (file.getSize() == 0) {
-//            Methods.showMessage("Information", "No File Selected!",
-//                    "You need to choose a file first before clicking Upload.");
+//        if (apartmentPhotoToDelete == null) {
+//            System.out.println("apartmentPhotoToDelete == null");
+//            Methods.showMessage("Fatal Error", "No Photo Selected!", "You do not have a photo to delete!");
 //            return "";
-//        }
-//
-//        /*
-//        MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
-//        the Internet according to their nature and format.
-//
-//        A "Content-type" is simply a header defined in many protocols, such as HTTP, that
-//        makes use of MIME types to specify the nature of the file currently being handled.
-//
-//        Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
-//
-//            JPEG Image      = image/jpeg or image/jpg
-//            PNG image       = image/png
-//            GIF image       = image/gif
-//            Plain text file = text/plain
-//            HTML file       = text/html
-//            JSON file       = application/json
-//         */
-//        // Obtain the uploaded file's MIME file type
-//        String mimeFileType = file.getContentType();
-//
-//        if (mimeFileType.startsWith("image/")) {
-//            // The uploaded file is an image file
-//            /*
-//            The subSequence() method returns the portion of the mimeFileType string from the 6th
-//            position to the last character. Note that it starts with "image/" which has 6 characters at
-//            positions 0,1,2,3,4,5. Therefore, we start the subsequence at position 6 to obtain the file extension.
-//             */
-//            String fileExtension = mimeFileType.subSequence(6, mimeFileType.length()).toString();
-//
-//            String fileExtensionInCaps = fileExtension.toUpperCase();
-//
-//            switch (fileExtensionInCaps) {
-//                case "JPG":
-//                case "JPEG":
-//                case "PNG":
-//                case "GIF":
-//                    // File is an acceptable image type
-//                    break;
-//                default:
-//                    Methods.showMessage("Fatal Error", "Unrecognized File Type!",
-//                            "Selected file type is not a JPG, JPEG, PNG, or GIF!");
-//                    return "";
-//            }
 //        } else {
-//            Methods.showMessage("Fatal Error", "Unrecognized File Type!",
-//                    "Selected file type is not a JPG, JPEG, PNG, or GIF!");
-//            return "";
-//        }
-//
-//        storePhotoFile(file);
-//
-//        // Redirect to show the Profile page
-//        return "/userAccount/Profile?faces-redirect=true";
-//    }
-//
-//    /*
-//    *******************************************************
-//    Store Uploaded User's Photo File and its Thumbnail File
-//    *******************************************************
-//     */
-//    public String storePhotoFile(UploadedFile file) {
-//
-//        // Since we will redirect to show the Profile page, invoke preserveMessages()
-//        Methods.preserveMessages();
-//
-//        try {
-//            // Delete signedInUser's earlier uploaded photo file, its thumbnail file, and its database record.
-//            deletePhoto();
-//
-//            // Obtain the object reference of the signed-in User object
-//            User signedInUser = (User) Methods.sessionMap().get("user");
-//
-//            // Obtain the uploaded file's MIME file type
-//            String mimeFileType = file.getContentType();
-//
-//            // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
-//            String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
-//
-//            // Construct a new Photo object with file extension and signedInUser's object reference
-//            UserPhoto newPhoto = new UserPhoto(fileExtension, signedInUser);
-//
-//            // Create a record for the new Photo object in the database
-//            getUserPhotoFacade().create(newPhoto);
-//
-//            /*
-//            Obtain the object reference of the first Photo object of the signedInUser
-//            whose primary key is signedInUser.getId()
-//            */
-//            UserPhoto photo = getUserPhotoFacade().findPhotosByUserPrimaryKey(signedInUser.getId()).get(0);
-//
-//            /*
-//            InputStream is an abstract class, which is the superclass of all classes representing
-//            an input stream of bytes. It is imported as: import java.io.InputStream;
-//            Convert the uploaded file into an input stream of bytes.
-//             */
-//            InputStream inputStream = file.getInputstream();
-//
-//            // Write the uploaded file's input stream of bytes under the photo object's
-//            // filename using the inputStreamToFile method given below
-//            File uploadedFile = inputStreamToFile(inputStream, photo.getPhotoFilename());
-//
-//            // Create and save the thumbnail version of the uploaded file
-//            saveThumbnail(uploadedFile, photo);
-//
-//            Methods.showMessage("Information", "Success!", "User's Photo File is Successfully Uploaded!");
-//
-//        } catch (IOException ex) {
-//            Methods.showMessage("Fatal Error", "Something went wrong while storing the user's photo file!",
-//                    "See: " + ex.getMessage());
-//        }
-//
-//        // Redirect to show the Profile page
-//        return "/userAccount/Profile?faces-redirect=true";
-//    }
-//
-//    /*
-//    ***************************************************
-//    Write Given InputStream into a File with Given Name
-//    ***************************************************
-//     */
-//    /**
-//     * @param inputStream of bytes to be written into file with name targetFilename
-//     * @param targetFilename
-//     * @return the created file targetFile
-//     * @throws IOException
-//     */
-//    private File inputStreamToFile(InputStream inputStream, String targetFilename) throws IOException {
-//
-//        File targetFile = null;
-//
-//        try {
-//            /*
-//            inputStream.available() returns an estimate of the number of bytes that can be read from
-//            the inputStream without blocking by the next invocation of a method for this input stream.
-//            A memory buffer of bytes is created with the size of estimated number of bytes.
-//             */
-//            byte[] buffer = new byte[inputStream.available()];
-//
-//            // Read the bytes of data from the inputStream into the created memory buffer.
-//            inputStream.read(buffer);
-//
-//            // Create a new empty file with the given name targetFilename in the UserPhotoStorage directory
-//            targetFile = new File(Constants.PHOTOS_ABSOLUTE_PATH, targetFilename);
-//
-//            // A file OutputStream is an output stream for writing data to a file
-//            OutputStream outStream;
-//
-//            /*
-//            FileOutputStream is intended for writing streams of raw bytes such as image data.
-//            Create a new FileOutputStream for writing to the empty targetFile
-//             */
-//            outStream = new FileOutputStream(targetFile);
-//
-//            // Create the targetFile in the UserPhotoStorage directory with the inputStream given
-//            outStream.write(buffer);
-//
-//            // Close the output stream and release any system resources associated with it.
-//            outStream.close();
-//
-//        } catch (IOException ex) {
-//            Methods.showMessage("Fatal Error", "Something went wrong in input stream to file!",
-//                    "See: " + ex.getMessage());
-//        }
-//
-//        // Return the created targetFile
-//        return targetFile;
-//    }
-//
-//    /*
-//    ********************************************
-//    Store Signed-In User's Thumbnail Photo Image
-//    ********************************************
-//
-//    When signedInUser uploads a photo, a thumbnail (small) version of the photo image
-//    is created in this method by using the Scalr.resize method provided in the
-//    imgscalr (Java Image Scaling Library) imported as imgscalr-lib-4.2.jar
-//     */
-//    private void saveThumbnail(File inputFile, UserPhoto inputPhoto) {
-//
-//        try {
-//            // Buffer the photo image from the uploaded inputFile
-//            BufferedImage uploadedPhoto = ImageIO.read(inputFile);
-//
-//            /*
-//            The thumbnail photo image size is set to 200x200px in Constants.java as follows:
-//            public static final Integer THUMBNAIL_SIZE = 200;
-//
-//            If the signedInUser uploads a large photo file, we will scale it down to THUMBNAIL_SIZE
-//            and use it so that the size is reasonable for performance reasons.
-//
-//            The photo image scaling is properly done by using the imgscalr-lib-4.2.jar file.
-//
-//            The thumbnail file is named as "userId_thumbnail.fileExtension",
-//            e.g., 5_thumbnail.jpg for signedInUser with id 5.
-//             */
-//            // Scale the uploaded photo image to the THUMBNAIL_SIZE using imgscalr.
-//            BufferedImage thumbnailPhoto = Scalr.resize(uploadedPhoto, Constants.THUMBNAIL_SIZE);
-//
-//            // Create the thumbnail photo file in the UserPhotoStorage directory
-//            File thumbnailPhotoFile = new File(Constants.PHOTOS_ABSOLUTE_PATH, inputPhoto.getThumbnailFileName());
-//
-//            /*
-//            NOTE: ImageIO is imported as: import javax.imageio.ImageIO;
-//            Write the thumbnailPhoto into thumbnailPhotoFile with the file extension.
-//            */
-//            ImageIO.write(thumbnailPhoto, inputPhoto.getExtension(), thumbnailPhotoFile);
-//
-//        } catch (IOException ex) {
-//            Methods.showMessage("Fatal Error", "Something went wrong while saving the thumbnail file!",
-//                    "See: " + ex.getMessage());
-//        }
-//    }
-//
-//    /*
-//    *******************************************************
-//    Delete Signed-In User's Photo and Thumbnail Image Files
-//    *******************************************************
-//     */
-//    public void deletePhoto() {
-//
-//        // Obtain the object reference of the signedInUser
-//        User signedInUser = (User) Methods.sessionMap().get("user");
-//
-//        // Obtain the id (primary key in the database) of the signedInUser object
-//        Integer primaryKey = signedInUser.getId();
-//
-//        /*
-//        Obtain the list of Photo file objects that belong to the signedInUser whose
-//        database primary key is primaryKey. The list will contain only one photo or nothing.
-//        We allow only one profile photo for the user to upload.
-//         */
-//        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserPrimaryKey(primaryKey);
-//
-//        // photoList.isEmpty implies that the user has never uploaded a photo file
-//        if (!photoList.isEmpty()) {
-//
-//            // Obtain the object reference of the first Photo object in the list
-//            UserPhoto photo = photoList.get(0);
-//
 //            try {
-//                /*
-//                NOTE: Files and Paths are imported as
-//                        import java.nio.file.Files;
-//                        import java.nio.file.Paths;
 //
-//                 Delete the user's photo if it exists.
-//                 getFilePath() is given in UserPhoto.java file.
-//                 */
-//                Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));
+//                // Delete the file from CloudStorage/FileStorage TODO
+//                Files.deleteIfExists(Paths.get(apartmentPhotoToDelete.getFilePath()));
+//                System.out.println("deleteIfExists");
 //
-//                /*
-//                 Delete the user's thumbnail image if it exists.
-//                 getThumbnailFilePath() is given in UserPhoto.java file.
-//                 */
-//                Files.deleteIfExists(Paths.get(photo.getThumbnailFilePath()));
+//                // Delete the user file record from the database
+//                persist(JsfUtil.PersistAction.DELETE, "Selected photo is successfully deleted!");
+//                // apartmentPhotoFacade inherits the remove() method from AbstractFacade
+//                System.out.println("remove");
+//                Methods.showMessage("Information", "Success!", "Selected photo is successfully deleted!");
 //
-//                // Delete the photo file record from the database.
-//                // UserPhotoFacade inherits the remove() method from AbstractFacade.
-//                getUserPhotoFacade().remove(photo);
+//                // See method below
+//                refreshFileList();
+//                System.out.println("refreshFileList");
+//                return "/usersApartment/ListPhotos?faces-redirect=true";
 //
 //            } catch (IOException ex) {
-//                Methods.showMessage("Fatal Error",
-//                        "Something went wrong while deleting the user photo file!",
+//                System.out.println(ex.getMessage());
+//                Methods.showMessage("Fatal Error", "Something went wrong while deleting the photo!",
 //                        "See: " + ex.getMessage());
+//                return "";
 //            }
 //        }
-//
-//    }
+    }
 
+    /*
+    ========================
+    Refresh User's Photo List
+    ========================
+     */
+    public void refreshFileList() {
+        /*
+        By setting the items to null, we force the getItems
+        method above to retrieve all of the user's files again.
+         */
+        selected = null; // Remove selection
+        items = null;    // Invalidate list of items to trigger re-query.
+    }
 
+    /*
+    =====================================
+    Return Cleaned Filename given Photo Id
+    =====================================
+     */
+    public String cleanedFilenameForFileId(Integer fileId) {
+        /*
+        cleanedFileNameHashMap<KEY, VALUE>
+            KEY   = Integer fileId
+            VALUE = String cleanedFileNameForSelected
+         */
 
+        // Obtain the cleaned filename for the given fileId
+        String cleanedFileName = cleanedFileNameHashMap.get(fileId);
 
+        return cleanedFileName;
+    }
 
+    /*
+    =========================================
+    Return Cleaned Filename for Selected Photo
+    =========================================
+     */
+    // This method is called from UserFiles.xhtml by passing the fileId as a parameter.
+    public String cleanedFileNameForSelected() {
+
+        Integer fileId = selected.getId();
+        /*
+        cleanedFileNameHashMap<KEY, VALUE>
+            KEY   = Integer fileId
+            VALUE = String cleanedFileNameForSelected
+         */
+
+        // Obtain the cleaned filename for the given fileId
+        String cleanedFileName = cleanedFileNameHashMap.get(fileId);
+
+        return cleanedFileName;
+    }
+
+    /*
+    ==========================
+    Return Selected Photo's URI
+    ==========================
+     */
+    public String selectedFileURI() {
+        return Constants.APARTMENT_PHOTOS_URI + selected.getFilename();
+    }
+
+    /*
+    =============================================
+    Return True if Selected Photo is an Image Photo
+    =============================================
+     */
+    public boolean isImage() {
+
+        switch (extensionOfSelectedFileInCaps()) {
+            case "JPG":
+            case "JPEG":
+            case "PNG":
+            case "GIF":
+                // Selected file is an acceptable image file
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /*
+    ========================================================
+    Return Extension of the Selected Photo in Capital Letters
+    ========================================================
+     */
+    public String extensionOfSelectedFileInCaps() {
+
+        // Obtain the selected filename
+        String userFileName = selected.getFilename();
+
+        // Extract the file extension from the filename
+        String fileExtension = userFileName.substring(userFileName.lastIndexOf(".") + 1);
+
+        // Convert file extension to be in capital letters
+        String fileExtensionInCaps = fileExtension.toUpperCase();
+
+        return fileExtensionInCaps;
+    }
+
+    /*
+     ****************************************************************************
+     *   Perform CREATE, EDIT (UPDATE), and DELETE Operations in the Database   *
+     ****************************************************************************
+     */
+
+    /**
+     * @param persistAction  refers to CREATE, UPDATE (Edit) or DELETE action
+     * @param successMessage displayed to inform the user about the result
+     */
+    private void persist(JsfUtil.PersistAction persistAction, String successMessage) {
+
+        if (selected != null) {
+
+            try {
+                if (persistAction != JsfUtil.PersistAction.DELETE) {
+                    /*
+                     -------------------------------------------------
+                     Perform CREATE or EDIT operation in the database.
+                     -------------------------------------------------
+                     The edit(selected) method performs the SAVE (STORE) operation of the "selected"
+                     object in the database regardless of whether the object is a newly
+                     created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
+
+                     UserFileFacade inherits the edit(selected) method from the AbstractFacade class.
+                     */
+                    apartmentPhotoFacade.edit(selected);
+                } else {
+                    /*
+                     -----------------------------------------
+                     Perform DELETE operation in the database.
+                     -----------------------------------------
+                     The remove method performs the DELETE operation in the database.
+
+                     UserFileFacade inherits the remove(selected) method from the AbstractFacade class.
+                     */
+                    apartmentPhotoFacade.remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, "A Persistence Error Occurred!");
+                }
+            } catch (Exception ex) {
+                System.out.println(12);
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, "A Persistence Error Occurred!");
+            }
+        }
+    }
 
     @FacesConverter(forClass = ApartmentPhoto.class)
     public static class ApartmentPhotoControllerConverter implements Converter {

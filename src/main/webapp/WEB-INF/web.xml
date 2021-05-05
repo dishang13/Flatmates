@@ -38,6 +38,12 @@
         <param-name>primefaces.UPLOADER</param-name>
         <param-value>auto</param-value>
     </context-param>
+
+    <!-- increase buffer size to avoid JSF1095 errors -->
+<!--    <context-param>-->
+<!--        <param-name>javax.faces.FACELETS_BUFFER_SIZE</param-name>-->
+<!--        <param-value>131072</param-value>-->
+<!--    </context-param>-->
     
     <!-- 
     This enables the use of Font Awesome icons in PrimeFaces buttons.

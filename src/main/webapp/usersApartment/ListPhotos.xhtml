@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Osman Balci on 2021.2.6
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Apartment Photos" />
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:95%">
+
+                <h:form id="ApartmentPhotoListForm">
+
+                    <p:panel header="#{apartmentController.selected.name}'s Files" >
+
+                        <p:dataTable id="datalist" value="#{apartmentPhotoController.items}" var="item"
+                                     selectionMode="single" selection="#{apartmentPhotoController.selected}"
+                                     reflow="true"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rowIndexVar="rowNumber"
+                                     first="#{apartmentPhotoController.selectedRowNumber}"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,20,30,40,50"
+                                     class="dataTable" >
+
+                            <p:ajax event="rowSelect" update="uploadButton downloadButton deleteButton displayButton">
+                                #{apartmentPhotoController.setSelectedRowNumber(rowNumber)};
+                            </p:ajax>
+
+                            <!-- 
+                            =========================================================================
+                            To show the previously selected row when the user comes back to this page
+                            =========================================================================
+                            
+                            Step 1: Include the following above:
+                            
+                                    rowIndexVar="rowNumber" 
+                                    first="#{apartmentPhotoController.selectedRowNumber}"
+                                        identifies the row number to show when this page reloads
+                            
+                            Step 2: With <p:ajax event="rowSelect"> above, set the selectedRowNumber 
+                                    instance variable by using the setter method.
+
+                            Step 3: Declare the instance variable selectedRowNumber and create the
+                                    getter and setter methods for it in apartmentPhotoController.java.
+                            -->
+
+                            <p:ajax event="rowUnselect" update="uploadButton downloadButton deleteButton displayButton"/>
+
+                            <!--
+                            ********************************
+                            *        FILE ID column        *
+                            ********************************
+                            -->
+                            <p:column sortBy="#{item.id}" headerText="Photo Id" style="width:60px;">
+                                <div align="center"><h:outputText value="#{item.id}"/></div>
+                            </p:column>
+
+                            <!--
+                            ********************************
+                            *     FILE TYPE column     *
+                            ********************************
+                            -->
+<!--                            <p:column headerText="File Type" style="width:80px;">-->
+<!--                                <div align="center">-->
+<!--                                    <h:graphicImage class="previewImage" value="#{apartmentPhotoController.fileTypeIcon(item.id)}" />-->
+<!--                                </div>-->
+<!--                            </p:column>-->
+
+                            <!--
+                            ********************************
+                            *        FILE NAME column      *
+                            ********************************
+                            -->
+                            <p:column sortBy="#{item.filename}" headerText="Photo Name" >
+                                <h:outputText value="#{apartmentPhotoController.cleanedFilenameForFileId(item.id)}"/>
+                            </p:column>
+
+                            <!--
+                            ********************************
+                            *        USER ID column        *
+                            ********************************
+                            -->
+<!--                            <p:column headerText="User Id" style="width:60px;">-->
+<!--                                <div align="center"><h:outputText value="#{item.userId}"/></div>-->
+<!--                            </p:column>-->
+
+                            <!--
+                            ********************************
+                            *       USER PHOTO column      *
+                            ********************************
+                            -->
+<!--                            <p:column headerText="User Photo" style="width:100px;">-->
+<!--                                <div align="center">-->
+<!--                                    <h:graphicImage class="smallProfilePhoto" value="#{apartmentController.userPhoto()}" />-->
+<!--                                </div>-->
+<!--                            </p:column>-->
+
+                            <!--
+                            The "header" and "footer" facets are defined for the p:dataTable.
+                            See their documentations in PrimeFaces User Guide.
+                            -->
+
+                            <f:facet name="footer">
+
+                                <!--
+                                ================================
+                                |      UPLOAD FILE Button      |
+                                ================================
+                                -->
+                                <p:commandButton id="uploadButton" value="Upload Photo" icon="fas fa-upload"
+                                                 update=":ApartmentPhotoListForm" ajax="true"
+                                                 action="/usersApartment/UploadPhotos?faces-redirect=true" />
+
+                                <!--
+                                ================================
+                                |     DOWNLOAD FILE Button     |
+                                ================================
+                                -->
+                                <p:commandButton id="downloadButton" value="Download Photo" ajax="false"
+                                                 icon="fas fa-download"
+                                                 disabled="#{empty apartmentPhotoController.selected}" >
+                                    <p:fileDownload value="#{fileDownloadManager.file}" />
+                                </p:commandButton>
+
+                                <!-- 
+                                ***************************************************
+                                Display a Confirmation dialog for the DELETE button
+                                *************************************************** 
+                                -->
+
+                                <!--
+                                ================================
+                                |      DELETE FILE Button      |
+                                ================================
+                                -->
+                                <p:commandButton id="deleteButton" icon="fas fa-trash-alt" value="Delete Photo"
+                                                 actionListener="#{apartmentPhotoController.deleteSelectedUserFile()}"
+                                                 update=":ApartmentPhotoListForm" ajax="true"
+                                                 disabled="#{empty apartmentPhotoController.selected}">
+
+                                    <p:confirm header="Photo Deletion Confirmation"
+                                               message="Are you sure you want to permanently delete the selected photo from the database?"
+                                               icon="fas fa-exclamation-triangle fa-2x" />
+                                </p:commandButton>
+
+                                <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
+                                    <div align="center">
+                                        <!-- The value of the first button listed below will be shown as 
+                                        highlighted (default action) when displayed -->
+                                        <p:commandButton value="No" type="button" 
+                                                         class="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                        &nbsp;
+                                        <p:commandButton value="Yes" type="button" 
+                                                         class="ui-confirmdialog-yes" icon="fas fa-check-square" />
+                                    </div>
+                                </p:confirmDialog>
+                                <!-- 
+                                ************************************************
+                                End of Display of the DELETE Confirmation dialog 
+                                ************************************************ 
+                                -->
+
+                                <!--
+                                ================================
+                                |     DISPLAY Photo Button      |
+                                ================================
+                                -->
+                                <p:commandButton id="displayButton" value="Display Photo"
+                                                 action="/usersApartment/DisplayPhoto?faces-redirect=true"
+                                                 ajax="false" icon="fas fa-file-alt"  
+                                                 disabled="#{empty apartmentPhotoController.selected}" />
+                            </f:facet>
+
+                        </p:dataTable>
+                    </p:panel>
+
+                </h:form>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>
