@@ -61,7 +61,6 @@ CREATE TABLE Apartment (
     latitude DECIMAL(8,6) NOT NULL,
     longitude DECIMAL(9,6) NOT NULL,
     complex_website varchar(1028),
-    pets_allowed BOOLEAN NOT NULL DEFAULT true,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 

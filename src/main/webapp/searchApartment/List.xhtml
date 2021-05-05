@@ -66,14 +66,15 @@
                                 </p:tab>
                             </p:accordionPanel>
                         </div>
-                        <div class="ui-g-6"><p:dataTable id="datalist" value="#{apartmentSearchController.searchResults}" var="item"
-                                                         selectionMode="single" selection="#{apartmentSearchController.selected}"
-                                                         reflow="true"
-                                                         paginator="true"
-                                                         rowKey="#{item.id}"
-                                                         rows="10"
-                                                         rowsPerPageTemplate="5,10,20,30,50,70,90"
-                                                         class="dataTable"
+                        <div class="ui-g-6">
+                            <p:dataTable id="datalist" value="#{apartmentSearchController.searchResults}" var="item"
+                                 selectionMode="single" selection="#{apartmentSearchController.selected}"
+                                 reflow="true"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,20,30,50,70,90"
+                                 class="dataTable"
                         >
 
                             <p:ajax event="rowSelect"   update="viewButton"/>
@@ -169,27 +170,52 @@
                             <f:facet name="footer">
                                 <!-- VIEW button -->
                                 <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
-                                                 update=":ApartmentSearchViewDlg" oncomplete="PF('ApartmentSearchViewDialog').show()"
+                                                 action="/searchApartment/View?faces-redirect=true"
                                                  disabled="#{empty apartmentSearchController.selected}"/>
-
                             </f:facet>
 
                         </p:dataTable></div>
-                        <div class="ui-g-6">Google Map comes here</div>
+                        <div class="ui-g-6">
+<!--                            TODO remove this map-->
+                            <p:gmap widgetVar="w_gmap"
+                                    center="#{apartmentSearchController.getCenter()}"
+                                    fitBounds="#{apartmentSearchController.searchResults.size() == 1 ? 'false' : true}"
+                                    zoom="15" type="roadmap" model="#{apartmentSearchController.mapModel}"
+                                    style="width:600px;height:400px" >
+<!--                                <p:ajax event="overlaySelect" listener="#{apartmentSearchController.onMarkerSelect}" />-->
+                            </p:gmap>
+                        </div>
                     </div>
-
                 </p:panel>
-
             </h:form>
-
         </div>
+<!--        <script type="text/javascript">-->
+<!--            if (navigator.geolocation) {-->
+<!--                checkGeolocationByHTML5();-->
+<!--            } else {-->
+<!--                checkGeolocationByLoaderAPI(); // HTML5 not supported! Fall back to Loader API.-->
+<!--            }-->
 
-        <!--
-        Clicking the View button displays the included
-        View.xhtml file in a dialog box on top of this page.
-        -->
-        <ui:include src="/searchApartment/View.xhtml"/>
+<!--            function checkGeolocationByHTML5() {-->
+<!--                navigator.geolocation.getCurrentPosition(function(position) {-->
+<!--                    setMapCenter(position.coords.latitude, position.coords.longitude);-->
+<!--                }, function() {-->
+<!--                    checkGeolocationByLoaderAPI(); // Error! Fall back to Loader API.-->
+<!--                });-->
+<!--            }-->
 
+<!--            function checkGeolocationByLoaderAPI() {-->
+<!--                if (google.loader.ClientLocation) {-->
+<!--                    setMapCenter(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);-->
+<!--                } else {-->
+<!--                    // Unsupported! Show error/warning?-->
+<!--                }-->
+<!--            }-->
+
+<!--            function setMapCenter(latitude, longitude) {-->
+<!--                w_gmap.getMap().setCenter(new google.maps.LatLng(latitude, longitude));-->
+<!--            }-->
+<!--        </script>-->
     </ui:define>
 
 </ui:composition>

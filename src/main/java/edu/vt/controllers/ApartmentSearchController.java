@@ -13,6 +13,11 @@ import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -86,6 +91,8 @@ public class ApartmentSearchController implements Serializable {
     private int petsAllowedNum;
 
     private Apartment selected;
+
+    private MapModel mapModel;
 
     /*
     The instance variable 'apartmentFacade' is annotated with the @EJB annotation.
@@ -204,7 +211,10 @@ public class ApartmentSearchController implements Serializable {
     }
 
     public void setSelected(Apartment selected) {
+        // We need to update mapModel everytime selected changes
+//        this.mapModel = null;
         this.selected = selected;
+//        mapModel = getMapModel();
     }
 
     public ApartmentFacade getApartmentFacade() {
@@ -223,13 +233,47 @@ public class ApartmentSearchController implements Serializable {
         this.apartmentPhotoFacade = apartmentPhotoFacade;
     }
 
+    public MapModel getMapModel() {
+        if(mapModel == null) {
+            if(selected == null) {
+                mapModel = new DefaultMapModel();
+                for(Apartment a : searchResults) {
+                    mapModel.addOverlay(new Marker(new LatLng(a.getLatitude().doubleValue(), a.getLongitude().doubleValue()), a.getId() + ". " + a.getName()));
+                }
+            } else {
+                mapModel.addOverlay(new Marker(new LatLng(selected.getLatitude().doubleValue(), selected.getLongitude().doubleValue()), selected.getName()));
+            }
+        }
+
+        return mapModel;
+    }
+
+    public void setMapModel(MapModel mapModel) {
+        this.mapModel = mapModel;
+    }
+
+    /* Get center for the map.
+    *  If selected != null use that as center
+    *  Other wise use Blacksburg as center
+    */
+    public String getCenter() {
+        if(selected != null) {
+            return selected.getLatLong();
+        }
+        if(searchResults.size() == 1) {
+            return searchResults.get(0).getLatLong();
+        }
+        return "37.2296, -80.4139";
+    }
+
     /*
-    ================
-    Instance Methods
-    ================
-     */
+        ================
+        Instance Methods
+        ================
+         */
     public void unselect() {
         selected = null;
+        searchResults = null;
     }
 
     private String processSearchFilters() {
@@ -273,6 +317,19 @@ public class ApartmentSearchController implements Serializable {
         searchResults = null;
 
         return "/searchApartment/List?faces-redirect=true";
+    }
+
+    public void onMarkerSelect(OverlaySelectEvent event) {
+        Marker marker = (Marker) event.getOverlay();
+
+// && marker.getLatlng().toString().equals(a.getLatLong())
+        for(Apartment a: searchResults) {
+            if(a.getName().equals(marker.getTitle())) {
+                System.out.println(a.getName());
+                setSelected(a);
+                break;
+            }
+        }
     }
 
 }

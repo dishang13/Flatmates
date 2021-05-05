@@ -17,13 +17,13 @@
 
     <ui:define name="title">
         <!-- Set the page title -->
-        <h:outputText value="View Apartment" />
+        <h:outputText value="Get Directions" />
     </ui:define>
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
 
-        <h:form id="ApartmentSearchViewForm" class="ui-datatable-data">
+        <h:form id="ApartmentGetDirectionsForm" class="ui-datatable-data">
 
             <div align="center">
                 <h:panelGroup id="display">
@@ -37,35 +37,6 @@
 
                         <h:outputText value="Apartment Name:"/>
                         <h:outputText value="#{apartmentSearchController.selected.name}" />
-
-                        <h:outputText value="Apartment Description:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.description}" />
-
-                        <h:outputText value="Address:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.address}" />
-
-                        <h:outputText value="Number of Bedrooms:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.numBed}" />
-
-                        <h:outputText value="Number of Bathrooms:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.numBath}" />
-
-                        <!--                        TODO currency format-->
-                        <h:outputText value="Monthly Rent:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.rent}" />
-
-                        <!--                        TODO date format-->
-                        <h:outputText value="Start Date:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.startDate}" />
-                        <!--                        TODO date format-->
-                        <h:outputText value="End Date:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.endDate}" />
-
-                        <!--                        TODO output link-->
-                        <h:outputText value="Apartment Complex Website:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.complexWebsite}"/>
-
-
 
                     </p:panelGrid>
                 </h:panelGroup>
@@ -81,11 +52,8 @@
                         zoom="15" type="roadmap" model="#{apartmentSearchController.mapModel}"
                         style="width:600px;height:400px" />
                 <h:panelGroup>
-                    <!-- Get Directions button -->
-                    <p:commandButton id="getDirections" value="Get Directions" action="/searchApartment/GetDirections?faces-redirect=true"
-                                     icon="fas fa-arrow-left" ajax="false" immediate="true" />
                     <!-- GO BACK button -->
-                    <p:commandButton id="backButton" value="Go Back" action="/searchApartment/List?faces-redirect=true"
+                    <p:commandButton id="backButton" value="Go Back" action="/searchApartment/View?faces-redirect=true"
                                      icon="fas fa-arrow-left" ajax="false" immediate="true" />
                 </h:panelGroup>
                 <br /><br />
