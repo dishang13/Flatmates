@@ -28,6 +28,11 @@
             <h1>Add a New Apartment</h1>
             <br />
             <h:form id="ApartmentCreateForm" class="ui-datatable-data">
+                <h:inputHidden id="dates" value="true">
+                    <f:validator validatorId="dateValidator" />
+                    <f:attribute name="hiddenStartDate" value="#{hiddenStartDate}" />
+                    <f:attribute name="hiddenEndDate" value="#{hiddenEndDate}" />
+                </h:inputHidden>
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >
@@ -92,26 +97,18 @@
                                      placeholder="Enter Apartment's Home Website URL"/>
 
 
-
-
                         <p:outputLabel value="Start Date:" for="startDate" />
 
-                        <p:calendar id="startDate" value="#{apartmentController.selected.startDate}" mindate="#{apartmentController.today}"
-                                    pattern="dd/MM/yyyy"     required="true" mask="true"
+                        <p:calendar id="startDate" binding="#{hiddenStartDate}" value="#{apartmentController.selected.startDate}" mindate="#{apartmentController.today}"
+                                    pattern="MM/dd/yyyy"     required="true" mask="true"
                                     requiredMessage="The Start Date field is required.">
-                            <p:ajax event="dateSelect" update="endDate"/>
                         </p:calendar>
-
-<!--                        pattern="dd/MM/yyyy"-->
-
-
 
 
                         <p:outputLabel value="End Date:" for="endDate" />
-                        <p:calendar id="endDate" value="#{apartmentController.selected.endDate}" mindate="#{apartmentController.startDate}"
-                                               pattern="dd/MM/yyyy" required="true" mask="true"
+                        <p:calendar id="endDate" binding="#{hiddenEndDate}" value="#{apartmentController.selected.endDate}" mindate="#{apartmentController.startDate}"
+                                               pattern="MM/dd/yyyy" required="true" mask="true"
                                     requiredMessage="The End Date field is required.">
-                            <p:ajax event="dateSelect"/>
                         </p:calendar>
 
 
