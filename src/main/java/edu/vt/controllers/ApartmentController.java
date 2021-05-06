@@ -346,6 +346,15 @@ public class ApartmentController implements Serializable {
     }
 
     /*
+     ****************************
+     *   Return Logo File URI   *
+     ****************************
+     */
+    public String logoFileStoragePath() {
+        return Constants.APARTMENT_PHOTOS_URI;
+    }
+
+    /*
     *************************************
     Prepare to Create a New Apartment
     *************************************
