@@ -199,12 +199,6 @@ public class ApartmentPhotoController implements Serializable {
     public void destroy() {
 
         Methods.preserveMessages();
-//        try {
-////            Files.deleteIfExists(Paths.get(selected.getFilePath()));
-//        } catch (IOException e) {
-//
-//            e.printStackTrace();
-//        }
 
         persist(JsfUtil.PersistAction.DELETE, "Photo was Successfully Deleted from the Database!");
         /*
@@ -258,44 +252,6 @@ public class ApartmentPhotoController implements Serializable {
                 return "";
             }
         }
-
-//        ApartmentPhoto apartmentPhotoToDelete = selected;
-//
-//        /*
-//        We need to preserve the messages since we will redirect to show a
-//        different JSF page after successful deletion of the user file.
-//         */
-//        Methods.preserveMessages();
-//
-//        if (apartmentPhotoToDelete == null) {
-//            System.out.println("apartmentPhotoToDelete == null");
-//            Methods.showMessage("Fatal Error", "No Photo Selected!", "You do not have a photo to delete!");
-//            return "";
-//        } else {
-//            try {
-//
-//                // Delete the file from CloudStorage/FileStorage TODO
-//                Files.deleteIfExists(Paths.get(apartmentPhotoToDelete.getFilePath()));
-//                System.out.println("deleteIfExists");
-//
-//                // Delete the user file record from the database
-//                persist(JsfUtil.PersistAction.DELETE, "Selected photo is successfully deleted!");
-//                // apartmentPhotoFacade inherits the remove() method from AbstractFacade
-//                System.out.println("remove");
-//                Methods.showMessage("Information", "Success!", "Selected photo is successfully deleted!");
-//
-//                // See method below
-//                refreshFileList();
-//                System.out.println("refreshFileList");
-//                return "/usersApartment/ListPhotos?faces-redirect=true";
-//
-//            } catch (IOException ex) {
-//                System.out.println(ex.getMessage());
-//                Methods.showMessage("Fatal Error", "Something went wrong while deleting the photo!",
-//                        "See: " + ex.getMessage());
-//                return "";
-//            }
-//        }
     }
 
     /*
@@ -318,11 +274,7 @@ public class ApartmentPhotoController implements Serializable {
     =====================================
      */
     public String cleanedFilenameForFileId(Integer fileId) {
-        /*
-        cleanedFileNameHashMap<KEY, VALUE>
-            KEY   = Integer fileId
-            VALUE = String cleanedFileNameForSelected
-         */
+
 
         // Obtain the cleaned filename for the given fileId
         String cleanedFileName = cleanedFileNameHashMap.get(fileId);
@@ -339,11 +291,6 @@ public class ApartmentPhotoController implements Serializable {
     public String cleanedFileNameForSelected() {
 
         Integer fileId = selected.getId();
-        /*
-        cleanedFileNameHashMap<KEY, VALUE>
-            KEY   = Integer fileId
-            VALUE = String cleanedFileNameForSelected
-         */
 
         // Obtain the cleaned filename for the given fileId
         String cleanedFileName = cleanedFileNameHashMap.get(fileId);

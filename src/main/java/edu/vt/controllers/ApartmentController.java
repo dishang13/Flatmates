@@ -604,113 +604,12 @@ public class ApartmentController implements Serializable {
         }
     }
 
-    /*
-     ****************************
-     *   Return Logo File URI   *
-     ****************************
-     */
-    public String logoFileStoragePath() {
-        return Constants.APARTMENT_PHOTOS_URI;
-    }
 
     public void setLatLong(Apartment apartment) {
         String geocodingApiUrl = Constants.geocodingApiUrlTemplate.replace("{0}", URLEncoder.encode(apartment.getAddress(), StandardCharsets.UTF_8));
         try {
             // Obtain the JSON file from the searchApiUrl
             String geocodingJsonData = Methods.readUrlContent(geocodingApiUrl);
-
-            /*
-            https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDBztt9J2EE3Js0OKoeA6k8E8Zpj82CYV4
-            returns the following JSON data:
-            {
-                "results": [
-                    {
-                        "address_components": [
-                            {
-                                "long_name": "1600",
-                                "short_name": "1600",
-                                "types": [
-                                    "street_number"
-                                ]
-                            },
-                            {
-                                "long_name": "Amphitheatre Pkwy",
-                                "short_name": "Amphitheatre Pkwy",
-                                "types": [
-                                    "route"
-                                ]
-                            },
-                            {
-                                "long_name": "Mountain View",
-                                "short_name": "Mountain View",
-                                "types": [
-                                    "locality",
-                                    "political"
-                                ]
-                            },
-                            {
-                                "long_name": "Santa Clara County",
-                                "short_name": "Santa Clara County",
-                                "types": [
-                                    "administrative_area_level_2",
-                                    "political"
-                                ]
-                            },
-                            {
-                                "long_name": "California",
-                                "short_name": "CA",
-                                "types": [
-                                    "administrative_area_level_1",
-                                    "political"
-                                ]
-                            },
-                            {
-                                "long_name": "United States",
-                                "short_name": "US",
-                                "types": [
-                                    "country",
-                                    "political"
-                                ]
-                            },
-                            {
-                                "long_name": "94043",
-                                "short_name": "94043",
-                                "types": [
-                                    "postal_code"
-                                ]
-                            }
-                        ],
-                        "formatted_address": "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
-                        "geometry": {
-                            "location": {
-                                "lat": 37.4224764,
-                                "lng": -122.0842499
-                            },
-                            "location_type": "ROOFTOP",
-                            "viewport": {
-                                "northeast": {
-                                    "lat": 37.4238253802915,
-                                    "lng": -122.0829009197085
-                                },
-                                "southwest": {
-                                    "lat": 37.4211274197085,
-                                    "lng": -122.0855988802915
-                                }
-                            }
-                        },
-                        "place_id": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
-                        "plus_code": {
-                            "compound_code": "CWC8+W5 Mountain View, California, United States",
-                            "global_code": "849VCWC8+W5"
-                        },
-                        "types": [
-                            "street_address"
-                        ]
-                    }
-                ],
-                "status": "OK"
-            }
-             */
 
             // Get the latitude and longitudes from the JSON
             JSONObject geocodingJsonObject = new JSONObject(geocodingJsonData);
@@ -731,6 +630,7 @@ public class ApartmentController implements Serializable {
     }
 
 //    TODO doc comment
+
     public String getApartmentFirstPhoto(int primaryKey) {
         List<ApartmentPhoto> userFilesList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
         if(userFilesList.isEmpty()) {

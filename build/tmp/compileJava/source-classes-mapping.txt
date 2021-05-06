@@ -1,5 +1,5 @@
-edu/vt/managers/FileDownloadManager.java
- edu.vt.managers.FileDownloadManager
+edu/vt/FacadeBeans/ApartmentFacade.java
+ edu.vt.FacadeBeans.ApartmentFacade
 edu/vt/globals/Constants.java
  edu.vt.globals.Constants
 edu/vt/validators/DateValidator.java
@@ -41,6 +41,12 @@ edu/vt/EntityBeans/ApartmentPhoto.java
  edu.vt.EntityBeans.ApartmentPhoto
 edu/vt/controllers/UserController.java
  edu.vt.controllers.UserController
+edu/vt/FacadeBeans/ApartmentPhotoFacade.java
+ edu.vt.FacadeBeans.ApartmentPhotoFacade
+edu/vt/EntityBeans/Apartment.java
+ edu.vt.EntityBeans.Apartment
+edu/vt/managers/FileDownloadManager.java
+ edu.vt.managers.FileDownloadManager
 edu/vt/managers/PhotoUploadManager.java
  edu.vt.managers.PhotoUploadManager
 edu/vt/controllers/ApartmentController.java
@@ -51,9 +57,3 @@ edu/vt/controllers/ApartmentPhotoController.java
  edu.vt.controllers.ApartmentPhotoController$ApartmentPhotoControllerConverter
 edu/vt/controllers/ApartmentSearchController.java
  edu.vt.controllers.ApartmentSearchController
-edu/vt/EntityBeans/Apartment.java
- edu.vt.EntityBeans.Apartment
-edu/vt/FacadeBeans/ApartmentPhotoFacade.java
- edu.vt.FacadeBeans.ApartmentPhotoFacade
-edu/vt/FacadeBeans/ApartmentFacade.java
- edu.vt.FacadeBeans.ApartmentFacade
