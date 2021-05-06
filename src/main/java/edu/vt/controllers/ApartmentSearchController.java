@@ -21,6 +21,7 @@ import org.primefaces.model.map.Marker;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
@@ -373,5 +374,17 @@ public class ApartmentSearchController implements Serializable {
         endDate = null;
         searchResults = null;
         selected = null;
+    }
+
+    /*
+     ******************************************
+     *   Converter Method for Data Exporter   *
+     ******************************************
+
+    PrimeFaces p:dataExporter requires the values to be exported to be of String type.
+    This method is called in searchApartments/List.xhtml.
+     */
+    public String convertIntToString(Integer value) {
+        return Integer.toString(value);
     }
 }

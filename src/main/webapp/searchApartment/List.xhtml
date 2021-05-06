@@ -81,7 +81,7 @@
                                         <p:watermark for="numBaths" value="Number of Bathrooms" />
                                     </p:inputNumber>
 
-                                    <span>&nbsp;</span>
+                                    <br/>
 
                                     <!-- SEARCH button -->
                                     <p:commandButton value="Search" icon="fas fa-arrow-up" ajax="false"
@@ -105,7 +105,7 @@
                                  rows="10"
                                  rowsPerPageTemplate="5,10,20,30,50,70,90"
                                  class="dataTable"
-                        >
+                            >
 
                             <p:ajax event="rowSelect"   update="viewButton"/>
                             <p:ajax event="rowUnselect" update="viewButton"/>
@@ -121,7 +121,7 @@
                             *    User Id   *
                             ************************
                             -->
-                                <p:column headerText="Id" style="width:20px;">
+                                <p:column headerText="Id" style="width:20px;" exportFunction="#{apartmentSearchController.convertIntToString(item.id)}">
                                     <div align="center">
                                         <h:outputText class="inputTextField" value="#{item.id}"/>
                                     </div>
@@ -132,7 +132,7 @@
                                 *    Apartment Name   *
                                 ***************************
                                 -->
-                                <p:column sortBy="#{item.name}" headerText="Apartment Name" style="width:100px;">
+                                <p:column sortBy="#{item.name}" exportFunction="#{item.getName()}" headerText="Apartment Name" style="width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.name}"/>
                                 </p:column>
 
@@ -142,7 +142,7 @@
                               *    Rent Per Month   *
                               ***************************
                               -->
-                                <p:column sortBy="#{item.rent}" headerText="Rent Per Month($):" style="width:100px;">
+                                <p:column sortBy="#{item.rent}" exportFunction="#{apartmentSearchController.convertIntToString(item.rent)}" headerText="Rent Per Month($):" style="width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.rent}"/>
                                 </p:column>
 
@@ -151,7 +151,7 @@
                               *    Number of Bedrooms   *
                               ***************************
                               -->
-                                <p:column sortBy="#{item.numBed}" headerText="Number of Bedrooms" style="width:100px;">
+                                <p:column sortBy="#{item.numBed}" exportFunction="#{apartmentSearchController.convertIntToString(item.numBed)}" headerText="Number of Bedrooms" style="width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.numBed}"/>
                                 </p:column>
 
@@ -160,7 +160,7 @@
                             *    Number of Bathrooms  *
                             ***************************
                             -->
-                                <p:column sortBy="#{item.numBath}" headerText="Number of Bathrooms" style="width:100px;">
+                                <p:column sortBy="#{item.numBath}" exportFunction="#{apartmentSearchController.convertIntToString(item.numBath)}" headerText="Number of Bathrooms" style="width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.numBath}"/>
                                 </p:column>
 
@@ -171,7 +171,7 @@
                                *   Start Date  *
                                *************************
                                -->
-                                <p:column sortBy="#{item.startDate}" headerText="Start Date "
+                                <p:column sortBy="#{item.startDate}" exportFunction="#{item.getStartDate().toString()}" headerText="Start Date "
                                           style="text-align: center; width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.startDate}">
                                         <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
@@ -184,7 +184,7 @@
                                *   End Date  *
                                *************************
                                -->
-                                <p:column sortBy="#{item.endDate}" headerText="End Date "
+                                <p:column sortBy="#{item.endDate}" exportFunction="#{item.getEndDate().toString()}" headerText="End Date "
                                           style="text-align: center; width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.endDate}">
                                         <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
@@ -197,7 +197,7 @@
                                *   Date Entered  *
                                *************************
                                -->
-                                <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
+                                <p:column sortBy="#{item.dateEntered}" headerText="Date Entered" exportFunction="#{item.getDateEntered().toString()}"
                                           style="text-align: center; width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.dateEntered}">
                                         <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
@@ -216,7 +216,102 @@
                                                  disabled="#{empty apartmentSearchController.selected}"/>
                             </f:facet>
 
-                        </p:dataTable></div>
+                        </p:dataTable>
+
+                        <p:panelGrid columns="2">
+                            <!--
+                            ================================================
+                            EXPORT ALL DATA as Excel, PDF, CSV, XML, or JSON
+                            ================================================
+                            -->
+                            <p:panel header="Export All Data">
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/xlsExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                    poi-3.15.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="xls" target="datalist" fileName="Apartments" />
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/pdfExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                                    itext-2.1.7.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="pdf" target="datalist" fileName="Apartments"/>
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/csvExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                    poi-3.15.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="csv" target="datalist" fileName="Apartments" />
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/xmlExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses xmlbeans-2.6.0.jar for exporting into XML documents.
+                                    xmlbeans-2.6.0.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="xml" target="datalist" fileName="Apartments" />
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/jsonExport.png']}" />
+                                    <!-- Download data table content as a JSON file  -->
+                                    <p:fileDownload value="#{fileDownloadManager.file}"/>
+                                </h:commandLink>
+                            </p:panel>
+
+                            <!--
+                            ===========================================
+                            EXPORT PAGE DATA as Excel, PDF, CSV, or XML
+                            ===========================================
+                            -->
+                            <p:panel header="Export Only Shown Page Data">
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/xlsExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                    poi-3.15.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="xls" target="datalist" fileName="Apartments-Page" pageOnly="true" />
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/pdfExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                                    itext-2.1.7.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="pdf" target="datalist" fileName="Apartments-Page" pageOnly="true" />
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/csvExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                                    poi-3.15.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="csv" target="datalist" fileName="Apartments-Page" pageOnly="true" />
+                                </h:commandLink>
+                                &nbsp;
+                                <h:commandLink>
+                                    <p:graphicImage value="#{resource['images:exportIcons/xmlExport.png']}" width="40" />
+                                    <!--
+                                    PrimeFaces p:dataExporter uses xmlbeans-2.6.0.jar for exporting into XML documents.
+                                    xmlbeans-2.6.0.jar must be added to the Libraries folder.
+                                    -->
+                                    <p:dataExporter type="xml" target="datalist" fileName="Apartments-Page" pageOnly="true" />
+                                </h:commandLink>
+                            </p:panel>
+                        </p:panelGrid>
+                        </div>
                     </div>
                 </p:panel>
             </h:form>

@@ -2,8 +2,8 @@ edu/vt/managers/FileDownloadManager.java
  edu.vt.managers.FileDownloadManager
 edu/vt/globals/Constants.java
  edu.vt.globals.Constants
-edu/vt/EntityBeans/ApartmentPhoto.java
- edu.vt.EntityBeans.ApartmentPhoto
+edu/vt/validators/DateValidator.java
+ edu.vt.validators.DateValidator
 edu/vt/validators/UsernameValidator.java
  edu.vt.validators.UsernameValidator
 edu/vt/globals/Methods.java
@@ -18,12 +18,12 @@ edu/vt/EntityBeans/User.java
  edu.vt.EntityBeans.User
 edu/vt/EntityBeans/UserPhoto.java
  edu.vt.EntityBeans.UserPhoto
-edu/vt/FacadeBeans/ApartmentPhotoFacade.java
- edu.vt.FacadeBeans.ApartmentPhotoFacade
+edu/vt/controllers/UserPhotoController.java
+ edu.vt.controllers.UserPhotoController
 edu/vt/managers/PasswordResetManager.java
  edu.vt.managers.PasswordResetManager
-edu/vt/FacadeBeans/ApartmentFacade.java
- edu.vt.FacadeBeans.ApartmentFacade
+edu/vt/FacadeBeans/UserPhotoFacade.java
+ edu.vt.FacadeBeans.UserPhotoFacade
 edu/vt/globals/Password.java
  edu.vt.globals.Password
  edu.vt.globals.Password$CannotPerformOperationException
@@ -35,18 +35,12 @@ edu/vt/controllers/util/JsfUtil.java
  edu.vt.controllers.util.JsfUtil$PersistAction
 edu/vt/validators/EmailValidator.java
  edu.vt.validators.EmailValidator
-edu/vt/EntityBeans/Apartment.java
- edu.vt.EntityBeans.Apartment
-edu/vt/FacadeBeans/UserPhotoFacade.java
- edu.vt.FacadeBeans.UserPhotoFacade
-edu/vt/controllers/UserPhotoController.java
- edu.vt.controllers.UserPhotoController
 edu/vt/FacadeBeans/UserFacade.java
  edu.vt.FacadeBeans.UserFacade
+edu/vt/EntityBeans/ApartmentPhoto.java
+ edu.vt.EntityBeans.ApartmentPhoto
 edu/vt/controllers/UserController.java
  edu.vt.controllers.UserController
-edu/vt/validators/DateValidator.java
- edu.vt.validators.DateValidator
 edu/vt/managers/PhotoUploadManager.java
  edu.vt.managers.PhotoUploadManager
 edu/vt/controllers/ApartmentController.java
@@ -57,3 +51,9 @@ edu/vt/controllers/ApartmentPhotoController.java
  edu.vt.controllers.ApartmentPhotoController$ApartmentPhotoControllerConverter
 edu/vt/controllers/ApartmentSearchController.java
  edu.vt.controllers.ApartmentSearchController
+edu/vt/EntityBeans/Apartment.java
+ edu.vt.EntityBeans.Apartment
+edu/vt/FacadeBeans/ApartmentPhotoFacade.java
+ edu.vt.FacadeBeans.ApartmentPhotoFacade
+edu/vt/FacadeBeans/ApartmentFacade.java
+ edu.vt.FacadeBeans.ApartmentFacade
