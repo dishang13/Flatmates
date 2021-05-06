@@ -274,7 +274,11 @@ public class ApartmentPhotoController implements Serializable {
     =====================================
      */
     public String cleanedFilenameForFileId(Integer fileId) {
-
+        /*
+        cleanedFileNameHashMap<KEY, VALUE>
+            KEY   = Integer fileId
+            VALUE = String cleanedFileNameForSelected
+         */
 
         // Obtain the cleaned filename for the given fileId
         String cleanedFileName = cleanedFileNameHashMap.get(fileId);
@@ -291,6 +295,11 @@ public class ApartmentPhotoController implements Serializable {
     public String cleanedFileNameForSelected() {
 
         Integer fileId = selected.getId();
+        /*
+        cleanedFileNameHashMap<KEY, VALUE>
+            KEY   = Integer fileId
+            VALUE = String cleanedFileNameForSelected
+         */
 
         // Obtain the cleaned filename for the given fileId
         String cleanedFileName = cleanedFileNameHashMap.get(fileId);
