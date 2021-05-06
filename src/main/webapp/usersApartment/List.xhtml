@@ -94,7 +94,10 @@
                        -->
                         <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
                                   style="text-align: center; width:100px;">
-                            <h:outputText class="inputDateField" value="#{item.dateEntered}"/>
+                            <h:outputText class="inputTextField" value="#{item.dateEntered}">
+                                <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <!--
@@ -104,7 +107,10 @@
                        -->
                         <p:column sortBy="#{item.startDate}" headerText="Start Date "
                                   style="text-align: center; width:100px;">
-                            <h:outputText class="inputDateField" value="#{item.startDate}"/>
+                            <h:outputText class="inputTextField" value="#{item.startDate}">
+                                <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <!--
@@ -114,7 +120,10 @@
                        -->
                         <p:column sortBy="#{item.endDate}" headerText="End Date "
                                   style="text-align: center; width:100px;">
-                            <h:outputText class="inputDateField" value="#{item.endDate}"/>
+                            <h:outputText class="inputTextField" value="#{item.endDate}">
+                                <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
                         </p:column>
 
                         <!--
