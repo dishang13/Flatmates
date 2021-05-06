@@ -48,21 +48,51 @@
 
                                     <span>&nbsp;</span>
 
-                                    <p:inputText id="minBeds" value="#{apartmentSearchController.minBeds}"
-                                                 placeholder="Min Number of Beds" >
-                                    </p:inputText>
+                                    <p:inputNumber id="minRent" class="dataFields" value="#{apartmentSearchController.minRent}"
+                                                   minValue="0" decimalPlaces="0" maxValue="100000000" symbol="$">
+                                        <p:watermark for="minRent" value="Min Rent" />
+                                    </p:inputNumber>
 
                                     <span>&nbsp;</span>
 
-                                    <p:inputText id="maxBeds" value="#{apartmentSearchController.maxBeds}"
-                                                 placeholder="Max Number of Beds" >
-                                    </p:inputText>
+                                    <p:inputNumber id="maxRent" class="dataFields" value="#{apartmentSearchController.maxRent}"
+                                                   minValue="0" decimalPlaces="0" maxValue="100000000" symbol="$">
+                                        <p:watermark for="maxRent" value="Max Rent" />
+                                    </p:inputNumber>
+
+                                    <span>&nbsp;</span>
+
+                                    <p:inputNumber id="minBeds" class="dataFields" value="#{apartmentSearchController.minBeds}"
+                                                   minValue="0" decimalPlaces="0" maxValue="100">
+                                        <p:watermark for="minBeds" value="Min Number of Beds" />
+                                    </p:inputNumber>
+
+                                    <span>&nbsp;</span>
+
+                                    <p:inputNumber id="maxBeds" class="dataFields" value="#{apartmentSearchController.maxBeds}"
+                                                   minValue="0" decimalPlaces="0" maxValue="100">
+                                        <p:watermark for="maxBeds" value="Max Number of Beds" />
+                                    </p:inputNumber>
+
+                                    <span>&nbsp;</span>
+
+                                    <p:inputNumber id="numBaths" class="dataFields" value="#{apartmentSearchController.numBaths}"
+                                                   minValue="0" decimalPlaces="0" maxValue="100" symbol="+" symbolPosition="suffix">
+                                        <p:watermark for="numBaths" value="Number of Bathrooms" />
+                                    </p:inputNumber>
 
                                     <span>&nbsp;</span>
 
                                     <!-- SEARCH button -->
                                     <p:commandButton value="Search" icon="fas fa-arrow-up" ajax="false"
                                                      action="#{apartmentSearchController.search()}" />
+
+                                    <!-- Clear button -->
+                                    <p:commandButton value="Clear" icon="fas fa-undo"
+                                                     update=":apartmentSearchForm" immediate="true"
+                                                     actionListener="#{apartmentSearchController.clear()}">
+                                        <p:resetInput target="apartmentSearchForm" />
+                                    </p:commandButton>
                                 </p:tab>
                             </p:accordionPanel>
                         </div>
@@ -117,17 +147,24 @@
                                 </p:column>
 
                                 <!--
-                               *************************
-                               *   Date Entered  *
-                               *************************
-                               -->
-                                <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
-                                          style="text-align: center; width:100px;">
-                                    <h:outputText class="inputTextField" value="#{item.dateEntered}">
-                                        <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
-                                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                                    </h:outputText>
+                              ***************************
+                              *    Number of Bedrooms   *
+                              ***************************
+                              -->
+                                <p:column sortBy="#{item.numBed}" headerText="Number of Bedrooms" style="width:100px;">
+                                    <h:outputText class="inputTextField" value="#{item.numBed}"/>
                                 </p:column>
+
+                                <!--
+                            ***************************
+                            *    Number of Bathrooms  *
+                            ***************************
+                            -->
+                                <p:column sortBy="#{item.numBath}" headerText="Number of Bathrooms" style="width:100px;">
+                                    <h:outputText class="inputTextField" value="#{item.numBath}"/>
+                                </p:column>
+
+
 
                                 <!--
                                *************************
@@ -150,6 +187,19 @@
                                 <p:column sortBy="#{item.endDate}" headerText="End Date "
                                           style="text-align: center; width:100px;">
                                     <h:outputText class="inputTextField" value="#{item.endDate}">
+                                        <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <!--
+                               *************************
+                               *   Date Entered  *
+                               *************************
+                               -->
+                                <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
+                                          style="text-align: center; width:100px;">
+                                    <h:outputText class="inputTextField" value="#{item.dateEntered}">
                                         <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
                                         <f:convertDateTime pattern="MM/dd/yyyy" />
                                     </h:outputText>

@@ -88,7 +88,6 @@ public class ApartmentSearchController implements Serializable {
     private String maxRent;
     private Date startDate;
     private Date endDate;
-    private int petsAllowedNum;
 
     private Apartment selected;
 
@@ -202,14 +201,6 @@ public class ApartmentSearchController implements Serializable {
         this.endDate = endDate;
     }
 
-    public int getPetsAllowedNum() {
-        return petsAllowedNum;
-    }
-
-    public void setPetsAllowedNum(int petsAllowedNum) {
-        this.petsAllowedNum = petsAllowedNum;
-    }
-
     public Apartment getSelected() {
         return selected;
     }
@@ -218,8 +209,10 @@ public class ApartmentSearchController implements Serializable {
         // We need to update mapModel everytime selected changes
         this.mapModel = null;
         this.selected = selected;
-        this.fromAddress = selected.getAddress();
-        this.toAddress = selected.getAddress();
+        if(selected != null) {
+            this.fromAddress = selected.getAddress();
+            this.toAddress = selected.getAddress();
+        }
 //        mapModel = getMapModel();
     }
 
@@ -332,6 +325,9 @@ public class ApartmentSearchController implements Serializable {
         if(maxBeds != null && !maxBeds.isBlank()) {
             searchFilters += " AND a.numBed <=" + maxBeds;
         }
+        if(numBaths != null && !numBaths.isBlank()) {
+            searchFilters += " AND a.numBath >=" + numBaths;
+        }
         if(minRent != null && !minRent.isBlank()) {
             searchFilters += " AND a.rent >=" + minRent;
         }
@@ -361,5 +357,21 @@ public class ApartmentSearchController implements Serializable {
         searchResults = null;
 
         return "/searchApartment/List?faces-redirect=true";
+    }
+
+    /*
+    Clear the search dialog.
+     */
+    public void clear() {
+        name = "";
+        numBaths = "";
+        minBeds = "";
+        maxBeds = "";
+        minRent = "";
+        maxRent = "";
+        startDate = null;
+        endDate = null;
+        searchResults = null;
+        selected = null;
     }
 }

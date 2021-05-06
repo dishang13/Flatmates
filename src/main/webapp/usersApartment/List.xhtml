@@ -88,16 +88,21 @@
                         </p:column>
 
                         <!--
-                       *******************
-                       *   Date Entered  *
-                       *******************
-                       -->
-                        <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
-                                  style="text-align: center; width:100px;">
-                            <h:outputText class="inputTextField" value="#{item.dateEntered}">
-                                <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
+                          ***************************
+                          *    Number of Bedrooms   *
+                          ***************************
+                          -->
+                        <p:column sortBy="#{item.numBed}" headerText="Number of Bedrooms" style="width:100px;">
+                            <h:outputText class="inputTextField" value="#{item.numBed}"/>
+                        </p:column>
+
+                        <!--
+                        ***************************
+                        *    Number of Bathrooms  *
+                        ***************************
+                        -->
+                        <p:column sortBy="#{item.numBath}" headerText="Number of Bathrooms" style="width:100px;">
+                            <h:outputText class="inputTextField" value="#{item.numBath}"/>
                         </p:column>
 
                         <!--
@@ -121,6 +126,19 @@
                         <p:column sortBy="#{item.endDate}" headerText="End Date "
                                   style="text-align: center; width:100px;">
                             <h:outputText class="inputTextField" value="#{item.endDate}">
+                                <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <!--
+                       *******************
+                       *   Date Entered  *
+                       *******************
+                       -->
+                        <p:column sortBy="#{item.dateEntered}" headerText="Date Entered"
+                                  style="text-align: center; width:100px;">
+                            <h:outputText class="inputTextField" value="#{item.dateEntered}">
                                 <!-- Convert Date field into user friendly format rather than printing a raw date like 2015-08-26 00:00:00.0-->
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>

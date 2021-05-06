@@ -111,15 +111,6 @@
                                     requiredMessage="The End Date field is required.">
                         </p:calendar>
 
-
-                        <!-- Asterisk * indicates that the field is required and must have a value -->
-<!--                        <h:outputText value="Logo: *" class="facetHeader"/>-->
-<!--                        &lt;!&ndash;-->
-<!--                        Apartment's logo file is named as TICKER.png and is stored in external directory ApartmentLogosStorage-->
-<!--                        &ndash;&gt;-->
-<!--                        <h:graphicImage value="#{apartmentController.logoFileStoragePath()}#{apartmentController.selected.ticker}.png"-->
-<!--                                        class="apartmentLogo" />-->
-
                     </p:panelGrid>
 
                 </h:panelGroup>
@@ -180,23 +171,6 @@
                     -->
                     <p:commandButton value="Cancel" action="#{apartmentController.cancel()}"
                                      icon="fas fa-ban" ajax="false" immediate="true" />
-<!--                    <c:if test="#{apartmentController.isLogoFileUploaded() == false}">-->
-<!--                        &lt;!&ndash;-->
-<!--                        Call the cancel() method immediately without first rendering this JSF page.-->
-<!--                        The cancel() method will make the selected apartment object null and show the List page.-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:commandButton value="Cancel" action="#{apartmentController.cancel()}"-->
-<!--                                         icon="fas fa-ban" ajax="false" immediate="true" />-->
-<!--                    </c:if>-->
-<!--                    <c:if test="#{apartmentController.isLogoFileUploaded() == true}">-->
-<!--                        &lt;!&ndash;-->
-<!--                        Show the List page while executing the deleteLogoFile() method of the backing bean-->
-<!--                        apartmentController to delete the uploaded apartment logo file since it is being cancelled.-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:commandButton value="Cancel" action="/apartment/List"-->
-<!--                                         icon="fas fa-ban" ajax="false"-->
-<!--                                         actionListener="#{apartmentController.deleteLogoFile()}" />-->
-<!--                    </c:if>-->
 
                 </h:panelGroup>
 
