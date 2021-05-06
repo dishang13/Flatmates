@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Osman Balci on 2021.2.17
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!--
+    *********************************************
+    Dialog pop-up window to VIEW (READ) a User
+    *********************************************
+    -->
+    <p:dialog id="RenterViewDlg" widgetVar="RenterViewDialog" modal="true"
+              resizable="false" appendTo="@(body)" header="#{apartmentSearchController.selected.userId.firstName} #{apartmentSearchController.selected.userId.lastName}">
+
+        <h:form id="UserViewForm" class="ui-datatable-data">
+            <div align="center">
+                <h:panelGroup id="display">
+                    <h1>#{apartmentSearchController.selected.userId.firstName} #{apartmentSearchController.selected.userId.lastName}</h1>
+                    <!--
+                    USER'S PROFILE PHOTO: Display the user's account profile photo in a circle.
+                    The cache="false" option enables immediate display of a newly uploaded photo without using cache.
+                    -->
+                    <p:graphicImage cache="false" class="profilePhoto" value="#{userController.userPhoto(apartmentSearchController.selected.userId.id)}" />
+                    <br />
+                    <br />
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                 rendered="#{apartmentSearchController.selected.userId != null}">
+
+                        <h:outputText value="First Name:"/>
+                        <h:outputText value="#{apartmentSearchController.selected.userId.firstName}" />
+
+                        <h:outputText value="Last Name:"/>
+                        <h:outputText value="#{apartmentSearchController.selected.userId.lastName}" />
+
+                        <h:outputText value="Eating Preferences:"/>
+                        <h:outputText value="#{userController.eatingPrefList()[apartmentSearchController.selected.userId.eatingPrefNumber]}" />
+
+                        <h:outputText value="Smoking Preferences:"/>
+                        <h:outputText value="#{userController.smokingPrefList()[apartmentSearchController.selected.userId.smokingPrefNumber]}" />
+
+                        <h:outputText value="Alcohol Preferences:"/>
+                        <h:outputText value="#{userController.alcoholPrefList()[apartmentSearchController.selected.userId.alcoholPrefNumber]}" />
+
+                        <h:outputText value="Sleep Preferences:"/>
+                        <h:outputText value="#{userController.sleepingPrefList()[apartmentSearchController.selected.userId.sleepPrefNumber]}" />
+
+                        <h:outputText value="Social Preferences:"/>
+                        <h:outputText value="#{userController.socialPrefList()[apartmentSearchController.selected.userId.socialPrefNumber]}" />
+
+                        <h:outputText value="Email:"/>
+                        <h:outputText value="#{apartmentSearchController.selected.userId.email}" />
+
+                        <h:outputText value="Username:"/>
+                        <h:outputText value="#{apartmentSearchController.selected.userId.username}" />
+
+                    </p:panelGrid>
+                </h:panelGroup>
+                <br />
+                <h:panelGroup>
+                    <!-- CLOSE button -->
+                    <p:commandButton value="Close" onclick="RenterViewDialog.hide()"
+                                     icon="fas fa-window-close" />
+                </h:panelGroup>
+                <br /><br />
+            </div>
+        </h:form>
+
+    </p:dialog>
+</ui:composition>
+</html>

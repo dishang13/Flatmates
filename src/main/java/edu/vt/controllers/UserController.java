@@ -846,10 +846,23 @@ public class UserController implements Serializable {
          */
         Integer primaryKey = (Integer) Methods.sessionMap().get("user_id");
 
-        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserPrimaryKey(primaryKey);
+        return userPhoto(primaryKey);
+    }
+
+    /*
+    ***********************************************
+    Return a User's Thumbnail Photo Relative Filepath
+    ***********************************************
+     */
+    public String userPhoto(Integer userId) {
+        /*
+        Obtain the list of Photo objects that belong to the User whose
+        database primary key is userId.
+         */
+        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserPrimaryKey(userId);
 
         if (photoList.isEmpty()) {
-            // No user photo exists. Return defaultUserPhoto.png from the BevqPhotoStorage directory.
+            // No user photo exists. Return defaultUserPhoto.png from the SurveyUserPhotoStorage directory.
             return Constants.USER_PHOTOS_URI + "defaultUserPhoto.png";
         }
 
@@ -929,5 +942,4 @@ public class UserController implements Serializable {
             apartmentFacade.deleteApartment(apartment.getId());
         });
     }
-
 }

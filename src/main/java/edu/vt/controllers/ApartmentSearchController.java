@@ -216,7 +216,7 @@ public class ApartmentSearchController implements Serializable {
 
     public void setSelected(Apartment selected) {
         // We need to update mapModel everytime selected changes
-//        this.mapModel = null;
+        this.mapModel = null;
         this.selected = selected;
         this.fromAddress = selected.getAddress();
         this.toAddress = selected.getAddress();
@@ -240,17 +240,10 @@ public class ApartmentSearchController implements Serializable {
     }
 
     public MapModel getMapModel() {
-        if(mapModel == null) {
+        if(mapModel == null && selected != null) {
             mapModel = new DefaultMapModel();
-            if(selected == null) {
-                for(Apartment a : searchResults) {
-                    mapModel.addOverlay(new Marker(new LatLng(a.getLatitude().doubleValue(), a.getLongitude().doubleValue()), a.getId() + ". " + a.getName()));
-                }
-            } else {
-                mapModel.addOverlay(new Marker(new LatLng(selected.getLatitude().doubleValue(), selected.getLongitude().doubleValue()), selected.getName()));
-            }
+            mapModel.addOverlay(new Marker(new LatLng(selected.getLatitude().doubleValue(), selected.getLongitude().doubleValue())));
         }
-
         return mapModel;
     }
 

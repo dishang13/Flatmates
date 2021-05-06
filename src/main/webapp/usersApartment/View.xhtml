@@ -22,195 +22,105 @@
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
-
         <h:form id="ApartmentViewForm" class="ui-datatable-data">
-            <!--
-            <tr> defines a row in the table
-            <td> defines a column within a row.
-            Number of <td> elements = number of columns
-            The table below has 1 row and 2 columns.
-            Left column contains the vertical navigation menu.
-            Right column contains the user's profile data.
-            -->
-<!--            <table width="100%" border="0" cellspacing="0" cellpadding="10">-->
-<!--                <tr>-->
-<!--                    &lt;!&ndash;-->
-<!--                    ***********************************************-->
-<!--                    Row 1 Column 1 (Left): VERTICAL NAVIGATION MENU-->
-<!--                    ***********************************************-->
-<!--                    &ndash;&gt;-->
-<!--                    <td width="180" align="left" valign="middle" nowrap="nowrap">-->
-<!--                        <ul class="verticalMenu">-->
-
-<!--                            <li class="verticalMenuItem">-->
-<!--                                &lt;!&ndash;-->
-<!--                                ================================-->
-<!--                                |          HOME Link           |-->
-<!--                                ================================-->
-<!--                                &ndash;&gt;-->
-<!--                                <h:link outcome="/index">-->
-<!--                                    <i class="fas fa-home" />&nbsp;Home-->
-<!--                                </h:link>-->
-<!--                            </li>-->
-
-<!--                        </ul>-->
-<!--                    </td>-->
-<!--                    &lt;!&ndash;-->
-<!--                    *****************************************-->
-<!--                    Row 1 Column 2 (Right): USER PROFILE DATA-->
-<!--                    *****************************************-->
-<!--                    &ndash;&gt;-->
-<!--                    <td align="center" valign="top">-->
-
-<!--                        <h1> #{apartmentController.selected.name} </h1>-->
-
-<!--                        &lt;!&ndash;-->
-<!--                        USER'S PROFILE PHOTO: Display the user's account profile photo in a circle.-->
-<!--                        The cache="false" option enables immediate display of a newly uploaded photo without using cache.-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:graphicImage cache="false" class="profilePhoto" value="#{userController.userPhoto()}" />-->
-<!--                        <br />-->
-<!--                        <br />-->
-<!--                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" >-->
-
-<!--                            <h:outputText value="First Name:"/>-->
-<!--                            <h:outputText value="#{userController.selected.firstName}" />-->
-
-<!--                            <h:outputText value="Middle Name:"/>-->
-<!--                            <h:outputText value="#{userController.selected.middleName}" />-->
-
-<!--                            <h:outputText value="Last Name:"/>-->
-<!--                            <h:outputText value="#{userController.selected.lastName}" />-->
-
-<!--                            <h:outputText value="Address Line 1:"/>-->
-<!--                            <h:outputText value="#{userController.selected.address1}" />-->
-
-<!--                            <h:outputText value="Address Line 2:"/>-->
-<!--                            <h:outputText value="#{userController.selected.address2}" />-->
-
-<!--                            <h:outputText value="City:"/>-->
-<!--                            <h:outputText value="#{userController.selected.city}" />-->
-
-<!--                            <h:outputText value="State:"/>-->
-<!--                            <h:outputText value="#{userController.selected.state}" />-->
-
-<!--                            <h:outputText value="Zip Code:"/>-->
-<!--                            <h:outputText value="#{userController.selected.zipcode}" />-->
-
-<!--                            <h:outputText value="Eating Preferences:"/>-->
-<!--                            <h:outputText value="#{userController.eatingPrefList()[userController.selected.eatingPrefNumber]}" />-->
-
-<!--                            <h:outputText value="Smoking Preferences:"/>-->
-<!--                            <h:outputText value="#{userController.smokingPrefList()[userController.selected.smokingPrefNumber]}" />-->
-
-<!--                            <h:outputText value="Alcohol Preferences:"/>-->
-<!--                            <h:outputText value="#{userController.alcoholPrefList()[userController.selected.alcoholPrefNumber]}" />-->
-
-<!--                            <h:outputText value="Sleep Preferences:"/>-->
-<!--                            <h:outputText value="#{userController.sleepingPrefList()[userController.selected.sleepPrefNumber]}" />-->
-
-<!--                            <h:outputText value="Social Preferences:"/>-->
-<!--                            <h:outputText value="#{userController.socialPrefList()[userController.selected.socialPrefNumber]}" />-->
-
-<!--                            <h:outputText value="Email:"/>-->
-<!--                            <h:outputText value="#{userController.selected.email}" />-->
-
-<!--                            <h:outputText value="Username:"/>-->
-<!--                            <h:outputText value="#{userController.selected.username}" />-->
-
-<!--                        </p:panelGrid>-->
-
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
 
             <div align="center">
                 <h:panelGroup id="display">
-
+                    <h:inputHidden id="address" value="#{apartmentController.selected.address}" />
                     <h:graphicImage value="#{apartmentController.getApartmentFirstPhoto(apartmentController.selected.id)}"
                                     style="width:300px" />
 
                     <br /><br />
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                                 rendered="#{apartmentController.selected != null}">
+                    <div class="ui-g">
+                        <div class="ui-g-4" align="center">
+                            <!-- WalkScore widget goes here-->
+                            <div id='ws-walkscore-tile'></div>
+                        </div>
+                        <div class="ui-g-4">
+                            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                     rendered="#{apartmentController.selected != null}">
 
-                        <h:outputText value="Apartment Name:"/>
-                        <h:outputText value="#{apartmentController.selected.name}" />
+                            <h:outputText value="Apartment Name:"/>
+                            <h:outputText value="#{apartmentController.selected.name}" />
 
-                        <h:outputText value="Apartment Description:"/>
-                        <h:outputText value="#{apartmentController.selected.description}" />
+                            <h:outputText value="Apartment Description:"/>
+                            <h:outputText value="#{apartmentController.selected.description}" />
 
-                        <h:outputText value="Address:"/>
-                        <h:outputText value="#{apartmentController.selected.address}" />
+                            <h:outputText value="Address:"/>
+                            <h:outputText value="#{apartmentController.selected.address}" />
 
-                        <h:outputText value="Number of Bedrooms:"/>
-                        <h:outputText value="#{apartmentController.selected.numBed}" />
+                            <h:outputText value="Number of Bedrooms:"/>
+                            <h:outputText value="#{apartmentController.selected.numBed}" />
 
-                        <h:outputText value="Number of Bathrooms:"/>
-                        <h:outputText value="#{apartmentController.selected.numBath}" />
+                            <h:outputText value="Number of Bathrooms:"/>
+                            <h:outputText value="#{apartmentController.selected.numBath}" />
 
-<!--                        TODO currency format-->
-                        <h:outputText value="Monthly Rent($):"/>
-                        <h:outputText value="#{apartmentController.selected.rent}" />
-
-
-<!--                        <p:outputLabel value="Rent per Month:" for="rent" />-->
-<!--                        &lt;!&ndash;TODO-->
-<!--                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.-->
-<!--                        *****************************************************************-->
-<!--                        *   mask="9?99999"   min=1 & max=999999 )   *-->
-<!--                        *****************************************************************-->
-<!--                        9 ==> indicates a digit 0 to 9.-->
-<!--                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.-->
-<!--                        Total number of 9s defines the maximum number of digits allowed.-->
-<!--                        &ndash;&gt;-->
-<!--                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"-->
-<!--                                       required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"-->
-<!--                                       decimalPlaces="0" maxValue="100000000">-->
-<!--                            <p:watermark for="rent" value="Enter the Monthly Rent!" />-->
-<!--                        </p:inputNumber>-->
+    <!--                        TODO currency format-->
+                            <h:outputText value="Monthly Rent($):"/>
+                            <h:outputText value="#{apartmentController.selected.rent}" />
 
 
-                        <h:outputText value="Start Date:" />
-                        <h:outputText value="#{apartmentController.selected.startDate}">
-                             <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
-                        </h:outputText>
+    <!--                        <p:outputLabel value="Rent per Month:" for="rent" />-->
+    <!--                        &lt;!&ndash;TODO-->
+    <!--                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.-->
+    <!--                        *****************************************************************-->
+    <!--                        *   mask="9?99999"   min=1 & max=999999 )   *-->
+    <!--                        *****************************************************************-->
+    <!--                        9 ==> indicates a digit 0 to 9.-->
+    <!--                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.-->
+    <!--                        Total number of 9s defines the maximum number of digits allowed.-->
+    <!--                        &ndash;&gt;-->
+    <!--                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"-->
+    <!--                                       required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"-->
+    <!--                                       decimalPlaces="0" maxValue="100000000">-->
+    <!--                            <p:watermark for="rent" value="Enter the Monthly Rent!" />-->
+    <!--                        </p:inputNumber>-->
 
 
-                        <h:outputText value="End Date:" />
-                        <h:outputText value="#{apartmentController.selected.endDate}">
-                            <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
-                        </h:outputText>
-
-<!--                        TODO output link-->
-                        <h:outputText value="Apartment Complex Website:"/>
-                        <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
-
-<!--                        <h:outputText value="Apartment Complex Website:"/>-->
-<!--                        <h:outputText >-->
-<!--                                <a href="#{apartmentController.selected.complexWebsite}" target="_blank">Apartment Complex Website</a>-->
-<!--                            -->
-<!--                        </h:outputText>-->
+                            <h:outputText value="Start Date:" />
+                            <h:outputText value="#{apartmentController.selected.startDate}">
+                                 <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                            </h:outputText>
 
 
+                            <h:outputText value="End Date:" />
+                            <h:outputText value="#{apartmentController.selected.endDate}">
+                                <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                            </h:outputText>
+
+    <!--                        TODO output link-->
+                            <h:outputText value="Apartment Complex Website:"/>
+                            <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
+
+    <!--                        <h:outputText value="Apartment Complex Website:"/>-->
+    <!--                        <h:outputText >-->
+    <!--                                <a href="#{apartmentController.selected.complexWebsite}" target="_blank">Apartment Complex Website</a>-->
+    <!--                            -->
+    <!--                        </h:outputText>-->
 
 
 
-                    </p:panelGrid>
+
+
+                        </p:panelGrid>
+                        </div>
+                        <div class="ui-g-4" align="left">
+                            <!--
+                            p:gmap is a map component integrated with Google Maps JavaScript API.
+                            See PrimeFaces User Guide for its documentation.
+
+                            You must register as Google developer and obtain an API key to use p:gmap
+                            by following the instructions in siteTemplate.xhtml
+                            -->
+                            <p:gmap center="#{apartmentController.selected.getLatLong()}"
+                                    zoom="15" type="roadmap" model="#{apartmentController.mapModel}"
+                                    style="width:600px;height:400px" />
+                        </div>
+                    </div>
                 </h:panelGroup>
-                <br /><br />
-                <!--
-                p:gmap is a map component integrated with Google Maps JavaScript API.
-                See PrimeFaces User Guide for its documentation.
 
-                You must register as Google developer and obtain an API key to use p:gmap
-                by following the instructions in siteTemplate.xhtml
-                -->
-                <p:gmap center="#{apartmentController.selected.getLatLong()}"
-                        zoom="15" type="roadmap" model="#{apartmentController.mapModel}"
-                        style="width:600px;height:400px" />
                 <h:panelGroup>
-<!--                     ADD PHOTOS button -->
+                    <!-- ADD PHOTOS button -->
                     <p:commandButton id="listPhotosButton" value="List Photos" action="/usersApartment/ListPhotos?faces-redirect=true"
                                      icon="fas fa-images" ajax="false" immediate="true" />
                     <!-- GO BACK button -->
@@ -220,7 +130,15 @@
                 <br /><br />
             </div>
         </h:form>
-
+        <!-- Load WalkScore widget-->
+        <script type='text/javascript'>
+            var ws_wsid = 'ddc71ae0ce1cf730538b5deb58e98d06';
+            var ws_format = 'tall';
+            var ws_width = '400';
+            var ws_height = '500';
+            var ws_address = document.getElementById('ApartmentViewForm:address').value;
+        </script>
+        <script type='text/javascript' src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
     </ui:define>
 
 </ui:composition>

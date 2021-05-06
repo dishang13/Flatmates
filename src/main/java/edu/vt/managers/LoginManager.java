@@ -79,6 +79,10 @@ public class LoginManager implements Serializable {
     *****************************************************
      */
     public String loginUser() {
+        return loginUser("/userAccount/Profile.xhtml?faces-redirect=true");
+    }
+
+    public String loginUser(String returnUrl) {
 
         // Since we will redirect to show the Profile page, invoke preserveMessages()
         Methods.preserveMessages();
@@ -127,8 +131,8 @@ public class LoginManager implements Serializable {
             // Initialize the session map with user properties of interest
             initializeSessionMap(user);
 
-            // Redirect to show the Profile page
-            return "/userAccount/Profile.xhtml?faces-redirect=true";
+            // Redirect to show the return page
+            return returnUrl;
         }
     }
 

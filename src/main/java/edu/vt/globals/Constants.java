@@ -169,7 +169,7 @@ public final class Constants {
         "Quiet",
     };
 
-    public static final String geocodingApiUrlTemplate = "https://api.geoapify.com/v1/geocode/search?text={0}&apiKey=679dd2b006364ecab99a87315b33e34c";
+    public static final String geocodingApiUrlTemplate = "https://maps.googleapis.com/maps/api/geocode/json?address={0}&key=AIzaSyDBztt9J2EE3Js0OKoeA6k8E8Zpj82CYV4";
 
     public static String DEFAULT_APARTMENT_PHOTO_FILE_NAME = "defaultApartmentPhoto.png";
 }

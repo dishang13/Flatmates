@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Osman Balci on 2021.2.17
+  - Copyright © 2021 Osman Balci. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+    <!--
+    ***************************************
+    Dialog pop-up window to Sign In  a User
+    ***************************************
+    -->
+    <p:dialog id="SignInDlg" widgetVar="SignInDialog" modal="true"
+              resizable="false" appendTo="@(body)" header="Please sign in to view the Renter">
+
+        <div align="center" style="width:70%; margin:0 auto;">
+
+            <h1>Sign In</h1>
+            <br />
+
+            <h:form>
+                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+
+                    <h:outputLabel value="Username:" for="username" />
+                    <p:inputText id="username" value="#{loginManager.username}" required="true" class="inputTextField"
+                                 requiredMessage="The Username field is required." label="Username" >
+                    </p:inputText>
+
+                    <h:outputLabel value="Password:" for="password" />
+                    <p:password id="password" value="#{loginManager.password}" feedback="false" class="inputTextField" >
+                    </p:password>
+
+                </p:panelGrid>
+
+                <br/>
+                <br/>
+                <!--
+                ================================
+                |         SIGN IN Button       |
+                ================================
+                -->
+                <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser('/searchApartment/View?faces-redirect=true')}"
+                                 ajax="false" icon="fas fa-sign-in-alt" />
+                &nbsp;
+                <!--
+                ================================
+                |   CREATE AN ACCOUNT Button   |
+                ================================
+                -->
+                <p:button outcome="/userAccount/CreateAccount" value="&nbsp;Create an Account" icon="fas fa-user-plus"  />
+
+                &nbsp;
+                <!--
+                ================================
+                |    FORGOT PASSWORD Button    |
+                ================================
+                -->
+                <p:button outcome="/userPasswordChange/EnterUsername" value="Forgot Password" icon="fas fa-key"  />
+
+                &nbsp;
+                <!--
+                ================================
+                |         CANCEL Button        |
+                ================================
+                -->
+                <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+            </h:form>
+
+        </div>
+        <br/><br/><br/>
+
+    </p:dialog>
+</ui:composition>
+</html>

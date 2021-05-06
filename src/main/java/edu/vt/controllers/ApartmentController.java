@@ -14,6 +14,7 @@ import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 
+import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -402,6 +403,7 @@ public class ApartmentController implements Serializable {
 
     // TODO
     public void update() { // TODO
+        setLatLong(selected);
         persist(PersistAction.UPDATE,"Apartment was successfully updated.");
     }
 
@@ -611,39 +613,6 @@ public class ApartmentController implements Serializable {
         return Constants.APARTMENT_PHOTOS_URI;
     }
 
-
-
-    /*
-     *****************************************
-     *   Delete Uploaded Company Logo File   *
-     *****************************************
-     */
-//    public void deleteLogoFile() {
-//
-//        // This sets the necessary flag to ensure the messages are preserved.
-//        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-//
-//        // Delete the company logo file stored in a directory external to the app directory
-//        try {
-//            // Obtain the company logo file URI
-//            String companyLogoFileURI = Constants.APARTMENT_PHOTOS_URI + getSelected().getTicker() + ".png";
-//
-//            // Obtain a Path object by converting the company logo file URI
-//            Path fileToDeletePath = Paths.get(companyLogoFileURI);
-//
-//            // Delete the file under the Path object if it exists
-//            Files.deleteIfExists(fileToDeletePath);
-//
-//            // Unselect previously selected company if any
-//            selected = null;
-//            setLogoFileUploaded(false);
-//
-//        } catch (IOException ex) {
-//            Methods.showMessage("Fatal Error", "Something went wrong during logo file deletion!",
-//                    "See: " + ex.getMessage());
-//        }
-//    }
-
     public void setLatLong(Apartment apartment) {
         String geocodingApiUrl = Constants.geocodingApiUrlTemplate.replace("{0}", URLEncoder.encode(apartment.getAddress(), StandardCharsets.UTF_8));
         try {
@@ -651,81 +620,111 @@ public class ApartmentController implements Serializable {
             String geocodingJsonData = Methods.readUrlContent(geocodingApiUrl);
 
             /*
-            https://api.geoapify.com/v1/geocode/search?text=38%20Upper%20Montagu%20Street%2C%20Westminster%20W1H%201LJ%2C%20United%20Kingdom&apiKey=679dd2b006364ecab99a87315b33e34c
+            https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDBztt9J2EE3Js0OKoeA6k8E8Zpj82CYV4
             returns the following JSON data:
             {
-                  "type": "FeatureCollection",
-                  "features": [
+                "results": [
                     {
-                      "type": "Feature",
-                      "properties": {
-                        "datasource": {
-                          "sourcename": "openstreetmap",
-                          "attribution": "© OpenStreetMap contributors",
-                          "license": "Open Database Licence",
-                          "url": "https://www.openstreetmap.org/copyright"
+                        "address_components": [
+                            {
+                                "long_name": "1600",
+                                "short_name": "1600",
+                                "types": [
+                                    "street_number"
+                                ]
+                            },
+                            {
+                                "long_name": "Amphitheatre Pkwy",
+                                "short_name": "Amphitheatre Pkwy",
+                                "types": [
+                                    "route"
+                                ]
+                            },
+                            {
+                                "long_name": "Mountain View",
+                                "short_name": "Mountain View",
+                                "types": [
+                                    "locality",
+                                    "political"
+                                ]
+                            },
+                            {
+                                "long_name": "Santa Clara County",
+                                "short_name": "Santa Clara County",
+                                "types": [
+                                    "administrative_area_level_2",
+                                    "political"
+                                ]
+                            },
+                            {
+                                "long_name": "California",
+                                "short_name": "CA",
+                                "types": [
+                                    "administrative_area_level_1",
+                                    "political"
+                                ]
+                            },
+                            {
+                                "long_name": "United States",
+                                "short_name": "US",
+                                "types": [
+                                    "country",
+                                    "political"
+                                ]
+                            },
+                            {
+                                "long_name": "94043",
+                                "short_name": "94043",
+                                "types": [
+                                    "postal_code"
+                                ]
+                            }
+                        ],
+                        "formatted_address": "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+                        "geometry": {
+                            "location": {
+                                "lat": 37.4224764,
+                                "lng": -122.0842499
+                            },
+                            "location_type": "ROOFTOP",
+                            "viewport": {
+                                "northeast": {
+                                    "lat": 37.4238253802915,
+                                    "lng": -122.0829009197085
+                                },
+                                "southwest": {
+                                    "lat": 37.4211274197085,
+                                    "lng": -122.0855988802915
+                                }
+                            }
                         },
-                        "housenumber": "38",
-                        "street": "Upper Montagu Street",
-                        "suburb": "Marylebone",
-                        "city": "Westminster",
-                        "county": "Greater London",
-                        "state": "England",
-                        "postcode": "W1H 1LJ",
-                        "country": "United Kingdom",
-                        "country_code": "gb",
-                        "lon": -0.16030636023550826,
-                        "lat": 51.52016005,
-                        "formatted": "38 Upper Montagu Street, Westminster W1H 1LJ, United Kingdom",
-                        "address_line1": "38 Upper Montagu Street",
-                        "address_line2": "Westminster W1H 1LJ, United Kingdom",
-                        "state_code": "ENG",
-                        "result_type": "building",
-                        "rank": {
-                          "importance": 0.811,
-                          "popularity": 8.988490181891963,
-                          "confidence": 1,
-                          "confidence_city_level": 1,
-                          "confidence_street_level": 1,
-                          "match_type": "full_match"
+                        "place_id": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
+                        "plus_code": {
+                            "compound_code": "CWC8+W5 Mountain View, California, United States",
+                            "global_code": "849VCWC8+W5"
                         },
-                        "place_id": "51dcb14637eb84c4bf59c6b7c19a94c24940f00102f901370cef1100000000c00203"
-                      },
-                      "geometry": {
-                        "type": "Point",
-                        "coordinates": [
-                          -0.16030636023550826,
-                          51.52016005
+                        "types": [
+                            "street_address"
                         ]
-                      },
-                      "bbox": [
-                        -0.160394,
-                        51.5201061,
-                        -0.1602251,
-                        51.5202273
-                      ]
                     }
-                  ],
-                  "query": {
-                    "text": "38 Upper Montagu Street, Westminster W1H 1LJ, United Kingdom",
-                    "parsed": {
-                      "housenumber": "38",
-                      "street": "upper montagu street",
-                      "postcode": "w1h 1lj",
-                      "district": "westminster",
-                      "country": "united kingdom",
-                      "expected_type": "building"
-                    }
-                  }
-                }
+                ],
+                "status": "OK"
+            }
              */
 
             // Get the latitude and longitudes from the JSON
             JSONObject geocodingJsonObject = new JSONObject(geocodingJsonData);
-            JSONObject properties = geocodingJsonObject.getJSONArray("features").getJSONObject(0).getJSONObject("properties");
+            JSONArray result = geocodingJsonObject.getJSONArray("results");
+            if(result.length() == 0) {
+                Methods.showMessage("Warning",
+                        "Address not found",
+                        "We could not locate this address. Please check the address.");
+                return;
+            }
+            JSONObject properties = result.getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
 
             apartment.setLatitude(properties.getBigDecimal("lat"));
-            apartment.setLongitude(properties.getBigDecimal("lon"));
+            apartment.setLongitude(properties.getBigDecimal("lng"));
         } catch (Exception e) {
             e.printStackTrace();
         }
