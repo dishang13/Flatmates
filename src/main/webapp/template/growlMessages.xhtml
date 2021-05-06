@@ -34,16 +34,16 @@
         -->
 
         <!-- Display informational messages for 5 seconds and fade away (1 second = 1000 milliseconds) -->
-        <p:growl id="growlInfoMessage" severity="info" showDetail="true" life="5000" />
+        <p:growl widgetVar="growlInfoMessageWV" id="growlInfoMessage" severity="info" showDetail="true" life="5000" />
 
         <!-- Display warning messages with no time duration and let the user close it by clicking the message box -->
-        <p:growl id="growlWarningMessage" severity="warn" showDetail="true" sticky="true" />
+        <p:growl widgetVar="growlWarningMessageWV" id="growlWarningMessage" severity="warn" showDetail="true" sticky="true" />
 
         <!-- Display error messages for 10 seconds and fade away -->
-        <p:growl id="growlErrorMessage" severity="error" showDetail="false" life="10000" />
+        <p:growl widgetVar="growlErrorMessageWV" id="growlErrorMessage" severity="error" showDetail="false" life="10000" />
 
         <!-- Display fatal error messages for 10 seconds and fade away -->
-        <p:growl id="growlFatalMessage" severity="fatal" showDetail="true" life="10000" />
+        <p:growl widgetVar="growlFatalMessageWV" id="growlFatalMessage" severity="fatal" showDetail="true" life="10000" />
 
     </ui:composition>
 
