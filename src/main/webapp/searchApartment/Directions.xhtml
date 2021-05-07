@@ -53,9 +53,11 @@
         </h:form>
 
         <script type="text/javascript">
-
+            // Setting the values here to prevent null pointer problems if the google api has not
+            // loaded before the function is called.
+            // This is used for the service to get directions
             var mapDirectionsService = new google.maps.DirectionsService();
-
+            // This is used for displaying directions
             var mapDirectionsDisplay = new google.maps.DirectionsRenderer();
 
             /* Call getDirections() after page has loaded.
