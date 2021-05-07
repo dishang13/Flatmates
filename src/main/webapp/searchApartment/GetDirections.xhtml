@@ -27,18 +27,23 @@
 
             <div align="center">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" class="borderless" style="max-width:650px">
+                    <p:panelGrid columns="3" columnClasses="panelGridColumn1, panelGridColumn2, panelGridColumn2" class="borderless" style="max-width:650px">
                         <p:outputLabel value="From Address:" for="fromAddress" />
                         <p:inputTextarea id="fromAddress" value="#{apartmentSearchController.fromAddress}" required="true" class="inputTextField"
                                          placeholder="Enter Apartment Address"
                                          maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
                         </p:inputTextarea>
 
+                        <p:commandButton icon="fas fa-search-location" type="button" value="&nbsp;Get Current Location" onclick="setStartToCurrent()"/>
+
+
                         <p:outputLabel value="To Address:" for="toAddress" />
                         <p:inputTextarea id="toAddress" value="#{apartmentSearchController.toAddress}" required="true" class="inputTextField"
                                          placeholder="Enter Apartment Address"
                                          maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
                         </p:inputTextarea>
+
+                        <p:commandButton icon="fas fa-search-location" type="button" value="&nbsp;Get Current Location" onclick="setEndToCurrent()"/>
                     </p:panelGrid>
 
                     <br/><br/>
@@ -68,6 +73,33 @@
                 <br /><br />
             </div>
         </h:form>
+
+        <script type="text/javascript">
+            var directionsService = new google.maps.DirectionsService();
+
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+
+            var geocoder = new google.maps.Geocoder();
+
+            function setStartToCurrent() {
+                getCurrentLocationAsAddress(function(address) {
+                    if(typeof address === 'undefined') {
+                        return;
+                    }
+                    document.getElementById('ApartmentGetDirectionsForm:fromAddress').value = address;
+                })
+            }
+
+            function setEndToCurrent() {
+                getCurrentLocationAsAddress(function(address) {
+                    if(typeof address === 'undefined') {
+                        return;
+                    }
+                    document.getElementById('ApartmentGetDirectionsForm:toAddress').value = address;
+                })
+            }
+        </script>
+
 
     </ui:define>
 
