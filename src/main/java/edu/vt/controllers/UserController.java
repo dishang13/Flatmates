@@ -84,7 +84,6 @@ public class UserController implements Serializable {
     private String answerToSecurityQuestion;
 
     private String email;
-    private String phone;
 
     private int eatingPrefNumber;
     private int smokingPrefNumber;
@@ -244,14 +243,6 @@ public class UserController implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public int getEatingPrefNumber() {
@@ -631,7 +622,6 @@ public class UserController implements Serializable {
             newUser.setSecurityAnswer(answerToSecurityQuestion);
             newUser.setEmail(email);
             newUser.setUsername(username);
-            newUser.setPhone(phone);
             newUser.setEatingPrefNumber(eatingPrefNumber);
             newUser.setSmokingPrefNumber(smokingPrefNumber);
             newUser.setAlcoholPrefNumber(alcoholPrefNumber);
@@ -696,8 +686,6 @@ public class UserController implements Serializable {
             editUser.setState(this.selected.getState());
             editUser.setZipcode(this.selected.getZipcode());
             editUser.setEmail(this.selected.getEmail());
-            editUser.setPhone(this.selected.getPhone());
-
             editUser.setEatingPrefNumber(this.selected.getEatingPrefNumber());
             editUser.setSmokingPrefNumber(this.selected.getSmokingPrefNumber());
             editUser.setAlcoholPrefNumber(this.selected.getAlcoholPrefNumber());

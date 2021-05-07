@@ -135,11 +135,6 @@ public class User implements Serializable {
     private String email;
 
     @Basic(optional = false)
-    @Size(max = 20)
-    @Column(name = "phone")
-    private String phone;
-
-    @Basic(optional = false)
     @NotNull
     @Column(name = "eating_pref_number")
     private int eatingPrefNumber;
@@ -167,9 +162,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "userId")
     private Collection<UserPhoto> userPhotoCollection;
 
-//    @OneToMany(mappedBy = "userId")
-//    private Collection<UserQuestionnaire> userQuestionnaireCollection;
-
     /*
     ============================================================
     Class constructors for instantiating a User entity object to
@@ -186,7 +178,7 @@ public class User implements Serializable {
     public User(Integer id, String username, String password, String firstName, String middleName,
                 String lastName, String address1, String address2, String city, String state,
                 String zipcode, int securityQuestionNumber, String securityAnswer, String email,
-                String phone, int petOwnedNumber, int eatingPrefNumber, int smokingPrefNumber,
+                int eatingPrefNumber, int smokingPrefNumber,
                 int alcoholPrefNumber, int sleepPrefNumber, int socialPrefNumber) {
         this.id = id;
         this.username = username;
@@ -202,7 +194,6 @@ public class User implements Serializable {
         this.securityQuestionNumber = securityQuestionNumber;
         this.securityAnswer = securityAnswer;
         this.email = email;
-        this.phone = phone;
         this.eatingPrefNumber = eatingPrefNumber;
         this.smokingPrefNumber = smokingPrefNumber;
         this.alcoholPrefNumber = alcoholPrefNumber;
@@ -326,14 +317,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public int getEatingPrefNumber() {

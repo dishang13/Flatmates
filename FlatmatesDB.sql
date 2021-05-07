@@ -27,7 +27,6 @@ CREATE TABLE User (
     security_question_number INT NOT NULL,  /* Refers to the number of the selected security question */
     security_answer varchar(128) NOT NULL,
     email varchar(128) NOT NULL,
-    phone varchar(20),
     eating_pref_number INT NOT NULL,
     smoking_pref_number INT NOT NULL,
     alcohol_pref_number INT NOT NULL,
@@ -61,6 +60,7 @@ CREATE TABLE Apartment (
     latitude DECIMAL(8,6) NOT NULL,
     longitude DECIMAL(9,6) NOT NULL,
     complex_website varchar(1028),
+    phone varchar(20),
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 

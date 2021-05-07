@@ -82,6 +82,10 @@
                                         <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
                                     </h:outputText>
 
+                                    <h:outputText value="Phone:"/>
+                                    <h:outputText value="#{apartmentController.selected.phone}" />
+
+
                                     <h:outputText value="Apartment Complex Website:"/>
                                     <h:outputLink value="#{apartmentController.selected.complexWebsite}" style="color:blue;white-space: normal" target="_blank" >
                                         <h:outputText value="#{apartmentController.selected.complexWebsite}" />

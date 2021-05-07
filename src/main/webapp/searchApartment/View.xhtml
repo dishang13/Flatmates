@@ -77,11 +77,13 @@
                                     <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
                                 </h:outputText>
 
-
                                 <h:outputText value="End Date:" />
                                 <h:outputText value="#{apartmentSearchController.selected.endDate}">
                                     <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
                                 </h:outputText>
+
+                                <h:outputText value="Phone:"/>
+                                <h:outputText value="#{apartmentSearchController.selected.phone}" />
 
                                 <h:outputText value="Apartment Complex Website:"/>
                                 <h:outputLink value="#{apartmentSearchController.selected.complexWebsite}" style="color:blue;white-space: normal" target="_blank">

@@ -91,6 +91,7 @@ public class ApartmentController implements Serializable {
     private Date dateEntered;
     private boolean archived;
     private String address;
+    private String phone;
     private int numBed;
     private int numBath;
     private int rent;
@@ -190,6 +191,14 @@ public class ApartmentController implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getNumBed() {

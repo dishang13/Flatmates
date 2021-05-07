@@ -80,6 +80,11 @@ public class Apartment implements Serializable {
     private String address;
 
     @Basic(optional = false)
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+
+    @Basic(optional = false)
     @NotNull
     @Column(name = "num_bed", nullable = false)
     private int numBed;
@@ -125,9 +130,6 @@ public class Apartment implements Serializable {
     @ManyToOne
     private User userId;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartmentId")
-//    private Collection<ApartmentPhoto> apartmentPhotoCollection;
-
     /*
     ============================================================
     Class constructors for instantiating a Apartment entity object to
@@ -141,13 +143,14 @@ public class Apartment implements Serializable {
         this.id = id;
     }
 
-    public Apartment(Integer id, String name, String description, Date dateEntered, boolean archived, String address, int numBed, int numBath, int rent, Date startDate, Date endDate, BigDecimal latitude, BigDecimal longitude) {
+    public Apartment(Integer id, String name, String description, Date dateEntered, boolean archived, String address, String phone, int numBed, int numBath, int rent, Date startDate, Date endDate, BigDecimal latitude, BigDecimal longitude, String complexWebsite, User userId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.dateEntered = dateEntered;
         this.archived = archived;
         this.address = address;
+        this.phone = phone;
         this.numBed = numBed;
         this.numBath = numBath;
         this.rent = rent;
@@ -155,6 +158,8 @@ public class Apartment implements Serializable {
         this.endDate = endDate;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.complexWebsite = complexWebsite;
+        this.userId = userId;
     }
 
     /*
@@ -209,6 +214,14 @@ public class Apartment implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getNumBed() {
@@ -274,14 +287,6 @@ public class Apartment implements Serializable {
     public void setComplexWebsite(String complexWebsite) {
         this.complexWebsite = complexWebsite;
     }
-
-//    public Collection<ApartmentPhoto> getApartmentPhotoCollection() {
-//        return apartmentPhotoCollection;
-//    }
-//
-//    public void setApartmentPhotoCollection(Collection<ApartmentPhoto> apartmentPhotoCollection) {
-//        this.apartmentPhotoCollection = apartmentPhotoCollection;
-//    }
 
     public boolean isArchived() {
         return archived;

@@ -100,6 +100,10 @@
                             <p:watermark for="numBath" value="Enter Number of Bathrooms!" />
                         </p:inputNumber>
 
+                        <p:outputLabel for="phone" value="Phone:"/>
+                        <p:inputMask id="phone" value="#{apartmentController.selected.phone}" mask="(999) 999-9999" validateMask="true" required="true"
+                                    requiredMessage="The Phone field is required."/>
+
                         <!-- TODO url validation-->
                         <p:outputLabel value="Apartment Complex Website:" for="website" />
                         <!-- The entered value is set to be the selected new apartment object's property 'website' -->
