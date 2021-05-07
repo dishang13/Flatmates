@@ -28,22 +28,31 @@
             <div align="center">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="3" columnClasses="panelGridColumn1, panelGridColumn2, panelGridColumn2" class="borderless" style="max-width:650px">
+
+
                         <p:outputLabel value="From Address:" for="fromAddress" />
+
                         <p:inputTextarea id="fromAddress" value="#{apartmentSearchController.fromAddress}" required="true" class="inputTextField"
                                          placeholder="Enter Apartment Address"
                                          maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
                         </p:inputTextarea>
 
+                        <!-- GET CURRENT LOCATION button -->
                         <p:commandButton icon="fas fa-search-location" type="button" value="&nbsp;Get Current Location" onclick="setStartToCurrent()"/>
 
 
                         <p:outputLabel value="To Address:" for="toAddress" />
+
                         <p:inputTextarea id="toAddress" value="#{apartmentSearchController.toAddress}" required="true" class="inputTextField"
                                          placeholder="Enter Apartment Address"
                                          maxlength="1000" autoResize="true" requiredMessage="The Address field is required." >
                         </p:inputTextarea>
 
+                        <!-- GET CURRENT LOCATION button -->
+
                         <p:commandButton icon="fas fa-search-location" type="button" value="&nbsp;Get Current Location" onclick="setEndToCurrent()"/>
+
+
                     </p:panelGrid>
 
                     <br/><br/>
@@ -51,13 +60,16 @@
                     <span>Show Directions via:</span>
 
                     <br/><br/>
-
+                    <!-- WALKING button -->
                         <p:commandButton id="Walking" value="&nbsp;Walking" action="#{apartmentSearchController.directions('Walking')}"
                                          icon="fas fa-walking" ajax="false"/>&nbsp;&nbsp;
+                    <!-- DRIVING button -->
                         <p:commandButton id="Driving" value="&nbsp;Driving" action="#{apartmentSearchController.directions('Driving')}"
                                          icon="fas fa-car" ajax="false" />&nbsp;&nbsp;
+                    <!-- BICYCLING button -->
                         <p:commandButton id="Bicycling" value="&nbsp;Bicycling" action="#{apartmentSearchController.directions('Bicycling')}"
                                          icon="fas fa-biking" ajax="false" immediate="true" />&nbsp;&nbsp;
+                    <!-- TRANSIT button -->
                         <p:commandButton id="Transit" value="&nbsp;Transit" action="#{apartmentSearchController.directions('Transit')}"
                                          icon="fas fa-bus" ajax="false" immediate="true" />&nbsp;&nbsp;
 
@@ -75,6 +87,7 @@
         </h:form>
 
         <script type="text/javascript">
+
             var directionsService = new google.maps.DirectionsService();
 
             var directionsDisplay = new google.maps.DirectionsRenderer();

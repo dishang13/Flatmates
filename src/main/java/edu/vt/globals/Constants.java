@@ -44,8 +44,8 @@ public final class Constants {
      public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/Users/sivakrishna/DocRoot/Team4-FileStorage/UserPhotoStorage/";
 
     // To run on your AWS EC2 instance
-// public static final String USER_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/UserPhotoStorage/";
-// public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
+    // public static final String USER_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/UserPhotoStorage/";
+    // public static final String APARTMENT_PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/";
 
     /*
      ---------------------------------
@@ -77,12 +77,12 @@ public final class Constants {
     public static final String APARTMENT_PHOTOS_URI = "http://localhost:8080/flatmatesapartmentphotos/";
 
     // Dishang's --To run on your AWS EC2 instance with your IP address
-//    public static final String USER_PHOTOS_URI = "http://3.236.179.184:8080/flatmatesuserphotos/";
-//    public static final String APARTMENT_PHOTOS_URI = "http://3.236.179.184:8080/flatmatesapartmentphotos/";
+    //    public static final String USER_PHOTOS_URI = "http://3.236.179.184:8080/flatmatesuserphotos/";
+    //    public static final String APARTMENT_PHOTOS_URI = "http://3.236.179.184:8080/flatmatesapartmentphotos/";
 
     // Siva's -- To run on your AWS EC2 instance with your IP address
-//  public static final String USER_PHOTOS_URI = "http://54.227.9.38:8080/flatmatesuserphotos/";
-//    public static final String APARTMENT_PHOTOS_URI = "http://54.227.9.38:8080/flatmatesapartmentphotos/";
+    //  public static final String USER_PHOTOS_URI = "http://54.227.9.38:8080/flatmatesuserphotos/";
+    //    public static final String APARTMENT_PHOTOS_URI = "http://54.227.9.38:8080/flatmatesapartmentphotos/";
 
     /* 
     ==================================================
