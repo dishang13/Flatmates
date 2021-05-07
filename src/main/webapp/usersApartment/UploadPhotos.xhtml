@@ -33,7 +33,7 @@
                     <h1>Upload One or More Photos</h1>
 
                     <div class="arialTen">
-                        Click Choose to select one or more files or drag one or more files and drop on the white area.
+                        Click Choose to select one or more files or drag one or more files and drop on the white area. Allowed file types are GIF, JPG, JPEG, PNG
                     </div>
                     <br/>
 
@@ -44,9 +44,10 @@
                     The user either selects multiple files to upload or 
                     drags and drops them within the upload box to upload them.
                     Maximum 30MB file size and no more than 5 files to upload at the same time.
+                    "/(\.|\/)(gif|jpe?g|png)$/" allows only gif,jpg,jpeg,png types
                     -->
 
-                    <p:fileUpload fileUploadListener="#{photoUploadManager.handleFileUpload}"
+                    <p:fileUpload fileUploadListener="#{photoUploadManager.handleFileUpload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
                                   mode="advanced" dragDropSupport="true" update="growlInfoMessage" 
                                   sizeLimit="30000000" multiple="true" fileLimit="5" />
                     <br/>

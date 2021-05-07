@@ -28,8 +28,18 @@
             <div align="center">
                 <h:panelGroup id="display">
                     <h:inputHidden id="address" value="#{apartmentSearchController.selected.address}" />
-                    <h:graphicImage value="#{apartmentController.getApartmentFirstPhoto(apartmentSearchController.selected.id)}"
-                                    style="width:300px" />
+
+                    <c:choose>
+                        <c:when test="#{apartmentController.getApartmentPhotoList(apartmentSearchController.selected).size() > 1}">
+                            <p:galleria value="#{apartmentController.getApartmentPhotoList(apartmentSearchController.selected)}" var="image" effect="slide" effectDuration="1000" panelWidth="500" panelHeight="313">
+                                <p:graphicImage value="#{image.getFileUrl()}" alt="#{image.getFileUrl()}"/>
+                            </p:galleria>
+                        </c:when>
+                        <c:otherwise>
+                            <h:graphicImage value="#{apartmentController.getApartmentFirstPhoto(apartmentSearchController.selected.id)}"
+                                            style="width:300px" />
+                        </c:otherwise>
+                    </c:choose>
 
                     <br /><br />
                     <div class="ui-g">
@@ -120,10 +130,10 @@
             </div>
         </h:form>
 
-        <!-- Clicking the View button displays the included UserDetail.xhtml file in a dialog window on top of this page. -->
+        <!-- Clicking the View button when signed in displays the included UserDetail.xhtml file in a dialog window on top of this page. -->
         <ui:include src="/userAccount/UserDetail.xhtml"/>
 
-        <!-- Clicking the View button displays the included UserDetail.xhtml file in a dialog window on top of this page. -->
+        <!-- Clicking the View button when not signed in displays the included SignInDialog.xhtml file in a dialog window on top of this page. -->
         <ui:include src="/SignInDialog.xhtml"/>
 
         <!-- Load WalkScore widget-->

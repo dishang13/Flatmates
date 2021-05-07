@@ -166,4 +166,8 @@ public class ApartmentPhoto implements Serializable {
     public String getFilePath() {
         return Constants.APARTMENT_PHOTOS_ABSOLUTE_PATH + getFilename();
     }
+
+    public String getFileUrl() {
+        return Constants.APARTMENT_PHOTOS_URI + getFilename();
+    }
 }

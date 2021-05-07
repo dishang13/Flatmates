@@ -39,6 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.el.ELContext;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -101,7 +102,6 @@ public class ApartmentController implements Serializable {
     private String complexWebsite;
 
     private List<Apartment> items;
-    private List<ApartmentPhoto> apartmentPhotoList;
 
     private Apartment selected;
 
@@ -263,16 +263,14 @@ public class ApartmentController implements Serializable {
         this.complexWebsite = complexWebsite;
     }
 
-    public List<ApartmentPhoto> getApartmentPhotoList() {
-        if(apartmentPhotoList == null) {
-            // Store the object reference of the apartment photos into the instance variable selected.
-            apartmentPhotoList = apartmentPhotoFacade.findPhotosByApartmentPrimaryKey(id);
+    public List<ApartmentPhoto> getApartmentPhotoList(Apartment apartment) {
+        // Store the object reference of the apartment photos into the instance variable selected.
+        List<ApartmentPhoto> apartmentPhotoList = apartmentPhotoFacade.findPhotosByApartmentPrimaryKey(apartment.getId());
+        if(apartmentPhotoList.isEmpty()) {
+            // No photo exists. Add default photo.
+            apartmentPhotoList.add(new ApartmentPhoto(selected, Constants.DEFAULT_APARTMENT_PHOTO_FILE_NAME));
         }
         return apartmentPhotoList;
-    }
-
-    public void setApartmentPhotoList(List<ApartmentPhoto> apartmentPhotoList) {
-        this.apartmentPhotoList = apartmentPhotoList;
     }
 
     public Apartment getSelected() {
@@ -282,6 +280,13 @@ public class ApartmentController implements Serializable {
     public void setSelected(Apartment selected) {
         // We need to update mapModel everytime selected changes
         this.mapModel = null;
+
+        // Invalidating list of old apartment photos to get new values
+        // This list is used for managing images
+        ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+        ApartmentPhotoController apartmentPhotoController = (ApartmentPhotoController) elContext.getELResolver().getValue(elContext, null, "apartmentPhotoController");
+        apartmentPhotoController.setItems(null);
+
         this.selected = selected;
     }
 
@@ -446,10 +451,10 @@ public class ApartmentController implements Serializable {
     // Delete all apartment photos for apartment with id 'primaryKey'
     public void deleteAllApartmentPhotos(int primaryKey) {
         // Obtain the List of files that belongs to the user with primaryKey
-        List<ApartmentPhoto> userFilesList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
-        if (!userFilesList.isEmpty()) {
+        List<ApartmentPhoto> apartmentPhotoList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
+        if (!apartmentPhotoList.isEmpty()) {
             // Java 8 looping over a list with lambda
-            userFilesList.forEach(photo -> {
+            apartmentPhotoList.forEach(photo -> {
                 try {
                     /*
                     Delete the user file if it exists.
@@ -734,11 +739,11 @@ public class ApartmentController implements Serializable {
 //    TODO doc comment
 
     public String getApartmentFirstPhoto(int primaryKey) {
-        List<ApartmentPhoto> userFilesList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
-        if(userFilesList.isEmpty()) {
+        List<ApartmentPhoto> apartmentPhotoList = getApartmentPhotoFacade().findPhotosByApartmentPrimaryKey(primaryKey);
+        if(apartmentPhotoList.isEmpty()) {
             return Constants.APARTMENT_PHOTOS_URI + Constants.DEFAULT_APARTMENT_PHOTO_FILE_NAME;
         }
-        return Constants.APARTMENT_PHOTOS_URI + userFilesList.get(0).getFilename();
+        return apartmentPhotoList.get(0).getFileUrl();
     }
 
 }
