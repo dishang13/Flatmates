@@ -36,7 +36,7 @@
         <div align="center" style="width:97%">
 
             <h:form id="apartmentSearchForm">
-                <p:panel header="Search">
+                <p:panel header="Search Apartments">
 
                     <div class="ui-g">
                         <div class="ui-g-12">
@@ -44,7 +44,8 @@
                                 <p:tab title="Filter">
                                     <!-- SEARCH BOX -->
                                     <p:inputText id="searchString" value="#{apartmentSearchController.name}"
-                                                 placeholder="Search Name" >
+                                                 placeholder="Search Name">
+
                                     </p:inputText>
 
                                     <span>&nbsp;</span>
@@ -126,10 +127,10 @@
                             -->
 
                                 <!--
-                            ************************
-                            *    User Id   *
-                            ************************
-                            -->
+                                ************************
+                                *    Apartment Id   *
+                                ************************
+                                -->
                                 <p:column headerText="Id" style="width:20px;" exportFunction="#{apartmentSearchController.convertIntToString(item.id)}">
                                     <div align="center">
                                         <h:outputText class="inputTextField" value="#{item.id}"/>
@@ -152,7 +153,9 @@
                               ***************************
                               -->
                                 <p:column sortBy="#{item.rent}" exportFunction="#{apartmentSearchController.convertIntToString(item.rent)}" headerText="Rent Per Month($):" style="width:100px;">
-                                    <h:outputText class="inputTextField" value="#{item.rent}"/>
+                                    <h:outputText class="inputTextField" value="#{item.rent}">
+                                        <f:convertNumber type="number" groupingUsed="true" />
+                                    </h:outputText>
                                 </p:column>
 
                                 <!--

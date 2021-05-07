@@ -22,6 +22,16 @@
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
+        <!--
+        *** Prevent Security Breach ***
+        While the app is running, entering
+        http://localhost:8080/HealthSurvey-Balci/userAccount/AdminProfile.xhtml
+        accesses the Admin account resulting in a security breach.
+        We show the SignIn screen if the signed-in user is not Administrator.
+        -->
+        <c:when test="#{userController.loggedIn() == false}">
+            #{userController.showSignIn()}
+        </c:when>
 
         <div align="center" style="width:97%">
 

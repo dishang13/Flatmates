@@ -40,6 +40,11 @@
                                      placeholder="Enter Apartment Name" required="true"
                                      requiredMessage="The Apartment Name field is required."/>
 
+                        <p:outputLabel value="Apartment Description:" for="description" />
+                        <p:inputTextarea id="description" class="inputTextField" value="#{apartmentController.selected.description}"
+                                         placeholder="Enter Apartment Description"
+                                         maxlength="1000" autoResize="true"/>
+
                         <p:outputLabel value="Address:" for="address" />
                         <p:inputText id="address" value="#{apartmentController.selected.address}" required="true" class="inputTextField"
                                      requiredMessage="The Address Line 1 field is required." >

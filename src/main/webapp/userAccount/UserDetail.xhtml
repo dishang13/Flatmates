@@ -55,7 +55,9 @@
                         <h:outputText value="#{userController.socialPrefList()[apartmentSearchController.selected.userId.socialPrefNumber]}" />
 
                         <h:outputText value="Email:"/>
-                        <h:outputText value="#{apartmentSearchController.selected.userId.email}" />
+                        <h:outputLink value="mailto:#{apartmentSearchController.selected.userId.email}" style="color:blue">
+                            <h:outputText value="#{apartmentSearchController.selected.userId.email}" />
+                        </h:outputLink>
 
                         <h:outputText value="Username:"/>
                         <h:outputText value="#{apartmentSearchController.selected.userId.username}" />

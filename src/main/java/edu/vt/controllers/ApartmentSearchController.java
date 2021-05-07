@@ -318,7 +318,7 @@ public class ApartmentSearchController implements Serializable {
         String searchFilters = "SELECT a FROM Apartment a WHERE a.archived = false";
 
         if(name != null && !name.isBlank()) {
-            searchFilters += " AND a.name LIKE '%" + name + "%'";
+            searchFilters += " AND a.name LIKE '%" + name.replaceAll("[\"']", "") + "%'";
         }
         if(minBeds != null && !minBeds.isBlank()) {
             searchFilters += " AND a.numBed >=" + minBeds;

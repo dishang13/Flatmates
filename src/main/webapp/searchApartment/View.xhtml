@@ -48,18 +48,18 @@
                             <div id='ws-walkscore-tile'></div>
                         </div>
                         <div class="ui-g-4">
-                            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" style="max-width:600px"
                                          rendered="#{apartmentSearchController.selected != null}">
 
 
                                 <h:outputText value="Apartment Name:"/>
-                                <h:outputText value="#{apartmentSearchController.selected.name}" />
+                                <h:outputText value="#{apartmentSearchController.selected.name}" style="white-space: normal"/>
 
                                 <h:outputText value="Apartment Description:"/>
-                                <h:outputText value="#{apartmentSearchController.selected.description}" />
+                                <h:outputText value="#{apartmentSearchController.selected.description}" style="white-space: normal"/>
 
                                 <h:outputText value="Address:"/>
-                                <h:outputText value="#{apartmentSearchController.selected.address}" />
+                                <h:outputText value="#{apartmentSearchController.selected.address}" style="white-space: normal"/>
 
                                 <h:outputText value="Number of Bedrooms:"/>
                                 <h:outputText value="#{apartmentSearchController.selected.numBed}" />
@@ -67,10 +67,10 @@
                                 <h:outputText value="Number of Bathrooms:"/>
                                 <h:outputText value="#{apartmentSearchController.selected.numBath}" />
 
-                                <!--                        TODO currency format-->
                                 <h:outputText value="Monthly Rent($):"/>
-                                <h:outputText value="#{apartmentSearchController.selected.rent}" />
-
+                                <h:outputText value="#{apartmentSearchController.selected.rent}" >
+                                    <f:convertNumber type="number" groupingUsed="true" />
+                                </h:outputText>
 
                                 <h:outputText value="Start Date:" />
                                 <h:outputText value="#{apartmentSearchController.selected.startDate}">
@@ -83,11 +83,32 @@
                                     <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
                                 </h:outputText>
 
-                                <!--                        TODO output link-->
                                 <h:outputText value="Apartment Complex Website:"/>
-                                <h:outputText value="#{apartmentSearchController.selected.complexWebsite}"/>
+                                <h:outputLink value="#{apartmentSearchController.selected.complexWebsite}" style="color:blue;white-space: normal" target="_blank">
+                                    <h:outputText value="#{apartmentSearchController.selected.complexWebsite}" />
+                                </h:outputLink>
 
                             </p:panelGrid>
+                            <br/><br/>
+                            <h:panelGroup>
+                                <!-- Get Directions button -->
+                                <p:commandButton id="getDirections" value="Get Directions" action="/searchApartment/GetDirections"
+                                                 icon="fas fa-route" ajax="false" immediate="true" />&nbsp;
+                                <!-- VIEW RENTER button -->
+                                <c:if test="#{userController.isLoggedIn() == true}">
+                                    <p:commandButton id="viewRenterButton" icon="fas fa-user" value="View Renter"
+                                                     update=":RenterViewDlg" oncomplete="PF('RenterViewDialog').show()"/>&nbsp;
+                                </c:if>
+                                <c:if test="#{userController.isLoggedIn() == false}">
+                                    <p:commandButton id="signInButton" icon="fas fa-user" value="View Renter"
+                                                     update=":SignInDlg" oncomplete="PF('SignInDialog').show()"/>&nbsp;
+                                </c:if>
+
+                                <!-- GO BACK button -->
+                                <p:commandButton id="backButton" value="Go Back" action="/searchApartment/List?faces-redirect=true"
+                                                 icon="fas fa-arrow-left" ajax="false" immediate="true" />
+
+                            </h:panelGroup>
                         </div>
                         <div class="ui-g-4" align="left">
                             <!--
@@ -106,26 +127,6 @@
 
                 </h:panelGroup>
 
-
-                <h:panelGroup>
-                    <!-- Get Directions button -->
-                    <p:commandButton id="getDirections" value="Get Directions" action="/searchApartment/GetDirections"
-                                     icon="fas fa-route" ajax="false" immediate="true" />&nbsp;
-                    <!-- VIEW RENTER button -->
-                    <c:if test="#{userController.isLoggedIn() == true}">
-                        <p:commandButton id="viewRenterButton" icon="fas fa-user" value="View Renter"
-                                         update=":RenterViewDlg" oncomplete="PF('RenterViewDialog').show()"/>&nbsp;
-                    </c:if>
-                    <c:if test="#{userController.isLoggedIn() == false}">
-                        <p:commandButton id="signInButton" icon="fas fa-user" value="View Renter"
-                                         update=":SignInDlg" oncomplete="PF('SignInDialog').show()"/>&nbsp;
-                    </c:if>
-
-                    <!-- GO BACK button -->
-                    <p:commandButton id="backButton" value="Go Back" action="/searchApartment/List?faces-redirect=true"
-                                     icon="fas fa-arrow-left" ajax="false" immediate="true" />
-
-                </h:panelGroup>
                 <br /><br />
             </div>
         </h:form>

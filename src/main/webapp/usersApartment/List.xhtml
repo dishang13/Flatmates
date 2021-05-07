@@ -84,7 +84,9 @@
                       ***************************
                       -->
                         <p:column sortBy="#{item.rent}" headerText="Rent Per Month($):" style="width:100px;">
-                            <h:outputText class="inputTextField" value="#{item.rent}"/>
+                            <h:outputText class="inputTextField" value="#{item.rent}">
+                                <f:convertNumber type="number" groupingUsed="true" />
+                            </h:outputText>
                         </p:column>
 
                         <!--

@@ -29,13 +29,13 @@
                     <h:inputHidden id="address" value="#{apartmentController.selected.address}" />
 
                     <c:choose>
-                        <c:when test="#{apartmentController.getApartmentPhotoList(apartmentSearchController.selected).size() > 1}">
-                            <p:galleria value="#{apartmentController.getApartmentPhotoList(apartmentSearchController.selected)}" var="image" effect="slide" effectDuration="1000" panelWidth="500" panelHeight="313">
+                        <c:when test="#{apartmentController.getApartmentPhotoList(apartmentController.selected).size() > 1}">
+                            <p:galleria value="#{apartmentController.getApartmentPhotoList(apartmentController.selected)}" var="image" effect="slide" effectDuration="1000" panelWidth="500" panelHeight="313">
                                 <p:graphicImage value="#{image.getFileUrl()}" alt="#{image.getFileUrl()}"/>
                             </p:galleria>
                         </c:when>
                         <c:otherwise>
-                            <h:graphicImage value="#{apartmentController.getApartmentFirstPhoto(apartmentSearchController.selected.id)}"
+                            <h:graphicImage value="#{apartmentController.getApartmentFirstPhoto(apartmentController.selected.id)}"
                                             style="width:300px" />
                         </c:otherwise>
                     </c:choose>
@@ -47,62 +47,58 @@
                             <div id='ws-walkscore-tile'></div>
                         </div>
                         <div class="ui-g-4">
-                            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                                     rendered="#{apartmentController.selected != null}">
+                            <div style="width: 600px">
+                                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2" style="max-width:600px"
+                                             rendered="#{apartmentController.selected != null}">
 
-                            <h:outputText value="Apartment Name:"/>
-                            <h:outputText value="#{apartmentController.selected.name}" />
+                                    <h:outputText value="Apartment Name:"/>
+                                    <h:outputText value="#{apartmentController.selected.name}" style="white-space: normal"/>
 
-                            <h:outputText value="Apartment Description:"/>
-                            <h:outputText value="#{apartmentController.selected.description}" />
+                                    <h:outputText value="Apartment Description:"/>
+                                    <h:outputText value="#{apartmentController.selected.description}" style="white-space: normal"/>
 
-                            <h:outputText value="Address:"/>
-                            <h:outputText value="#{apartmentController.selected.address}" />
+                                    <h:outputText value="Address:"/>
+                                    <h:outputText value="#{apartmentController.selected.address}" style="white-space: normal"/>
 
-                            <h:outputText value="Number of Bedrooms:"/>
-                            <h:outputText value="#{apartmentController.selected.numBed}" />
+                                    <h:outputText value="Number of Bedrooms:"/>
+                                    <h:outputText value="#{apartmentController.selected.numBed}" />
 
-                            <h:outputText value="Number of Bathrooms:"/>
-                            <h:outputText value="#{apartmentController.selected.numBath}" />
+                                    <h:outputText value="Number of Bathrooms:"/>
+                                    <h:outputText value="#{apartmentController.selected.numBath}" />
 
-    <!--                        TODO currency format-->
-                            <h:outputText value="Monthly Rent($):"/>
-                            <h:outputText value="#{apartmentController.selected.rent}" />
+                                    <h:outputText value="Monthly Rent($):"/>
+                                    <h:outputText value="#{apartmentController.selected.rent}" >
+                                        <f:convertNumber type="number" groupingUsed="true" />
+                                    </h:outputText>
 
-
-    <!--                        <p:outputLabel value="Rent per Month:" for="rent" />-->
-    <!--                        &lt;!&ndash;TODO-->
-    <!--                        Use mask to allow only digits 0 to 9 with minimum 1 and maximum 7 digits.-->
-    <!--                        *****************************************************************-->
-    <!--                        *   mask="9?99999"   min=1 & max=999999 )   *-->
-    <!--                        *****************************************************************-->
-    <!--                        9 ==> indicates a digit 0 to 9.-->
-    <!--                        ? ==> number of 9s on the left of ? defines the minimum number of digits required.-->
-    <!--                        Total number of 9s defines the maximum number of digits allowed.-->
-    <!--                        &ndash;&gt;-->
-    <!--                        <p:inputNumber id="rent" class="dataFields" value="#{apartmentController.selected.rent}"-->
-    <!--                                       required="true" requiredMessage="The Rent field is required." symbol="$" minValue="0"-->
-    <!--                                       decimalPlaces="0" maxValue="100000000">-->
-    <!--                            <p:watermark for="rent" value="Enter the Monthly Rent!" />-->
-    <!--                        </p:inputNumber>-->
+                                    <h:outputText value="Start Date:" />
+                                    <h:outputText value="#{apartmentController.selected.startDate}">
+                                        <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                                    </h:outputText>
 
 
-                            <h:outputText value="Start Date:" />
-                            <h:outputText value="#{apartmentController.selected.startDate}">
-                                 <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
-                            </h:outputText>
+                                    <h:outputText value="End Date:" />
+                                    <h:outputText value="#{apartmentController.selected.endDate}">
+                                        <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
+                                    </h:outputText>
 
+                                    <h:outputText value="Apartment Complex Website:"/>
+                                    <h:outputLink value="#{apartmentController.selected.complexWebsite}" style="color:blue;white-space: normal" target="_blank" >
+                                        <h:outputText value="#{apartmentController.selected.complexWebsite}" />
+                                    </h:outputLink>
 
-                            <h:outputText value="End Date:" />
-                            <h:outputText value="#{apartmentController.selected.endDate}">
-                                <f:convertDateTime type="date" pattern="MM-dd-yyyy"/>
-                            </h:outputText>
-
-    <!--                        TODO output link-->
-                            <h:outputText value="Apartment Complex Website:"/>
-                            <h:outputText value="#{apartmentController.selected.complexWebsite}"/>
-
-                        </p:panelGrid>
+                                </p:panelGrid>
+                            </div>
+                            <br/><br/>
+                            <h:panelGroup>
+                                <!-- ADD PHOTOS button -->
+                                <p:commandButton id="listPhotosButton" value="List Photos" action="/usersApartment/ListPhotos?faces-redirect=true"
+                                                 icon="fas fa-images" ajax="false" immediate="true" />
+                                &nbsp;&nbsp;
+                                <!-- GO BACK button -->
+                                <p:commandButton id="backButton" value="Go Back" action="/usersApartment/List?faces-redirect=true"
+                                                 icon="fas fa-arrow-left" ajax="false" immediate="true" />
+                            </h:panelGroup>
                         </div>
                         <div class="ui-g-4" align="left">
                             <!--
@@ -119,14 +115,7 @@
                     </div>
                 </h:panelGroup>
 
-                <h:panelGroup>
-                    <!-- ADD PHOTOS button -->
-                    <p:commandButton id="listPhotosButton" value="List Photos" action="/usersApartment/ListPhotos?faces-redirect=true"
-                                     icon="fas fa-images" ajax="false" immediate="true" />
-                    <!-- GO BACK button -->
-                    <p:commandButton id="backButton" value="Go Back" action="/usersApartment/List?faces-redirect=true"
-                                     icon="fas fa-arrow-left" ajax="false" immediate="true" />
-                </h:panelGroup>
+
                 <br /><br />
             </div>
         </h:form>

@@ -942,4 +942,15 @@ public class UserController implements Serializable {
             apartmentFacade.deleteApartment(apartment.getId());
         });
     }
+
+    /*
+    *************************
+    Display the SignIn Screen
+    *************************
+    */
+    public void showSignIn() throws IOException {
+        if(!isLoggedIn()) {
+            FacesContext.getCurrentInstance().getExternalContext().dispatch("/SignIn.xhtml?faces-redirect=true");
+        }
+    }
 }
