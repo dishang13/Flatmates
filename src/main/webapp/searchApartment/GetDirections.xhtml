@@ -87,13 +87,7 @@
         </h:form>
 
         <script type="text/javascript">
-
-            var directionsService = new google.maps.DirectionsService();
-
-            var directionsDisplay = new google.maps.DirectionsRenderer();
-
             var geocoder = new google.maps.Geocoder();
-
             function setStartToCurrent() {
                 getCurrentLocationAsAddress(function(address) {
                     if(typeof address === 'undefined') {

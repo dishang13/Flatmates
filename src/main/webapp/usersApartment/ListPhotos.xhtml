@@ -26,7 +26,7 @@
 
                 <h:form id="ApartmentPhotoListForm">
 
-                    <p:panel header="#{apartmentController.selected.name}'s Files" >
+                    <p:panel header="#{apartmentController.selected.name} - Photos" >
 
                         <p:dataTable id="datalist" value="#{apartmentPhotoController.items}" var="item"
                                      selectionMode="single" selection="#{apartmentPhotoController.selected}"
@@ -108,7 +108,7 @@
                                 <p:commandButton id="uploadButton" value="Upload Photo" icon="fas fa-upload"
                                                  update=":ApartmentPhotoListForm" ajax="true"
                                                  action="/usersApartment/UploadPhotos?faces-redirect=true" />
-
+                                &nbsp;
                                 <!--
                                 ================================
                                 |     DOWNLOAD FILE Button     |
@@ -119,7 +119,7 @@
                                                  disabled="#{empty apartmentPhotoController.selected}" >
                                     <p:fileDownload value="#{fileDownloadManager.file}" />
                                 </p:commandButton>
-
+                                &nbsp;
                                 <!-- 
                                 ***************************************************
                                 Display a Confirmation dialog for the DELETE button
@@ -140,7 +140,7 @@
                                                message="Are you sure you want to permanently delete the selected photo from the database?"
                                                icon="fas fa-exclamation-triangle fa-2x" />
                                 </p:commandButton>
-
+                                &nbsp;
                                 <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
                                     <div align="center">
                                         <!-- The value of the first button listed below will be shown as 
@@ -167,7 +167,7 @@
                                                  action="/usersApartment/DisplayPhoto?faces-redirect=true"
                                                  ajax="false" icon="fas fa-file-alt"
                                                  disabled="#{empty apartmentPhotoController.selected}" />
-
+                                &nbsp;
                                 <!--
                                 ================================
                                 |         BACK Button          |

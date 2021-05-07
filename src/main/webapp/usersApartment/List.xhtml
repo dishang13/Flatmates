@@ -168,17 +168,17 @@
                             <p:commandButton id="createButton" icon="fas fa-plus" value="Add an Apartment"
                                              actionListener="#{apartmentController.prepareCreate()}"
                                              action="/usersApartment/Add?faces-redirect=true" />
-
+                            &nbsp;
                             <!-- VIEW button -->
                             <p:commandButton id="viewButton" icon="fas fa-eye" value="View"
                                              action="/usersApartment/View?faces-redirect=true"
                                              disabled="#{empty apartmentController.selected}"/>
-
+                            &nbsp;
                             <!-- EDIT button -->
                             <p:commandButton id="editButton" icon="fas fa-edit" value="Edit"
                                              update=":ApartmentEditDlg" oncomplete="PF('ApartmentEditDialog').show()"
                                              disabled="#{empty apartmentController.selected}"/>
-
+                            &nbsp;
                             <!-- **********************************************
                             Display a Confirmation dialog for the DELETE button
                             *********************************************** -->
@@ -191,13 +191,13 @@
                                            message="Are you sure you want to permanently delete the selected apartment from the database?"
                                            icon="fas fa-exclamation-triangle fa-2x" />
                             </p:commandButton>
-
+                            &nbsp;
 
                             <p:commandButton id="archiveButton" icon="fas fa-trash-alt"  value="#{ empty apartmentController.selected or apartmentController.selected.archived == false ? 'Archive' : 'Unarchive'}"
                                              actionListener="#{apartmentController.archive}"
                                              update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                              disabled="#{empty apartmentController.selected}">
-
+                                &nbsp;
 
                                 <p:confirm header="Confirmation"
                                            message="#{ empty apartmentController.selected or apartmentController.selected.archived == false ? 'Are you sure you want to archive the selected apartment? This will hide the apartment from other users.'

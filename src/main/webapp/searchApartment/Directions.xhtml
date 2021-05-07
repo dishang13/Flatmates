@@ -29,7 +29,9 @@
             <h:inputHidden id="directionType" value="#{apartmentSearchController.directionType}" />
 
             <div align="center">
-                <span>Directions from #{apartmentSearchController.fromAddress} to #{apartmentSearchController.toAddress} via #{apartmentSearchController.directionType}</span>
+                <h4>
+                <span>Directions from <i>#{apartmentSearchController.fromAddress}</i> to <i>#{apartmentSearchController.toAddress}</i> via <i>#{apartmentSearchController.directionType}</i></span>
+                </h4>
 
                 <br/><br/>
 
@@ -51,14 +53,17 @@
         </h:form>
 
         <script type="text/javascript">
-            // Instantiate a DirectionsService object and store its object reference into directionsService.
-            var directionsService = new google.maps.DirectionsService();
 
-            // Instantiate a DirectionsRenderer object and store its object reference into directionsDisplay.
-            var directionsDisplay = new google.maps.DirectionsRenderer();
-            // Initialize and display a Google Map of VT campus
+            var mapDirectionsService = new google.maps.DirectionsService();
+
+            var mapDirectionsDisplay = new google.maps.DirectionsRenderer();
+
+            /* Call getDirections() after page has loaded.
+             * This ensures google map api js has been loaded by the time
+             * this function is called
+             */
             jQuery(document).ready(function() {
-                initializeMap();
+                getDirections();
             });
         </script>
 
