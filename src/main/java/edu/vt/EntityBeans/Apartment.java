@@ -125,8 +125,8 @@ public class Apartment implements Serializable {
     @ManyToOne
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartmentId")
-    private Collection<ApartmentPhoto> apartmentPhotoCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "apartmentId")
+//    private Collection<ApartmentPhoto> apartmentPhotoCollection;
 
     /*
     ============================================================
@@ -275,13 +275,13 @@ public class Apartment implements Serializable {
         this.complexWebsite = complexWebsite;
     }
 
-    public Collection<ApartmentPhoto> getApartmentPhotoCollection() {
-        return apartmentPhotoCollection;
-    }
-
-    public void setApartmentPhotoCollection(Collection<ApartmentPhoto> apartmentPhotoCollection) {
-        this.apartmentPhotoCollection = apartmentPhotoCollection;
-    }
+//    public Collection<ApartmentPhoto> getApartmentPhotoCollection() {
+//        return apartmentPhotoCollection;
+//    }
+//
+//    public void setApartmentPhotoCollection(Collection<ApartmentPhoto> apartmentPhotoCollection) {
+//        this.apartmentPhotoCollection = apartmentPhotoCollection;
+//    }
 
     public boolean isArchived() {
         return archived;
