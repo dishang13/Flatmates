@@ -610,3 +610,15 @@ if content overflows an element's box.
 .ui-button {
     margin-top: 10px !important;
 }
+
+/* Requiring galleria to fit all images*/
+.ui-panel-images {
+    width: 100%;
+    height: 100%;
+}
+
+/* Requiring galleria to fit all images*/
+.ui-galleria-panel {
+    width: 100%;
+    height: 100%;
+}

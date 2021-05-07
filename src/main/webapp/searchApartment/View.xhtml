@@ -32,7 +32,7 @@
                     <c:choose>
                         <c:when test="#{apartmentController.getApartmentPhotoList(apartmentSearchController.selected).size() > 1}">
                             <p:galleria value="#{apartmentController.getApartmentPhotoList(apartmentSearchController.selected)}" var="image" effect="slide" effectDuration="1000" panelWidth="500" panelHeight="313">
-                                <p:graphicImage value="#{image.getFileUrl()}" alt="#{image.getFileUrl()}"/>
+                                <p:graphicImage value="#{image.getFileUrl()}" alt="#{image.getFileUrl()}" width="500" height="313"/>
                             </p:galleria>
                         </c:when>
                         <c:otherwise>
