@@ -627,9 +627,16 @@ public class ApartmentController implements Serializable {
         }
     }
 
-
+    /**
+     * Set the latitude and longitude fields of an apartment with the Geocoded values in its address.
+     * Uses Google Maps API to convert the address to latitude and longitude fields
+     * @param apartment The Apartment to be updated
+     */
     public void setLatLong(Apartment apartment) {
-        String geocodingApiUrl = Constants.geocodingApiUrlTemplate.replace("{0}", URLEncoder.encode(apartment.getAddress(), StandardCharsets.UTF_8));
+        // Replace {0} in Constants.geocodingApiUrlTemplate with the address to be located.
+        // Encode the address in a URL format to ensure that spaces and other characters not supported in URL are encoded.
+        String geocodingApiUrl = Constants.geocodingApiUrlTemplate.replace("{0}",
+                                URLEncoder.encode(apartment.getAddress(), StandardCharsets.UTF_8));
         try {
             // Obtain the JSON file from the searchApiUrl
             String geocodingJsonData = Methods.readUrlContent(geocodingApiUrl);

@@ -68,10 +68,10 @@
                                          icon="fas fa-car" ajax="false" />&nbsp;&nbsp;
                     <!-- BICYCLING button -->
                         <p:commandButton id="Bicycling" value="&nbsp;Bicycling" action="#{apartmentSearchController.directions('Bicycling')}"
-                                         icon="fas fa-biking" ajax="false" immediate="true" />&nbsp;&nbsp;
+                                         icon="fas fa-biking" ajax="false"/>&nbsp;&nbsp;
                     <!-- TRANSIT button -->
                         <p:commandButton id="Transit" value="&nbsp;Transit" action="#{apartmentSearchController.directions('Transit')}"
-                                         icon="fas fa-bus" ajax="false" immediate="true" />&nbsp;&nbsp;
+                                         icon="fas fa-bus" ajax="false"/>&nbsp;&nbsp;
 
                 </h:panelGroup>
 
@@ -87,7 +87,9 @@
         </h:form>
 
         <script type="text/javascript">
+            // Set the geocoder variable up to be used by gmap.js
             var geocoder = new google.maps.Geocoder();
+
             function setStartToCurrent() {
                 getCurrentLocationAsAddress(function(address) {
                     if(typeof address === 'undefined') {
@@ -105,7 +107,7 @@
                     document.getElementById('ApartmentGetDirectionsForm:toAddress').value = address;
                 })
             }
-        </script>
+</script>
 
 
     </ui:define>

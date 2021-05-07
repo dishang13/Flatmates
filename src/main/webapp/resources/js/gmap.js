@@ -23,11 +23,15 @@
 */
 
 /* Global variables */
-var google;
-var gmap;
-var mapDirectionsDisplay;
-var mapDirectionsService;
-var geocoder;
+/*
+Set the values of these variable while calling the functions needed on each page.
+Setting the values here itself may lead to null pointer problems if the google api has not
+loaded before the function is called.
+ */
+var gmap; // This will store the map to be displayed
+var mapDirectionsDisplay; // This is used for displaying directions
+var mapDirectionsService; // This is used for the service to get directions
+var geocoder; // This is used for address lookup
 
 /**
  * Get users current location as address
@@ -106,6 +110,7 @@ function getDirections() {
 
     // Assign the directions display component this map to draw on
     mapDirectionsDisplay.setMap(gmap);
+    // Get the route and draw it.
     drawRoute();
 }
 
