@@ -25,6 +25,8 @@ var gmap;
 // Object reference 'currentMarker' to point to a VT building location on gmap
 var currentMarker = null;
 
+var geocoder = new google.maps.Geocoder();
+
 /*
  You can obtain directions via driving, bicycling, bus, or walking by using the DirectionsService object.
  This object communicates with the Google Maps API Directions Service which receives direction requests
@@ -80,40 +82,10 @@ function display() {
     }
 }
 
-// Draws the route on gmap showing directions to go from one VT building to another
 function drawRoute() {
 
-    // Identify the VT campus gmap as the Map to display Directions on
     directionsDisplay.setMap(gmap);
 
-    // Since the DirectionsRequest object must be of type 'literal', we convert lat and long numbers to String type.
-
-    /******************************* Start Geolocation Determination *******************************/
-
-        // Obtain the starting Latitude as String from the hidden input element with id="startLat" in ShowOnMap.xhtml
-    // var startingLatitudeAsString = document.getElementById("startLat").value.toString();
-    //
-    // // Obtain the starting Longitude as String from the hidden input element with id="startLong" in ShowOnMap.xhtml
-    // var startingLongitudeAsString = document.getElementById("startLong").value.toString();
-
-    // Instantiate the starting geolocation object for obtaining directions FROM
-    // var startGeolocation = new google.maps.LatLng(startingLatitudeAsString, startingLongitudeAsString);
-    // var startGeolocation = new google.maps.LatLng(startingLatitudeAsString, startingLongitudeAsString);
-
-    /**************************** Destination Geolocation Determination ****************************/
-
-        // Obtain the destination Latitude as String from the hidden input element with id="destinationLat" in ShowOnMap.xhtml
-    // var destinationLatitudeAsString = document.getElementById("destinationLat").value.toString();
-    //
-    // // Obtain the destination Longitude as String from the hidden input element with id="destinationLong" in ShowOnMap.xhtml
-    // var destinationLongitudeAsString = document.getElementById("destinationLong").value.toString();
-    //
-    // // Instantiate the ending geolocation object for obtaining directions TO
-    // var endGeolocation = new google.maps.LatLng(destinationLatitudeAsString, destinationLongitudeAsString);
-    //
-    // /********************************** Travel Mode Determination **********************************/
-    //
-        // Obtain the selected Travel Mode from the hidden input element with id="travelMode" in ShowOnMap.xhtml
     var selectedTravelMode = document.getElementById('ApartmentViewDirectionsForm:directionType').value;
     var startLocation = document.getElementById('ApartmentViewDirectionsForm:fromAddress').value;
     var endLocation = document.getElementById('ApartmentViewDirectionsForm:toAddress').value;
@@ -126,21 +98,7 @@ function drawRoute() {
             travelMode: google.maps.TravelMode[selectedTravelMode.toUpperCase()]
         };
 
-    /***************************** Obtaining and Displaying Directions *****************************/
-
-    /*
-     "To use directions in the Google Maps JavaScript API, create an object of type DirectionsService
-     and call DirectionsService.route() to initiate a request to the Directions service, passing it a
-     DirectionsRequest object literal containing the input terms and a callback method to execute upon
-     receipt of the 'response'." [Google]
-
-     Values of the 'response' and 'status' parameters of the callback method are returned from the
-     Google Maps Directions API.
-
-     status   --> must be okay if the directions can be computed by the Google Maps Directions API
-     response --> contains the requested directions
-     */
-    directionsService.route(request, function (response, status) {
+   directionsService.route(request, function (response, status) {
 
         // The operator === tests for equal value and equal type
         if (status === google.maps.DirectionsStatus.OK) {
@@ -154,3 +112,45 @@ function drawRoute() {
         }
     });
 }
+
+function getCurrentLocationAsAddress(callback) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                console.log(JSON.stringify(pos));
+                getReverseGeocode(pos, callback);
+            },
+            () => {
+                PF('growlWarningMessageWV').renderMessage({
+                    "summary": "Failed to get your current Location",
+                    "detail" : "The Geolocation service failed."});
+            }
+        );
+    } else {
+        // Browser doesn't support Geolocation
+        PF('growlWarningMessageWV').renderMessage({
+            "summary": "Failed to get your current Location",
+            "detail" : "Your browser doesn't support geolocation."});
+    }
+}
+
+function getReverseGeocode( pos , callback) {
+    geocoder.geocode({ location: pos }, (results, status) => {
+        if (status === "OK") {
+            if (results[0]) {
+                console.log(results[0].formatted_address);
+                callback(results[0].formatted_address);
+            } else {
+                window.alert("No results found");
+            }
+        } else {
+            window.alert("Geocoder failed due to: " + status);
+        }
+    });
+}
+
+
