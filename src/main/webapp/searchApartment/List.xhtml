@@ -263,20 +263,6 @@
                                     <p:dataExporter type="csv" target="datalist" fileName="Apartments" />
                                 </h:commandLink>
                                 &nbsp;
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images:exportIcons/xmlExport.png']}" width="40" />
-                                    <!--
-                                    PrimeFaces p:dataExporter uses xmlbeans-2.6.0.jar for exporting into XML documents.
-                                    xmlbeans-2.6.0.jar must be added to the Libraries folder.
-                                    -->
-                                    <p:dataExporter type="xml" target="datalist" fileName="Apartments" />
-                                </h:commandLink>
-                                &nbsp;
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images:exportIcons/jsonExport.png']}" />
-                                    <!-- Download data table content as a JSON file  -->
-                                    <p:fileDownload value="#{fileDownloadManager.file}"/>
-                                </h:commandLink>
                             </p:panel>
 
                             <!--
@@ -311,15 +297,7 @@
                                     -->
                                     <p:dataExporter type="csv" target="datalist" fileName="Apartments-Page" pageOnly="true" />
                                 </h:commandLink>
-                                &nbsp;
-                                <h:commandLink>
-                                    <p:graphicImage value="#{resource['images:exportIcons/xmlExport.png']}" width="40" />
-                                    <!--
-                                    PrimeFaces p:dataExporter uses xmlbeans-2.6.0.jar for exporting into XML documents.
-                                    xmlbeans-2.6.0.jar must be added to the Libraries folder.
-                                    -->
-                                    <p:dataExporter type="xml" target="datalist" fileName="Apartments-Page" pageOnly="true" />
-                                </h:commandLink>
+                                
                             </p:panel>
                         </p:panelGrid>
                         </div>

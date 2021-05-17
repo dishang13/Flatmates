@@ -10,11 +10,11 @@
 +--------------+-------------+--------------------------------------------+---------------------------------------+-----------------------------+
 
 
-/subsystem=undertow/configuration=handler/file=FlatmatesUserPhotosDirHandler/:add(cache-buffer-size=1024,cache-buffers=1024,directory-listing=true,follow-symlink=true,path=C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/UserPhotoStorage/)
+/subsystem=undertow/configuration=handler/file=FlatmatesUserPhotosDirHandler/:add(cache-buffer-size=1024,cache-buffers=1024,directory-listing=true,follow-symlink=true,path=/opt/wildfly/DocRoot/Team4-FileStorage/UserPhotoStorage/)
 
 /subsystem=undertow/server=default-server/host=default-host/location=\/flatmatesuserphotos/:add(handler=FlatmatesUserPhotosDirHandler)
 
-/subsystem=undertow/configuration=handler/file=FlatmatesApartmentPhotosDirHandler/:add(cache-buffer-size=1024,cache-buffers=1024,directory-listing=true,follow-symlink=true,path=C:/Users/disha/OneDrive - Virginia Tech/MEngg/CS5704 Software Engineering/CloudDrive/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/)
+/subsystem=undertow/configuration=handler/file=FlatmatesApartmentPhotosDirHandler/:add(cache-buffer-size=1024,cache-buffers=1024,directory-listing=true,follow-symlink=true,path=/opt/wildfly/DocRoot/Team4-FileStorage/ApartmentPhotoStorage/)
 
 /subsystem=undertow/server=default-server/host=default-host/location=\/flatmatesapartmentphotos/:add(handler=FlatmatesApartmentPhotosDirHandler)
 

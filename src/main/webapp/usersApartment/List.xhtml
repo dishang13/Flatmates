@@ -193,7 +193,7 @@
                             </p:commandButton>
                             &nbsp;
 
-                            <p:commandButton id="archiveButton" icon="fas fa-trash-alt"  value="#{ empty apartmentController.selected or apartmentController.selected.archived == false ? 'Archive' : 'Unarchive'}"
+                            <p:commandButton id="archiveButton" icon="fas fa-archive"  value="#{ empty apartmentController.selected or apartmentController.selected.archived == false ? 'Archive' : 'Unarchive'}"
                                              actionListener="#{apartmentController.archive}"
                                              update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                              disabled="#{empty apartmentController.selected}">
